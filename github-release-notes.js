@@ -85,11 +85,11 @@ function commitMessages(commits) {
  * @param  {[string]} commitMessages The commit messages to create the release body
  */
 function prepareRelease(tags, commitMessages) {
+   commitMessages.pop();
+
    var body = commitMessages.filter(function (message) {
       return !message.match('Merge');
    }).map(createBody);
-
-   body.pop();
 
    var releaseOptions = {
       tag_name: tags[0].name,
@@ -109,7 +109,7 @@ function prepareRelease(tags, commitMessages) {
  * @param  {string} since The since date in ISO
  * @param  {string} until The until date in ISO
  *
- * @return {Promise}      The promise which resolves the commit messages
+ * @return {Promise}      The promise which resolves the [Array] commit messages
  */
 function getCommitsBetweenTwo(since, until) {
    var options = {
