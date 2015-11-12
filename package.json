@@ -2,9 +2,6 @@
   "name": "github-release-notes",
   "version": "0.1.0",
   "description": "Node module to publish release notes based on commits between the last two tags.",
-  "bin": {
-    "gren": "./bin/github-release-notes.js"
-  },
   "main": "github-release-notes.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -24,8 +21,7 @@
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/alexcanessa/github-release-notes/issues"
-  },
-  "preferGlobal": "true",
+  }
   "homepage": "https://github.com/alexcanessa/github-release-notes#readme",
   "dependencies": {
     "github-api": "git+https://github.com/alexcanessa/github.git"
