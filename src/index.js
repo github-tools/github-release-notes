@@ -200,7 +200,7 @@ function GithubReleaseNotes(options) {
 /**
  * Get All the tags, get the dates, get the commits between those dates and prepeare the release
  */
-githubReleaseNotes.prototype.init = function() {
+GithubReleaseNotes.prototype.init = function() {
    getLatestRelease().then(function (releaseTagName) {
       getLastTag(releaseTagName).then(function (tags) {
          if(tags.length === 1) {
