@@ -192,7 +192,8 @@ function getLatestRelease() {
  *
  * @constructor
  */
-function githubReleaseNotes(options) {
+function GithubReleaseNotes(options) {
+   this.options = options || {};
    // Silence is golden
 }
 
@@ -215,6 +216,7 @@ githubReleaseNotes.prototype.init = function() {
    });
 };
 
+var githubReleaseNotes = new GithubReleaseNotes();
 githubReleaseNotes.init();
 
-module.exports = githubReleaseNotes;
+module.exports = GithubReleaseNotes;
