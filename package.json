@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Node module to publish release notes based on commits between the last two tags.",
   "bin": {
-    "gren": "bin/github-release-notes.js"
+    "gren": "./bin/github-release-notes.js"
   },
   "main": "github-release-notes.js",
   "scripts": {
