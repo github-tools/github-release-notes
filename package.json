@@ -4,7 +4,7 @@
   "description": "Node module to publish release notes based on commits between the last two tags.",
   "main": "./lib/github-release-notes.js",
   "scripts": {
-    "install": "node github-release-notes.js",
+    "start": "node github-release-notes.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
