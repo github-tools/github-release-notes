@@ -215,4 +215,6 @@ githubReleaseNotes.prototype.init = function() {
    });
 };
 
+githubReleaseNotes.init();
+
 module.exports = githubReleaseNotes;

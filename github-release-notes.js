@@ -1,4 +1,4 @@
 'use strict';
 
-var githubReleaseNotes = require('./lib/github-release-notes');
+var githubReleaseNotes = require('./lib/index');
 githubReleaseNotes.init();
