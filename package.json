@@ -2,7 +2,7 @@
   "name": "github-release-notes",
   "version": "0.1.0",
   "description": "Node module to publish release notes based on commits between the last two tags.",
-  "main": "./lib/index.js",
+  "main": "./src/index.js",
   "scripts": {
     "start": "node github-release-notes.js",
     "test": "echo \"Error: no test specified\" && exit 1"
