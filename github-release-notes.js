@@ -5,6 +5,7 @@ var options = getOptions(process.argv);
 var token = options.token;
 var username = options.username;
 var repositoryName = options.repo;
+var releasePrefix = options.prefix || '';
 var github = new Github({
   token: token,
   auth: "oauth"
@@ -47,9 +48,9 @@ function getAllTags() {
 
 /**
  * Return a string with a - to be a bullet list (used for a mapping)
- * 
+ *
  * @param  {string} message
- * 
+ *
  * @return {string}
  */
 function createBody(message) {
@@ -58,9 +59,9 @@ function createBody(message) {
 
 /**
  * Transforms the commits to commit messages
- * 
+ *
  * @param  {[Object]} commits The array of object containing the commits
- * 
+ *
  * @return {[string]}
  */
 function commitMessages(commits) {
@@ -71,10 +72,10 @@ function commitMessages(commits) {
 
 /**
  * Gets all the commits between two dates
- * 
+ *
  * @param  {string} since The since date in ISO
  * @param  {string} until The until date in ISO
- * 
+ *
  * @return {Promise}      The promise which resolves the commit messages
  */
 function getCommitsBetweenTwo(since, until) {
@@ -97,7 +98,7 @@ function getCommitsBetweenTwo(since, until) {
 
 /**
  * Get the dates of the last two tags
- * 
+ *
  * @param  {[Object]} tags List of all the tags in the repo
  * @return {[Promise]}     The promises which returns the dates
  */
@@ -117,7 +118,7 @@ function getTagDates(tags) {
 
 /**
  * Create a release from a given tag (in the options)
- * 
+ *
  * @param  {Object} options The options to build the release:
  * {
  *   "tag_name": "v1.0.0",
@@ -128,8 +129,8 @@ function getTagDates(tags) {
  *   "prerelease": false
  * }
  */
-function makeRelease(options) {
-   repo.makeRelease(options, function (err, release) {
+function makeRelease(releaseOptions) {
+   repo.makeRelease(releaseOptions, function (err, release) {
       if(err) {
          console.error(
             (JSON.parse(err.request.responseText)).message + '\n'
@@ -143,25 +144,26 @@ function makeRelease(options) {
 
 /**
  * Creates the options to make the release
- * 
- * @param  {[string]} commitMessages The commit messages to create the release body 
+ *
+ * @param  {[string]} commitMessages The commit messages to create the release body
  */
-function prepareRelease(commitMessages) {
+function prepareRelease(tags, commitMessages) {
    var body = commitMessages.filter(function(message) {
       return !message.match('Merge');
    }).map(createBody);
 
    body.pop();
 
-   var options = {
+   var releaseOptions = {
       tag_name: tags[0].name,
-      name: options.prefix || '' + tags[0].name,
+      name: releasePrefix + tags[0].name,
       body: body.join('\n'),
       draft: options.draft || false,
       prerelease: options.prerelease || false
    };
 
-   makeRelease(options);
+
+   makeRelease(releaseOptions);
 }
 
 /**
@@ -171,7 +173,7 @@ function init() {
    getAllTags().then(function(tags) {
       Promise.all(getTagDates(tags))
          .then(function(data) {
-            getCommitsBetweenTwo(data[1], data[0]).then(prepareRelease);
+            getCommitsBetweenTwo(data[1], data[0]).then(prepareRelease.bind(null, tags));
          });
    });
 }
