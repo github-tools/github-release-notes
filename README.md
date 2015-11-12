@@ -1,5 +1,5 @@
 # github-release-notes
-Node module to publish release notes based on commits between the last two tags.
+Node module which generates a release from the latest tag and compiles release notes based on commit messages between the last two tags.
 
 ## Installation
 
@@ -11,7 +11,7 @@ npm install github-release-notes --save-dev
 
 ## Usage
 
-You can run the command via the terminal (the three arguments ar all required):
+You can run the command via the terminal (the three arguments are all required):
 
 ```
 node github-release-notes --token=[token] --username=[username] --repo=[repo name]
@@ -25,4 +25,4 @@ There are optional arguments such as:
 
 - `--draft=true` To set the release as a draft
 - `--prerelease=true` To set the release as a prerelease
-- `--prefix=` Add a prefix to the tag version `e.g. v1.0.1`
+- `--prefix=v` Add a prefix to the tag version `e.g. v1.0.1`
