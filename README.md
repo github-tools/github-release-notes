@@ -1,4 +1,7 @@
 # github-release-notes
+
+[![npm version](https://badge.fury.io/js/github-release-notes.svg)](https://badge.fury.io/js/github-release-notes)
+
 Node module which generates a release from the latest tag and compiles release notes based on commit messages between the last tag and the latest release.
 
 ## Installation
