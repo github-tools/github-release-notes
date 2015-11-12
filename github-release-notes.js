@@ -90,9 +90,12 @@ function getTagDates(tags) {
 function makeRelease(options) {
    repo.makeRelease(options, function (err, release) {
       if(err) {
-         console.error(err);
+         console.error(
+            (JSON.parse(err.request.responseText)).message + '\n'
+            + (JSON.parse(err.request.responseText)).errors[0].code
+         );
       } else {
-         console.info(release);
+         console.info(release.tag_name + 'successfully created!');
       }
    });
 }
