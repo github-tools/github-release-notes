@@ -155,7 +155,7 @@ function prepareRelease(commitMessages) {
 
    var options = {
       tag_name: tags[0].name,
-      name: tags[0].name,
+      name: options.prefix || '' + tags[0].name,
       body: body.join('\n'),
       draft: options.draft || false,
       prerelease: options.prerelease || false
