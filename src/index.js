@@ -44,9 +44,9 @@ function createBody(message) {
 /**
  * Transforms the commits to commit messages
  *
- * @param  {[Object]} commits The array of object containing the commits
+ * @param  {Object[]} commits The array of object containing the commits
  *
- * @return {Array}
+ * @return {String[]}
  */
 function commitMessages(commits) {
    return commits.map(function (commitObject) {
@@ -204,7 +204,7 @@ function GithubReleaseNotes(options) {
 /**
  * Get All the tags, get the dates, get the commits between those dates and prepeare the release
  */
-GithubReleaseNotes.prototype.init = function() {
+GithubReleaseNotes.prototype.release = function() {
    var that = this;
 
    getLatestRelease(that).then(function (releaseTagName) {
@@ -223,8 +223,5 @@ GithubReleaseNotes.prototype.init = function() {
          });
    });
 };
-
-var gren = new GithubReleaseNotes();
-gren.init();
 
 module.exports = GithubReleaseNotes;

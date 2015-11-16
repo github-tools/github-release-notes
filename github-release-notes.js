@@ -1,3 +1,6 @@
 'use strict';
 
-var githubReleaseNotes = require('./lib/index');
+var GithubReleaseNotes = require('./src/index');
+var gren = new GithubReleaseNotes();
+
+gren.release();
