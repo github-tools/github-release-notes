@@ -26,6 +26,6 @@ To generate a github token, follow [this link](https://help.github.com/articles/
 
 There are optional arguments such as:
 
-- `--draft=true` To set the release as a draft
-- `--prerelease=true` To set the release as a prerelease
+- `--draft=true` To set the release as a draft. Default: `false`
+- `--prerelease=true` To set the release as a prerelease. Default: `false`
 - `--prefix=v` Add a prefix to the tag version `e.g. v1.0.1`
