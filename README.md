@@ -2,13 +2,15 @@
 
 [![npm version](https://badge.fury.io/js/github-release-notes.svg)](https://badge.fury.io/js/github-release-notes)
 
-Node module which generates a release from the latest tag and compiles release notes based on commit messages between the last tag and the latest release.
+> Node module which generates a release from the latest tag and compiles release notes based on commit messages between the last tag and the latest release.
 
 ## Installation
 
+The plugin requires Node `^0.12.`, since is using Promises.
+
 Install `github-release-notes` via npm:
 
-```
+```shell
 npm install github-release-notes --save-dev
 ```
 
@@ -16,7 +18,7 @@ npm install github-release-notes --save-dev
 
 You can run the command via the terminal (the three arguments are all required):
 
-```
+```shell
 node github-release-notes --token=[token] --username=[username] --repo=[repo name]
 ```
 
