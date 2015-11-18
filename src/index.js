@@ -58,13 +58,17 @@ function commitMessages(commits) {
  * Creates the options to make the release
  *
  * @param  {GithubReleaseNotes} gren The gren object
- * @param  {Array} tags The collection of tags
- * @param  {Array} commitMessages The commit messages to create the release body
+ * @param  {Object[]} tags The collection of tags
+ * @param  {string[]} commitMessages The commit messages to create the release body
  */
 function prepareRelease(gren, tags, commitMessages) {
-   var body = commitMessages.slice(0, -1).filter(function (message) {
-      return !message.match(/^merge/i);
-   }).map(createBody).join('\n');
+   var body = commitMessages
+      .slice(0, -1)
+      .filter(function (message) {
+         return !message.match(/^merge/i);
+      })
+      .map(createBody)
+      .join('\n');
 
    var releaseOptions = {
       tag_name: tags[0].name,
@@ -93,7 +97,6 @@ function getCommitsBetweenTwo(gren, since, until) {
    };
 
    return new Promise(function (resolve, reject) {
-
       gren.repo.getCommits(options, function (err, commits) {
          if(err) {
             reject(err);
@@ -133,17 +136,17 @@ function getTagDates(gren, lastTag, lastRelease) {
  *
  * @return {Promise}
  */
-function getLastTag(gren, releaseTagName) {
+function getLastTags(gren, releaseTagName) {
    return new Promise(function (resolve, reject) {
       gren.repo.listTags(function (err, tags) {
          if(err) {
             reject(err);
          } else {
-            resolve(
-               tags.filter(function(tag, index) {
-                  return (index === 0 || tag.name === releaseTagName);
-               })
-            );
+            var filteredTags = tags.filter(function(tag, index) {
+               return index === 0 || tag.name === releaseTagName;
+            });
+
+            resolve(filteredTags);
          }
       });
    });
@@ -179,7 +182,9 @@ function getOptions(args) {
    var settings = {};
 
    for(var i=2;i<args.length;i++) {
-     settings[args[i].split('=')[0].replace('--', '')] = args[i].split('=')[1];
+      var paramArray = args[i].split('=');
+
+      settings[paramArray[0].replace('--', '')] = paramArray[1];
    }
 
    return settings;
@@ -191,11 +196,11 @@ function getOptions(args) {
  * @constructor
  */
 function GithubReleaseNotes(options) {
-   this.options = getOptions(process.argv);
+   this.options = options || getOptions(process.argv);
 
    var github = new Github({
      token: this.options.token,
-     auth: "oauth"
+     auth: 'oauth'
    });
 
    this.repo = github.getRepo(this.options.username, this.options.repo);
@@ -207,21 +212,26 @@ function GithubReleaseNotes(options) {
 GithubReleaseNotes.prototype.release = function() {
    var that = this;
 
-   getLatestRelease(that).then(function (releaseTagName) {
-      getLastTag(that, releaseTagName).then(function (tags) {
+   getLatestRelease(this)
+      .then(function (releaseTagName) {
+         return getLastTags(that, releaseTagName);
+      })
+      .then(function (tags) {
          if(tags.length === 1) {
-            console.error('The latest tag is the latest release!');
-            return;
+            throw new Error('The latest tag is the latest release!');
          }
 
-         Promise.all(getTagDates(that, tags[0], tags[1]))
-            .then(function (data) {
-               getCommitsBetweenTwo(that, data[1], data[0]).then(function(commitMessages) {
-                  prepareRelease(that, tags, commitMessages);
-               });
-            });
-         });
-   });
+         return Promise.all(getTagDates(that, tags[0], tags[1]));
+      })
+      .then(function (data) {
+         return getCommitsBetweenTwo(that, data[1], data[0]);
+      })
+      .then(function (commitMessages) {
+         prepareRelease(that, tags, commitMessages);
+      })
+      .catch(function (error) {
+         console.error(error);
+      });
 };
 
 module.exports = GithubReleaseNotes;
