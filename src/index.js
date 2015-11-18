@@ -17,16 +17,20 @@ var Github = require('github-api');
  * }
  */
 function makeRelease(gren, releaseOptions) {
-   gren.repo.makeRelease(releaseOptions, function (err, release) {
-      if(err) {
-         var responseText = JSON.parse(err.request.responseText);
-         console.error(
-            responseText.message + '\n'
-            + responseText.errors[0].code
-         );
-      } else {
-         console.info(release.tag_name + ' successfully created!');
-      }
+   return new Promise(function (resolve, reject) {   
+      gren.repo.makeRelease(releaseOptions, function (err, release) {
+         if(err) {
+            var responseText = JSON.parse(err.request.responseText);
+            console.error(
+               responseText.message + '\n'
+               + responseText.errors[0].code
+            );
+            reject(false);
+         } else {
+            console.log(release.tag_name + ' successfully created!');
+            resolve(true);
+         }
+      });
    });
 }
 
@@ -78,7 +82,7 @@ function prepareRelease(gren, tags, commitMessages) {
       prerelease: gren.options.prerelease || false
    };
 
-   makeRelease(gren, releaseOptions);
+   return makeRelease(gren, releaseOptions);
 }
 
 /**
@@ -212,7 +216,7 @@ function GithubReleaseNotes(options) {
 GithubReleaseNotes.prototype.release = function() {
    var that = this;
 
-   getLatestRelease(this)
+   return getLatestRelease(this)
       .then(function (releaseTagName) {
          return getLastTags(that, releaseTagName);
       })
@@ -227,7 +231,10 @@ GithubReleaseNotes.prototype.release = function() {
          return getCommitsBetweenTwo(that, data[1], data[0]);
       })
       .then(function (commitMessages) {
-         prepareRelease(that, tags, commitMessages);
+         return prepareRelease(that, tags, commitMessages);
+      })
+      .then(function (success) {
+         return success;
       })
       .catch(function (error) {
          console.error(error);
