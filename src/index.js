@@ -201,6 +201,7 @@ function getOptions(args) {
  */
 function GithubReleaseNotes(options) {
    this.options = options || getOptions(process.argv);
+   this.options.force = this.options.force || false;
 
    var github = new Github({
      token: this.options.token,
@@ -238,6 +239,8 @@ GithubReleaseNotes.prototype.release = function() {
       })
       .catch(function (error) {
          console.error(error);
+
+         return that.options.force;
       });
 };
 
