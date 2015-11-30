@@ -17,7 +17,7 @@ var Github = require('github-api');
  * }
  */
 function makeRelease(gren, releaseOptions) {
-   return new Promise(function (resolve, reject) {   
+   return new Promise(function (resolve, reject) {
       gren.repo.makeRelease(releaseOptions, function (err, release) {
          if(err) {
             var responseText = JSON.parse(err.request.responseText);
@@ -65,7 +65,7 @@ function commitMessages(commits) {
  * @param  {Object[]} tags The collection of tags
  * @param  {string[]} commitMessages The commit messages to create the release body
  */
-function prepareRelease(gren, tags, commitMessages) {
+function prepareRelease(gren, tagName, commitMessages) {
    var body = commitMessages
       .slice(0, -1)
       .filter(function (message) {
@@ -75,8 +75,8 @@ function prepareRelease(gren, tags, commitMessages) {
       .join('\n');
 
    var releaseOptions = {
-      tag_name: tags[0].name,
-      name: (gren.options.prefix || '') + tags[0].name,
+      tag_name: tagName,
+      name: (gren.options.prefix || '') + tagName,
       body: body,
       draft: gren.options.draft || false,
       prerelease: gren.options.prerelease || false
@@ -216,6 +216,7 @@ function GithubReleaseNotes(options) {
  */
 GithubReleaseNotes.prototype.release = function() {
    var that = this;
+   var tagName;
 
    return getLatestRelease(this)
       .then(function (releaseTagName) {
@@ -226,13 +227,15 @@ GithubReleaseNotes.prototype.release = function() {
             throw new Error('The latest tag is the latest release!');
          }
 
+         tagName = tags[0].name;
+
          return Promise.all(getTagDates(that, tags[0], tags[1]));
       })
       .then(function (data) {
          return getCommitsBetweenTwo(that, data[1], data[0]);
       })
       .then(function (commitMessages) {
-         return prepareRelease(that, tags, commitMessages);
+         return prepareRelease(that, tagName, commitMessages);
       })
       .then(function (success) {
          return success;
