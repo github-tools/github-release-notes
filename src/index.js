@@ -25,10 +25,10 @@ function makeRelease(gren, releaseOptions) {
                responseText.message + '\n'
                + responseText.errors[0].code
             );
-            reject(false);
+            reject();
          } else {
             console.log(release.tag_name + ' successfully created!');
-            resolve(true);
+            resolve();
          }
       });
    });
@@ -69,7 +69,7 @@ function prepareRelease(gren, tagName, commitMessages) {
    var body = commitMessages
       .slice(0, -1)
       .filter(function (message) {
-         return !message.match(/^merge/i);
+         return !message.match(/^merge/i) && !message.match(/^[x]/);
       })
       .map(createBody)
       .join('\n');
@@ -146,7 +146,7 @@ function getLastTags(gren, releaseTagName) {
          if(err) {
             reject(err);
          } else {
-            var filteredTags = tags.filter(function(tag, index) {
+            var filteredTags = tags.filter(function (tag, index) {
                return index === 0 || tag.name === releaseTagName;
             });
 
@@ -237,8 +237,11 @@ GithubReleaseNotes.prototype.release = function() {
       .then(function (commitMessages) {
          return prepareRelease(that, tagName, commitMessages);
       })
-      .then(function (success) {
-         return success;
+      .then(function () {
+         return true;
+      },
+      function() {
+         return false;
       })
       .catch(function (error) {
          console.error(error);
