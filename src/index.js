@@ -25,10 +25,10 @@ function makeRelease(gren, releaseOptions) {
                responseText.message + '\n'
                + responseText.errors[0].code
             );
-            reject();
+            reject(false);
          } else {
             console.log(release.tag_name + ' successfully created!');
-            resolve();
+            resolve(true);
          }
       });
    });
@@ -69,7 +69,7 @@ function prepareRelease(gren, tagName, commitMessages) {
    var body = commitMessages
       .slice(0, -1)
       .filter(function (message) {
-         return !message.match(/^merge/i) && !message.match(/^[x]/);
+         return !message.match(/^merge/i);
       })
       .map(createBody)
       .join('\n');
@@ -146,8 +146,8 @@ function getLastTags(gren, releaseTagName) {
          if(err) {
             reject(err);
          } else {
-            var filteredTags = tags.filter(function (tag, index) {
-               return index === 0 || tag.name === releaseTagName;
+            var filteredTags = tags.filter(function(tag, index) {
+               return index === 0 || (releaseTagName ? tag.name === releaseTagName : index === tags.length-1   );
             });
 
             resolve(filteredTags);
@@ -166,10 +166,14 @@ function getLastTags(gren, releaseTagName) {
 function getLatestRelease(gren) {
    return new Promise(function (resolve, reject) {
       gren.repo.getLatestRelease(function (err, release) {
-         if(err) {
+         if(err && err.request.status !== 404) {
             reject(err);
          } else {
-            resolve(release.tag_name);
+            if(err && err.request.status === 404) {
+               resolve(false);
+            } else {
+               resolve(release.tag_name);
+            }
          }
       });
    });
@@ -237,11 +241,8 @@ GithubReleaseNotes.prototype.release = function() {
       .then(function (commitMessages) {
          return prepareRelease(that, tagName, commitMessages);
       })
-      .then(function () {
-         return true;
-      },
-      function() {
-         return false;
+      .then(function (success) {
+         return success;
       })
       .catch(function (error) {
          console.error(error);
