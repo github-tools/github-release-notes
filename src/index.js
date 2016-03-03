@@ -220,7 +220,7 @@ function GithubReleaseNotes(options) {
      auth: 'oauth'
    });
 
-   this.includemessages = this.options.includemessages || "All";
+   this.includemessages = this.options.includemessages || "commits";
    this.repo = github.getRepo(this.options.username, this.options.repo);
 }
 
