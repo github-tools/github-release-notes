@@ -69,11 +69,11 @@ function prepareRelease(gren, tagName, commitMessages) {
    var body = commitMessages
       .slice(0, -1)
       .filter(function (message) {
-          switch(gren.includeMessages)
+          switch(gren.includemessages)
           {
-              case 'MergePull':
+              case 'merges':
                 return message.match(/^merge/i);
-              case "All":
+              case "all":
                 return true;
               default:
                  return !message.match(/^merge/i);
@@ -220,7 +220,7 @@ function GithubReleaseNotes(options) {
      auth: 'oauth'
    });
 
-   this.includeMessages = this.options.includeMessages || "All";
+   this.includemessages = this.options.includemessages || "All";
    this.repo = github.getRepo(this.options.username, this.options.repo);
 }
 
