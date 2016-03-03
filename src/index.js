@@ -73,10 +73,10 @@ function prepareRelease(gren, tagName, commitMessages) {
           {
               case 'MergePull':
                 return message.match(/^merge/i);
-              case "Commits":
-                return !message.match(/^merge/i);
-              default:
+              case "All":
                 return true;
+              default:
+                 return !message.match(/^merge/i);
           }
       })
       .map(createBody)
