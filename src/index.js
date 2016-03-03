@@ -57,6 +57,10 @@ function commitMessages(commits) {
       return commitObject.commit.message;
    });
 }
+{
+
+   key: function(message) { return message.method },
+}
 
 /**
  * Creates the options to make the release
@@ -69,15 +73,22 @@ function prepareRelease(gren, tagName, commitMessages) {
    var body = commitMessages
       .slice(0, -1)
       .filter(function (message) {
-          switch(gren.includemessages)
-          {
-              case 'merges':
-                return message.match(/^merge/i);
-              case "all":
-                return true;
-              default:
-                 return !message.match(/^merge/i);
+         var messageType = gren.options.includeMessages;
+         var filterMap = {
+            merges: function(message) {
+               return message.match(/^merge/i);
+            },
+            commits: function(message) {
+               return !message.match(/^merge/i);
+            },
+            all: function(message) { return true; }
+         };
+
+          if(filterMap[messageType]) {
+            return filterMap[messageType](message);
           }
+
+          return filterMap.commits(message);
       })
       .map(createBody)
       .join('\n');
@@ -188,6 +199,19 @@ function getLatestRelease(gren) {
 }
 
 /**
+ * Transforms a dasherize string into a camel case one.
+ * 
+ * @param  {[string]} value The dasherize string
+ * 
+ * @return {[string]}       The camel case string
+ */
+function dashToCamelCase(value) {
+   return value.replace(/-([a-z])/g, function (match) {
+      return match[1].toUpperCase();
+   });
+}
+
+/**
  * Create a literal object of the node module options
  *
  * @param  {Array} args The array of arguments (the module arguments start from index 2)
@@ -200,7 +224,7 @@ function getOptions(args) {
    for(var i=2;i<args.length;i++) {
       var paramArray = args[i].split('=');
 
-      settings[paramArray[0].replace('--', '')] = paramArray[1];
+      settings[dashToCamelCase(paramArray[0].replace('--', ''))] = paramArray[1];
    }
 
    return settings;
@@ -220,7 +244,6 @@ function GithubReleaseNotes(options) {
      auth: 'oauth'
    });
 
-   this.includemessages = this.options.includemessages || "commits";
    this.repo = github.getRepo(this.options.username, this.options.repo);
 }
 
