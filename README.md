@@ -31,4 +31,4 @@ There are optional arguments such as:
 - `--draft=true` To set the release as a draft. Default: `false`
 - `--prerelease=true` To set the release as a prerelease. Default: `false`
 - `--prefix=v` Add a prefix to the tag version `e.g. v1.0.1`
-- `--includemessages=merges/commits/all` used to filter the messages added to the release notes. Default: `Commits` 
+- `--includemessages=merges/commits/all` used to filter the messages added to the release notes. Default: `commits` 
