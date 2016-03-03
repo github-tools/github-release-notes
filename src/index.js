@@ -69,11 +69,19 @@ function prepareRelease(gren, tagName, commitMessages) {
    var body = commitMessages
       .slice(0, -1)
       .filter(function (message) {
-         return !message.match(/^merge/i);
+          switch(gren.includemessages)
+          {
+              case 'merges':
+                return message.match(/^merge/i);
+              case "all":
+                return true;
+              default:
+                 return !message.match(/^merge/i);
+          }
       })
       .map(createBody)
       .join('\n');
-
+      
    var releaseOptions = {
       tag_name: tagName,
       name: (gren.options.prefix || '') + tagName,
@@ -212,6 +220,7 @@ function GithubReleaseNotes(options) {
      auth: 'oauth'
    });
 
+   this.includemessages = this.options.includemessages || "commits";
    this.repo = github.getRepo(this.options.username, this.options.repo);
 }
 
