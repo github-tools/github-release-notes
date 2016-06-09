@@ -103,7 +103,7 @@ function formatDate(date) {
 module.exports = {
    printTask: printTask,
    task: task,
-   getOptions: getOptions,
+   getBashOptions: getBashOptions,
    isInRange: isInRange,
    formatDate: formatDate
 };
