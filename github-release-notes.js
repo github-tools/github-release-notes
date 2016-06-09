@@ -1,6 +1,6 @@
 'use strict';
 
-var GithubReleaseNotes = require('./src/index');
+var GithubReleaseNotes = require('./src/gren');
 var gren = new GithubReleaseNotes();
 var utils = require('./src/util');
 
