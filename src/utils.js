@@ -62,9 +62,11 @@ function isInRange(value, min, max) {
  * @return {string}       The camel case string
  */
 function dashToCamelCase(value) {
-   return value.replace(/-([a-z])/g, function (match) {
-      return match[1].toUpperCase();
-   });
+   return value
+      .toLowerCase()
+      .replace(/-([a-z])/g, function (match) {
+         return match[1].toUpperCase();
+      });
 }
 
 /**
@@ -104,6 +106,7 @@ module.exports = {
    printTask: printTask,
    task: task,
    getBashOptions: getBashOptions,
+   dashToCamelCase: dashToCamelCase,
    isInRange: isInRange,
    formatDate: formatDate
 };
