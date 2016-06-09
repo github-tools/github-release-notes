@@ -678,7 +678,7 @@ function generateOptions() {
  * @constructor
  */
 function GithubReleaseNotes(options) {
-   this.options = Object.assign({}, defaults, options || utils.getOptions(process.argv));
+   this.options = Object.assign({}, defaults, options || utils.getBashOptions(process.argv));
    this.repo = null;
    this.issues = null;
 }

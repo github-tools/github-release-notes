@@ -76,7 +76,7 @@ function dashToCamelCase(value) {
  *
  * @return {Object}     The object containg the key/value options
  */
-function getOptions(args) {
+function getBashOptions(args) {
    var settings = {};
 
    for(var i=2;i<args.length;i++) {
@@ -97,7 +97,7 @@ function getOptions(args) {
  * @return {string}
  */
 function formatDate(date) {
-   return date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
+   return ('0' + date.getDate()).slice(-2) + '/' + ('0' + (date.getMonth() + 1)).slice(-2) + '/' + date.getFullYear();
 }
 
 module.exports = {
