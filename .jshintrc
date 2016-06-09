@@ -1,0 +1,31 @@
+{
+   "curly": true,
+   "eqeqeq": true,
+   "forin": false,
+   "freeze": true,
+   "funcscope": false,
+   "futurehostile": true,
+   "globals": {
+      "define": false
+   },
+   "globalstrict": true,
+   "iterator": false,
+   "latedef": true,
+   "maxcomplexity": 6,
+   "maxdepth": 3,
+   "maxparams": 4,
+   "maxstatements": 15,
+   "noarg": true,
+   "nocomma": true,
+   "nonbsp": true,
+   "nonew": true,
+   "notypeof": true,
+   "shadow": true,
+   "singleGroups": true,
+   "unused": true,
+
+   "strict": true,
+
+   "node": true,
+   "esversion": 6
+}
