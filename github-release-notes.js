@@ -2,5 +2,8 @@
 
 var GithubReleaseNotes = require('./src/index');
 var gren = new GithubReleaseNotes();
+var utils = require('./src/util');
 
-gren.release();
+var action = utils.getOptions(process.argv)['action'];
+
+gren.init(action || 'release');
