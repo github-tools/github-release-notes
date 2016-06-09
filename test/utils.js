@@ -1,6 +1,6 @@
 'use strict';
 
-var utils = require('../src/utils.js');
+var utils = require('../src/utils');
 
 /*
 ======== A Handy Little Nodeunit Reference ========
