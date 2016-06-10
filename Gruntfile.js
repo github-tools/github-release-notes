@@ -20,14 +20,18 @@ module.exports = function(grunt) {
 		},
 		jsdoc : {
 			dist : {
-				src: ['src/*.js', 'README.md'],
+				src: ['CHANGELOG.md', 'src/*.js'],
+				readme: 'README.md',
+				version: true,
 				options: {
-					destination: 'docs'
+					destination: 'docs',
+					template : "node_modules/ink-docstrap/template",
+					configure : "node_modules/ink-docstrap/template/jsdoc.conf.json"
 				}
 			}
 		}
 	});
 
-	// grunt.registerTask('ship', ['jshint', 'jsdoc']);
+	grunt.registerTask('ship', ['jshint', 'jsdoc']);
 	grunt.registerTask('test', ['jshint', 'nodeunit']);
 };

@@ -83,7 +83,7 @@ function repo(callback) {
  * @return {Promise} The promise that resolves token informations ({token: token})
  */
 function token(callback) {
-   return executeCommand('gitapp getToken', function (token) {
+   return executeCommand('echo $CHANGELOG_GITHUB_TOKEN', function (token) {
       return {
          token: token
       };

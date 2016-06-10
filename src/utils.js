@@ -27,7 +27,7 @@ function task(taskName) {
 
    var si = setInterval(function() {
       process.stdout.write('.');
-   }, 1000);
+   }, 100);
 
    return function (message) {
       var diff = process.hrtime(time);

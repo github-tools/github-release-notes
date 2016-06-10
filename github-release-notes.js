@@ -2,8 +2,13 @@
 
 var GithubReleaseNotes = require('./src/gren');
 var gren = new GithubReleaseNotes();
-var utils = require('./src/util');
+var utils = require('./src/utils');
 
-var action = utils.getOptions(process.argv)['action'];
+var action = utils.getBashOptions(process.argv)['action'];
 
-gren.init(action || 'release');
+gren.init()
+	.then(function (success) {
+		if(success) {
+			return gren[action || 'release']();
+		}
+	});

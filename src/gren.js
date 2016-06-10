@@ -6,6 +6,7 @@ var Github = require('github-api');
 var fs = require('fs');
 var chalk = require('chalk');
 var Promise = Promise || require('es6-promise').Promise;
+var isOnline = require('is-online');
 
 var defaults = {
    timeWrap: 'latest', // || history
@@ -16,11 +17,14 @@ var defaults = {
    prefix: '',
    prerelease: false,
    timeMeter: 'releaseDates', // || milestones,
-   dateZero: new Date(0)
+   dateZero: new Date(0),
+   override: false
 };
 
 /**
  * Create a release from a given tag (in the options)
+ *
+ * @private
  *
  * @since 0.1.0
  * 
@@ -466,7 +470,7 @@ function getIssueBlocks(gren, releaseRanges) {
       .then(function (issues) {
          return releaseRanges
                   .map(function (range) {
-                     var body = (!range[0].body || gren.options.force) &&
+                     var body = (!range[0].body || gren.options.override) &&
                         issues.filter(function (issue) {
                            return utils.isInRange(
                               Date.parse(issue.closed_at),
@@ -637,8 +641,9 @@ function createChangelog(gren, body) {
          if(data.match(newReleaseName)) {
             console.error(chalk.red('\nThis release is already in the changelog'));
 
-            // @TODO: Change to a dedicated option
             if(gren.options.force) {
+               createFile(body + data.replace(/^(#\s?\w*\n\n)/g, ''));
+            } else if(gren.options.override) {
                createFile(body);
             }
 
@@ -671,6 +676,26 @@ function generateOptions() {
 }
 
 /**
+ * Check if there is connectivity
+ *
+ * @since 0.5.0
+ * @private
+ * 
+ * @return {boolean} If there is connectivity or not
+ */
+function hasNetwork() {
+   return new Promise(function (resolve, reject) {
+      isOnline(function (err, online) {
+         if(err) {
+            reject(chalk.red(err));
+         }
+
+         resolve(online);
+      });
+   });
+}
+
+/**
  * @param  {Object} [options] The options of the module
  *
  * @since  0.1.0
@@ -690,13 +715,24 @@ function GithubReleaseNotes(options) {
  * @since 0.5.0
  * 
  * @param  {function} action
+ *
+ * @return {Promise} The generated options
+ *
+ * @todo: check the network first 
  */
-GithubReleaseNotes.prototype.init = function(action) {
+GithubReleaseNotes.prototype.init = function() {
    var gren = this;
 
-   generateOptions(this.options)
-      .then(function (OptionData) {
-         gren.options = Object.assign(...OptionData, gren.options);
+   return hasNetwork()
+      .then(function (success) {
+         if(success) {
+            return generateOptions(gren, gren.options);
+         } else {
+            throw chalk.red('You need to have network connectivity');
+         }
+      })
+      .then(function (optionData) {
+         gren.options = Object.assign(...optionData, gren.options);
 
          if(!gren.options.token) {
             throw chalk.red('You need to provide the token');
@@ -709,10 +745,7 @@ GithubReleaseNotes.prototype.init = function(action) {
          gren.repo = githubApi.getRepo(gren.options.username, gren.options.repo);
          gren.issues = githubApi.getIssues(gren.options.username, gren.options.repo);
 
-         console.log(chalk.green('Hello ' + gren.options.user + ', sit back while I do the ' + action + ' for you\n'));
-
-         gren[action]();
-
+         return true;
       })
       .catch(function (error) {
          console.log(error);
@@ -735,7 +768,6 @@ GithubReleaseNotes.prototype.release = function() {
       commits: getCommitBlocks
    };
 
-
    return getLatestRelease(this)
       .then(function (release) {
          return getLastTags(gren, release.tag_name || false);
@@ -752,9 +784,6 @@ GithubReleaseNotes.prototype.release = function() {
       })
       .then(function (blocks) {
          return prepareRelease(gren, blocks[0]);
-      })
-      .then(function (success) {
-         return success && gren.changelog();
       })
       .then(function (success) {
          return success;
