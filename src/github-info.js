@@ -8,6 +8,7 @@ var Promise = Promise || require('es6-promise').Promise;
  * Execute a command in the bash and run a callback
  *
  * @since 0.5.0
+ * @private
  * 
  * @param  {string}   command The command to execute
  * @param  {Function} callback The callback which returns the stdout
@@ -34,6 +35,7 @@ function executeCommand(command, callback) {
  * Get user informations
  *
  * @since 0.5.0
+ * @public
  * 
  * @param  {Function} callback
  * 
@@ -52,6 +54,7 @@ function user(callback) {
  * Get repo informations
  *
  * @since 0.5.0
+ * @public
  * 
  * @param  {Function} callback
  * 
@@ -77,6 +80,7 @@ function repo(callback) {
  * Get token informations
  *
  * @since 0.5.0
+ * @public
  * 
  * @param  {Function} callback
  * 

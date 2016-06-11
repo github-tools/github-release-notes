@@ -6,6 +6,7 @@ var chalk = require('chalk');
  * Print a task name in a custom format
  * 
  * @since 0.5.0
+ * @public
  * 
  * @param  {string} name The name of the task
  */
@@ -16,6 +17,7 @@ function printTask(name) {
  * Outputs the task status
  *
  * @since 0.5.0
+ * @public
  * 
  * @param  {string} taskName The task name
  * 
@@ -41,6 +43,7 @@ function task(taskName) {
  * Check if e value is between a min and a max
  *
  * @since 0.5.0
+ * @public
  * 
  * @param  {number}  value
  * @param  {number}  min
@@ -56,6 +59,7 @@ function isInRange(value, min, max) {
  * Transforms a dasherize string into a camel case one.
  *
  * @since 0.3.2
+ * @public
  * 
  * @param  {string} value The dasherize string
  * 
@@ -73,6 +77,7 @@ function dashToCamelCase(value) {
  * Create a literal object of the node module options
  * 
  * @since 0.1.0
+ * @public
  *
  * @param  {Array} args The array of arguments (the module arguments start from index 2)
  *
@@ -94,6 +99,7 @@ function getBashOptions(args) {
  * Format a date into a string
  * 
  * @since 0.5.0
+ * @public
  * 
  * @param  {Date} date
  * @return {string}
