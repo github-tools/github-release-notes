@@ -21,15 +21,16 @@ var defaults = {
    override: false
 };
 
+
 /**
- * Create a release from a given tag (in the options)
+ * Edit arelease from a given tag (in the options)
  *
+ * @since 0.5.0
  * @private
- *
- * @since 0.1.0
  * 
  * @param  {GithubReleaseNotes} gren The gren object
  * @param  {Object} releaseOptions The options to build the release:
+ * @example
  * {
  *   "tag_name": "v1.0.0",
  *   "target_commitish": "master",
@@ -38,6 +39,45 @@ var defaults = {
  *   "draft": false,
  *   "prerelease": false
  * }
+ * 
+ * @return {Promise}
+ */
+function editRelease(gren, releaseId, releaseOptions) {
+   var loaded = utils.task('Updating latest release');
+
+   return new Promise(function (resolve, reject) {
+      gren.repo.updateRelease(releaseId, releaseOptions, function (err, release) {
+         loaded();
+
+         if(err) {
+            reject(chalk.red(err));
+         } else {            
+            console.log(chalk.green('\n\n' + release.name + ' has successfully updated!'));
+
+            resolve(true);
+         }
+      });
+   });
+}
+
+/**
+ * Create a release from a given tag (in the options)
+ *
+ * @since 0.1.0
+ * @private
+ * 
+ * @param  {GithubReleaseNotes} gren The gren object
+ * @param  {Object} releaseOptions The options to build the release:
+ * @example {
+ *   "tag_name": "v1.0.0",
+ *   "target_commitish": "master",
+ *   "name": "v1.0.0",
+ *   "body": "Description of the release",
+ *   "draft": false,
+ *   "prerelease": false
+ * }
+ *
+ * @return {Promise}
  */
 function createRelease(gren, releaseOptions) {
    var loaded = utils.task('Preparing the release');
@@ -66,9 +106,12 @@ function createRelease(gren, releaseOptions) {
  * Creates the options to make the release
  *
  * @since 0.2.0
+ * @private
  * 
  * @param  {GithubReleaseNotes} gren The gren object
  * @param  {Object[]} tags The collection of tags
+ * 
+ * @return {Promise}
  */
 function prepareRelease(gren, block) {
    var releaseOptions = {
@@ -79,67 +122,24 @@ function prepareRelease(gren, block) {
       prerelease: gren.options.prerelease
    };
 
-   return createRelease(gren, releaseOptions);
-}
-
-/**
- * Transforms the commits to commit messages
- *
- * @since 0.1.0
- * 
- * @param  {Object[]} commits The array of object containing the commits
- *
- * @return {String[]}
- */
-function commitMessages(commits) {
-   return commits.map(function (commitObject) {
-      return commitObject.commit.message;
-   });
-}
-
-/**
- * Gets all the commits between two dates
- *
- * @since 0.1.0
- * 
- * @param  {GithubReleaseNotes} gren The gren object
- * @param  {string} since The since date in ISO
- * @param  {string} until The until date in ISO
- *
- * @return {Promise}      The promise which resolves the [Array] commit messages
- */
-function getCommitsBetweenTwo(gren, since, until) {
-   var loaded = utils.task('Get commits between ' + utils.formatDate(new Date(since)) + ' and ' + utils.formatDate(new Date(until)));
-
-   var options = {
-      since: since,
-      until: until,
-      per_page: 100
-   };
-
-   return new Promise(function (resolve, reject) {
-      gren.repo.listCommits(options, function (err, commits) {
-         loaded();
-
-         if(err) {
-            reject(err);
-         } else {
-            resolve(commitMessages(commits));
-         }
-      });
-   });
+   if(gren.isEditingLatestRelease) {
+      return editRelease(gren, block.id, releaseOptions);
+   } else {
+      return createRelease(gren, releaseOptions);
+   }
 }
 
 /**
  * Get all the tags of the repo
  *
  * @since 0.1.0
+ * @private
  * 
  * @param  {GithubReleaseNotes} gren The gren object
  *
  * @return {Promise}
  */
-function getLastTags(gren, releaseTagName) {
+function getLastTags(gren, releases) {
    var loaded = utils.task('Getting latest tag');
 
    return new Promise(function (resolve, reject) {
@@ -150,10 +150,34 @@ function getLastTags(gren, releaseTagName) {
             reject(err);
          } else {
             var filteredTags = tags.filter(function(tag, index) {
-               return index === 0 || (releaseTagName ? tag.name === releaseTagName : index === tags.length-1);
+               var previousTag = releases[0].tag_name ? tag.name === releases[0].tag_name : index === tags.length-1;
+
+               return index === 0 || previousTag;
+            })
+            .map(function (tag) {
+               return {
+                  tag: tag,
+                  releaseId: releases.filter(function (release) {
+                     return release.tag_name === tag.name;
+                  })[0].id || null
+               };
             });
 
-            resolve(filteredTags);
+
+            if(filteredTags.length === 1 && gren.options.override) {
+               gren.isEditingLatestRelease = true;
+
+               var secondTag = {
+                  tag: tags.filter(function (tag) {
+                     return tag.name === releases[1].tag_name;
+                  })[0],
+                  releaseId: releases[1].id
+               };
+               
+               resolve(filteredTags.concat(secondTag));
+            } else {
+               resolve(filteredTags);
+            }
          }
       });
    });
@@ -163,6 +187,7 @@ function getLastTags(gren, releaseTagName) {
  * Get the dates of the last two tags
  *
  * @since 0.1.0
+ * @private
  * 
  * @param  {GithubReleaseNotes} gren The gren object
  * @param  {Object[]} tags List of all the tags in the repo
@@ -170,18 +195,15 @@ function getLastTags(gren, releaseTagName) {
  * @return {Promise[]}     The promises which returns the dates
  */
 function getTagDates(gren, tags) {
-   var loaded = utils.task('Getting the tag dates ranges');
-
    return tags.map(function (tag) {
       return new Promise(function (resolve, reject) {
-         gren.repo.getCommit(tag.commit.sha, function (err, commit) {
-            loaded();
-
+         gren.repo.getCommit(tag.tag.commit.sha, function (err, commit) {
             if(err) {
                reject(err);
             } else {
                resolve({
-                  name: tag.name,
+                  id: tag.releaseId,
+                  name: tag.tag.name,
                   date: commit.committer.date
                });
             }
@@ -194,6 +216,7 @@ function getTagDates(gren, tags) {
  * Get all releases
  *
  * @since 0.5.0
+ * @private
  * 
  * @param  {Object[]} releases A list of release Objects
  *
@@ -215,6 +238,7 @@ function getReleaseDates(gren, releases) {
  * Get all releases
  *
  * @since 0.5.0
+ * @private
  * 
  * @param  {GithubReleaseNotes} gren The gren object
  *
@@ -245,6 +269,7 @@ function getListReleases(gren) {
  * Get the latest two releases
  *
  * @since 0.5.0
+ * @private
  * 
  * @param  {GithubReleaseNotes} gren The gren object
  *
@@ -258,25 +283,10 @@ function getLatestTwoRelease(gren) {
 }
 
 /**
- * Get the latest release
- *
- * @since 0.5.0
- *
- * @param  {GithubReleaseNotes} gren The gren object
- *
- * @return {Promise} The promise which resolves the tag name of the release
- */
-function getLatestRelease(gren) {
-   return getListReleases(gren)
-      .then(function(releases) {
-         return releases[0];
-      });
-}
-
-/**
  * Return a string with a - to be a bullet list (used for a mapping)
  *
  * @since 0.1.0
+ * @private
  * 
  * @param  {string} message
  *
@@ -290,6 +300,7 @@ function templateCommits(message) {
  * Generate the MD template from all the labels of a specific issue
  *
  * @since 0.5.0
+ * @private
  * 
  * @param  {Object} issue
  * 
@@ -306,6 +317,7 @@ function templateLabels(issue) {
  * Generate the MD template a block
  *
  * @since 0.5.0
+ * @private
  * 
  * @param  {Object} block ({name: 'v1.2.3', body: []})
  * 
@@ -322,6 +334,7 @@ function templateBlock(block) {
  * Generate the MD template for each issue
  *
  * @since 0.5.0
+ * @private
  * 
  * @param  {Object} issue
  * 
@@ -335,6 +348,7 @@ function templateIssue(issue) {
  * Generate the Changelog MD template
  *
  * @since 0.5.0
+ * @private
  * 
  * @param  {Object[]} blocks
  * 
@@ -350,7 +364,8 @@ function templateChangelog(blocks) {
 /**
  * Return a commit messages generated body 
  *
- * @since 0.5.0
+ * @since 0.1.0
+ * @private
  * 
  * @param  {string} message
  *
@@ -382,27 +397,88 @@ function generateCommitsBody(gren, messages) {
 }
 
 /**
- * Get the list of all the issues of a specific milestone
+ * Transforms the commits to commit messages
+ *
+ * @since 0.1.0
+ * @private
+ * 
+ * @param  {Object[]} commits The array of object containing the commits
+ *
+ * @return {String[]}
+ */
+function commitMessages(commits) {
+   return commits.map(function (commitObject) {
+      return commitObject.commit.message;
+   });
+}
+
+/**
+ * Gets all the commits between two dates
+ *
+ * @since 0.1.0
+ * @private
+ * 
+ * @param  {GithubReleaseNotes} gren The gren object
+ * @param  {string} since The since date in ISO
+ * @param  {string} until The until date in ISO
+ *
+ * @return {Promise}      The promise which resolves the [Array] commit messages
+ */
+function getCommitsBetweenTwo(gren, since, until) {
+   process.stdout.write(chalk.green('Get commits between ' + utils.formatDate(new Date(since)) + ' and ' + utils.formatDate(new Date(until)) + '\n'));
+
+   var options = {
+      since: since,
+      until: until,
+      per_page: 100
+   };
+
+   return new Promise(function (resolve, reject) {
+      gren.repo.listCommits(options, function (err, commits) {
+         if(err) {
+            reject(err);
+         } else {
+            resolve(commitMessages(commits));
+         }
+      });
+   });
+}
+
+/**
+ * Get the blocks of commits based on release dates
  *
  * @since 0.5.0
+ * @private
  * 
- * @param  {Object[]} issues  The list of all the issues
- * @param  {Object} milestone The milestone whom filter the issues
+ * @param  {GithubReleaseNotes} gren
+ * @param  {Array} releaseRanges The array of date ranges
  * 
- * @return {string}
+ * @return {Promise[]}
  */
-function getMilestoneIssues(issues, milestone) {
-   return issues.filter(function(issue) {
-      return issue.milestone !== null && issue.milestone.id === milestone.id;
-   })
-   .map(templateIssue)
-   .join('\n');
+function getCommitBlocks(gren, releaseRanges) {
+   console.log(chalk.blue('\nCreating the body blocks from commits:'));
+
+   return Promise.all(
+      releaseRanges
+         .map(function (range) {
+            return getCommitsBetweenTwo(gren, range[1].date, range[0].date)
+               .then(function (commits) {
+                  return {
+                     id: range[0].id,
+                     release: range[0].name,
+                     date: range[0].date,
+                     body: generateCommitsBody(gren, commits)
+                  };
+               });
+         })
+   );
 }
 
 /**
  * Get all the closed issues from the current repo
  *
  * @since 0.5.0
+ * @private
  * 
  * @param  {GithubReleaseNotes} gren The gren object
  * 
@@ -424,30 +500,9 @@ function getClosedIssues(gren) {
                return !issue.pull_request;
             });
 
-            process.stdout.write(filteredIssues.length + ' issues found');
+            process.stdout.write(filteredIssues.length + ' issues found\n');
 
             resolve(filteredIssues);
-         }
-      });
-   });
-}
-
-/**
- * Get all the closed milestones from the current repo
- *
- * @since 0.5.0
- * 
- * @param  {GithubReleaseNotes} gren The gren object
- * 
- * @return {Promise} The promise which resolves the list of the milestones
- */
-function getClosedMilestones(gren) {
-   return new Promise(function (resolve, reject) {
-      gren.issues.listMilestones({ state: 'closed' }, function (err, milestones) {
-         if(err) {
-            reject(err);
-         } else {
-            resolve(milestones);
          }
       });
    });
@@ -457,6 +512,7 @@ function getClosedMilestones(gren) {
  * Get the blocks of issues based on release dates
  * 
  * @since 0.5.0
+ * @private
  * 
  * @param  {GithubReleaseNotes} gren
  * @param  {Array} releaseRanges The array of date ranges
@@ -480,8 +536,8 @@ function getIssueBlocks(gren, releaseRanges) {
                         })
                         .map(templateIssue)
                         .join('\n') || range[0].body + '\n';
-
                      return {
+                        id: range[0].id,
                         release: range[0].name,
                         date: range[0].date,
                         body: body
@@ -491,37 +547,51 @@ function getIssueBlocks(gren, releaseRanges) {
 }
 
 /**
- * Get the blocks of commits based on release dates
+ * Get the list of all the issues of a specific milestone
  *
  * @since 0.5.0
+ * @private
  * 
- * @param  {GithubReleaseNotes} gren
- * @param  {Array} releaseRanges The array of date ranges
+ * @param  {Object[]} issues  The list of all the issues
+ * @param  {Object} milestone The milestone whom filter the issues
  * 
- * @return {Promise[]}
+ * @return {string}
  */
-function getCommitBlocks(gren, releaseRanges) {
-   console.log('\nCreating the body blocks from commits:');
+function getMilestoneIssues(issues, milestone) {
+   return issues.filter(function(issue) {
+      return issue.milestone !== null && issue.milestone.id === milestone.id;
+   })
+   .map(templateIssue)
+   .join('\n');
+}
 
-   return Promise.all(
-      releaseRanges
-         .map(function (range) {
-            return getCommitsBetweenTwo(gren, range[1].date, range[0].date)
-               .then(function (commits) {
-                  return {
-                     release: range[0].name,
-                     date: range[0].date,
-                     body: generateCommitsBody(gren, commits)
-                  };
-               });
-         })
-   );
+/**
+ * Get all the closed milestones from the current repo
+ *
+ * @since 0.5.0
+ * @private
+ * 
+ * @param  {GithubReleaseNotes} gren The gren object
+ * 
+ * @return {Promise} The promise which resolves the list of the milestones
+ */
+function getClosedMilestones(gren) {
+   return new Promise(function (resolve, reject) {
+      gren.issues.listMilestones({ state: 'closed' }, function (err, milestones) {
+         if(err) {
+            reject(err);
+         } else {
+            resolve(milestones);
+         }
+      });
+   });
 }
 
 /**
  * Create the ranges of release dates
  *
  * @since 0.5.0
+ * @private
  * 
  * @param  {Array} releaseDates The release dates
  * 
@@ -542,6 +612,7 @@ function createReleaseRanges(releaseDates) {
  * Generate a CHANGELOG.md file based on Time and issues
  *
  * @since 0.5.0
+ * @private
  *
  * @return {Promise[]}
  */
@@ -570,6 +641,7 @@ function generateReleaseDatesChangelogBody(gren) {
  * Generate a CHANGELOG.md file based on Milestones and issues
  *
  * @since 0.5.0
+ * @private
  * 
  * @return {Promise}
  */
@@ -607,6 +679,7 @@ function generateMilestonesChangelogBody(gren) {
  * Create the CHANGELOG.md file
  *
  * @since 0.5.0
+ * @private
  * 
  * @param  {string} body
  * 
@@ -621,7 +694,7 @@ function createChangelog(gren, body) {
             throw err;
          }
 
-         process.stdout.write('\n' + chalk.green('The changelog file has been saved!'));
+         process.stdout.write('\n' + chalk.green('The changelog file has been saved!\n'));
 
          return true;
       });
@@ -639,18 +712,23 @@ function createChangelog(gren, body) {
          var newReleaseName = body.match(/(##\s[\w\.]+)/)[0];
 
          if(data.match(newReleaseName)) {
-            console.error(chalk.red('\nThis release is already in the changelog'));
 
             if(gren.options.force) {
-               createFile(body + data.replace(/^(#\s?\w*\n\n)/g, ''));
+               createFile(body + '\n --- \n\n' + data.replace(/^(#\s?\w*\n\n)/g, ''));
+
+               return true;
             } else if(gren.options.override) {
                createFile(body);
+
+               return true;
             }
 
-            return;
+            console.error(chalk.red('\nThis release is already in the changelog\n'));
+
+            return false;
          }
 
-         createFile(body + data.replace(/^(#\s?\w*\n\n)/g, ''));
+         createFile(body + '\n --- \n\n' + data.replace(/^(#\s?\w*\n\n)/g, ''));
       });
 
    }
@@ -664,6 +742,7 @@ function createChangelog(gren, body) {
  * Generate the GithubReleaseNotes getting the options from the git config
  *
  * @since 0.5.0
+ * @private
  * 
  * @return {Promise[]}
  */
@@ -699,6 +778,7 @@ function hasNetwork() {
  * @param  {Object} [options] The options of the module
  *
  * @since  0.1.0
+ * @public
  *
  * @constructor
  */
@@ -706,6 +786,7 @@ function GithubReleaseNotes(options) {
    this.options = Object.assign({}, defaults, options || utils.getBashOptions(process.argv));
    this.repo = null;
    this.issues = null;
+   this.isEditingLatestRelease = false;
 }
 
 /**
@@ -713,12 +794,11 @@ function GithubReleaseNotes(options) {
  * a given module method
  *
  * @since 0.5.0
+ * @public
  * 
  * @param  {function} action
  *
  * @return {Promise} The generated options
- *
- * @todo: check the network first 
  */
 GithubReleaseNotes.prototype.init = function() {
    var gren = this;
@@ -756,30 +836,36 @@ GithubReleaseNotes.prototype.init = function() {
  * Get All the tags, get the dates, get the commits between those dates and prepeare the release
  * 
  * @since  0.1.0
+ * @public
  * 
  * @return {Promise}
  */
 GithubReleaseNotes.prototype.release = function() {
    utils.printTask('Release');
    
+   var loaded;
    var gren = this;
    var dataSource = {
       issues: getIssueBlocks,
       commits: getCommitBlocks
    };
 
-   return getLatestRelease(this)
-      .then(function (release) {
-         return getLastTags(gren, release.tag_name || false);
+   return getLatestTwoRelease(this)
+      .then(function (releases) {
+         return getLastTags(gren, releases || false);
       })
       .then(function (tags) {
          if(tags.length === 1) {
             throw chalk.red('The latest tag is the latest release!');
          }
 
+         loaded = utils.task('Getting the tag dates ranges');
+
          return Promise.all(getTagDates(gren, tags));
       })
-      .then(function (releaseDates) {
+      .then(function (releaseDates) {         
+         loaded();
+
          return dataSource[gren.options.dataSource](gren, createReleaseRanges(releaseDates));
       })
       .then(function (blocks) {
@@ -791,10 +877,6 @@ GithubReleaseNotes.prototype.release = function() {
       .catch(function (error) {
          console.error(error);
 
-         if(gren.options.force) {
-            gren.changelog();
-         }
-
          return gren.options.force;
       });
    
@@ -804,6 +886,7 @@ GithubReleaseNotes.prototype.release = function() {
  * Generate the Changelog based on milestones
  *
  * @since 0.5.0
+ * @public
  * 
  * @param {string} type The type of changelog
  */
