@@ -16,7 +16,6 @@ var defaults = {
    force: false,
    prefix: '',
    prerelease: false,
-   timeMeter: 'releaseDates', // || milestones,
    dateZero: new Date(0),
    override: false
 };
@@ -29,6 +28,7 @@ var defaults = {
  * @private
  * 
  * @param  {GithubReleaseNotes} gren The gren object
+ * @param  {number} releaseId The id of the release to edit
  * @param  {Object} releaseOptions The options to build the release:
  * @example
  * {
@@ -547,47 +547,6 @@ function getIssueBlocks(gren, releaseRanges) {
 }
 
 /**
- * Get the list of all the issues of a specific milestone
- *
- * @since 0.5.0
- * @private
- * 
- * @param  {Object[]} issues  The list of all the issues
- * @param  {Object} milestone The milestone whom filter the issues
- * 
- * @return {string}
- */
-function getMilestoneIssues(issues, milestone) {
-   return issues.filter(function(issue) {
-      return issue.milestone !== null && issue.milestone.id === milestone.id;
-   })
-   .map(templateIssue)
-   .join('\n');
-}
-
-/**
- * Get all the closed milestones from the current repo
- *
- * @since 0.5.0
- * @private
- * 
- * @param  {GithubReleaseNotes} gren The gren object
- * 
- * @return {Promise} The promise which resolves the list of the milestones
- */
-function getClosedMilestones(gren) {
-   return new Promise(function (resolve, reject) {
-      gren.issues.listMilestones({ state: 'closed' }, function (err, milestones) {
-         if(err) {
-            reject(err);
-         } else {
-            resolve(milestones);
-         }
-      });
-   });
-}
-
-/**
  * Create the ranges of release dates
  *
  * @since 0.5.0
@@ -634,44 +593,6 @@ function generateReleaseDatesChangelogBody(gren) {
       })
       .then(function (blocks) {
          return templateChangelog(blocks);
-      });
-}
-
-/**
- * Generate a CHANGELOG.md file based on Milestones and issues
- *
- * @since 0.5.0
- * @private
- * 
- * @return {Promise}
- */
-function generateMilestonesChangelogBody(gren) {
-   return Promise.all([getClosedMilestones(gren), getClosedIssues(gren)])
-      .then(function (data) {
-         var milestones = data[0];
-         var issues = data[1];
-
-         // @TODO: Sort by date rather than reorder it
-         milestones.reverse();
-
-         return milestones.map(function(milestone) {
-            var date = new Date(milestone.closed_at);
-            var stringDate = date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
-
-            return {
-               title: milestone.title,
-               date: stringDate,
-               body: getMilestoneIssues(issues, milestone)
-            };
-         });
-      })
-      .then(function (milestones) {
-         return templateChangelog(milestones);
-      })
-      .catch(function (error) {
-         console.error(error);
-
-         return false;
       });
 }
 
@@ -894,13 +815,8 @@ GithubReleaseNotes.prototype.changelog = function() {
    utils.printTask('\nChangelog');
  
    var gren = this;
-   var changelogs = {
-      releaseDates: generateReleaseDatesChangelogBody,
-      milestones: generateMilestonesChangelogBody
-   };
-   var changelogFunction = changelogs[this.options.timeMeter];
 
-   return changelogFunction(this)
+   return generateReleaseDatesChangelogBody(this)
       .then(function(changelogBody) {
          return createChangelog(gren, changelogBody);
       }).
