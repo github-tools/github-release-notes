@@ -15,6 +15,7 @@ var defaults = {
    draft: false,
    force: false,
    prefix: '',
+   includeMessages: 'commits', // || merges || all
    prerelease: false,
    dateZero: new Date(0),
    override: false
