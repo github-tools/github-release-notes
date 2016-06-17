@@ -1,7 +1,7 @@
 # Github Release Notes
 
 [![npm version](https://badge.fury.io/js/github-release-notes.svg)](https://badge.fury.io/js/github-release-notes)
-[![build](https://travis-ci.org/github-tools/github-release-notes.svg)](https://travis-ci.org/github-tools/github-release-notes)
+[![Build Status](https://travis-ci.org/github-tools/github-release-notes.svg?branch=release-0.5.0)](https://travis-ci.org/github-tools/github-release-notes)
 
 > Node module that generates a release from the latest tag and compiles release notes based on commit messages or closed issues between the last tag and the latest release. It also can create a full changelog or add the latest release notes to the existing changelog file.
 
