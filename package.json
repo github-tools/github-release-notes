@@ -1,11 +1,11 @@
 {
   "name": "github-release-notes",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Node module to publish release notes based on commits between the last two tags.",
   "main": "./github-release-notes.js",
   "scripts": {
     "start": "node github-release-notes.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "grunt test"
   },
   "repository": {
     "type": "git",
@@ -15,8 +15,11 @@
     "Github",
     "Release",
     "notes",
-    "Release",
-    "Tag"
+    "Tag",
+    "Changelog",
+    "Changelog Generator",
+    "Issues",
+    "Commits"
   ],
   "author": "alexcanessa",
   "license": "ISC",
