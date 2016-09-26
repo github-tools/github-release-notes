@@ -8,7 +8,10 @@ var chalk = require('chalk');
 var Promise = Promise || require('es6-promise').Promise;
 var isOnline = require('is-online');
 
+Object.prototype.assign ? Object.prototype.assign : require('object-assign');
+
 var defaults = {
+   tags: false,
    timeWrap: 'latest', // || history
    changelogFilename: 'CHANGELOG.md',
    dataSource: 'issues', // || commits
@@ -53,7 +56,7 @@ function editRelease(gren, releaseId, releaseOptions) {
          if(err) {
             reject(chalk.red(err));
          } else {            
-            console.log(chalk.green('\n\n' + release.name + ' has successfully updated!'));
+            console.log(chalk.green('\n\n' + release.name + ' has been successfully updated!'));
 
             resolve(true);
          }
@@ -123,11 +126,40 @@ function prepareRelease(gren, block) {
       prerelease: gren.options.prerelease
    };
 
-   if(gren.isEditingLatestRelease) {
+   if(block.id) {
       return editRelease(gren, block.id, releaseOptions);
    } else {
       return createRelease(gren, releaseOptions);
    }
+}
+
+/**
+ * Get the tags information from the given ones, and adds
+ * the next one in case only one is given
+ *
+ * @since 0.5.0
+ * @private
+ * 
+ * @param  {Boolean || Array} selectedTags
+ * @param  {[Object]} tags
+ * 
+ * @return {Boolean || Array}
+ */
+function getSelectedTags(optionTags, tags) {  
+   if (!optionTags) {
+      return false;
+   }
+
+   var selectedTags = [].concat(optionTags);
+
+   return tags.filter(function (tag, index) {
+      var isSelectedTag = selectedTags.indexOf(tag.name) !== -1;
+
+      if (isSelectedTag && selectedTags.length === 1 && tags[index + 1]) {
+         selectedTags.push(tags[index + 1].name);
+      }
+      return isSelectedTag;
+   }).slice(0, 2);
 }
 
 /**
@@ -141,7 +173,7 @@ function prepareRelease(gren, block) {
  * @return {Promise}
  */
 function getLastTags(gren, releases) {
-   var loaded = utils.task('Getting latest tag');
+   var loaded = utils.task('Getting tags');
 
    return new Promise(function (resolve, reject) {
       gren.repo.listTags(function (err, tags) {
@@ -150,35 +182,25 @@ function getLastTags(gren, releases) {
          if(err) {
             reject(err);
          } else {
-            var filteredTags = tags.filter(function(tag, index) {
-               var previousTag = releases[0].tag_name ? tag.name === releases[0].tag_name : index === tags.length-1;
+            var filteredTags = 
+               (getSelectedTags(gren.options.tags, tags) || [tags[0], tags[1]])
+               .map(function (tag) {
+                  var tagRelease = releases && releases.filter(function (release) {
+                        return release.tag_name === tag.name;
+                     })[0] || false;
+                  var releaseId = tagRelease ? tagRelease.id : null;
 
-               return index === 0 || previousTag;
-            })
-            .map(function (tag) {
-               return {
-                  tag: tag,
-                  releaseId: releases.filter(function (release) {
-                     return release.tag_name === tag.name;
-                  })[0].id || null
-               };
-            });
+                  return {
+                     tag: tag,
+                     releaseId: releaseId
+                  };
+               });
 
-
-            if(filteredTags.length === 1 && gren.options.override) {
-               gren.isEditingLatestRelease = true;
-
-               var secondTag = {
-                  tag: tags.filter(function (tag) {
-                     return tag.name === releases[1].tag_name;
-                  })[0],
-                  releaseId: releases[1].id
-               };
-               
-               resolve(filteredTags.concat(secondTag));
-            } else {
-               resolve(filteredTags);
+            if(filteredTags[0].releaseId && !gren.options.override) {
+               reject(chalk.red(filteredTags[0].tag.name + ' is a release, use --override flag to override an existing release!'));
             }
+
+            resolve(filteredTags);
          }
       });
    });
@@ -198,7 +220,7 @@ function getLastTags(gren, releases) {
 function getTagDates(gren, tags) {
    return tags.map(function (tag) {
       return new Promise(function (resolve, reject) {
-         gren.repo.getCommit(tag.tag.commit.sha, function (err, commit) {
+         gren.repo.getCommit(tag.tag.commit.sha, function (err, commit) {            
             if(err) {
                reject(err);
             } else {
@@ -232,7 +254,7 @@ function getReleaseDates(gren, releases) {
          date: release.created_at,
          body: release.body || null
       };
-   }).concat(releases.length === 1 || gren.options.timeWrap === 'history' && {id: 0, date: gren.options.dateZero} || []);
+   });
 }
 
 /**
@@ -267,7 +289,7 @@ function getListReleases(gren) {
 }
 
 /**
- * Get the latest two releases
+ * Get the latest releases
  *
  * @since 0.5.0
  * @private
@@ -276,7 +298,7 @@ function getListReleases(gren) {
  *
  * @return {Promise} The promise which resolves the tag name of the release
  */
-function getLatestTwoRelease(gren) {
+function getLastTwoReleases(gren) {
    return getListReleases(gren)
       .then(function(releases) {
          return releases.slice(0, 2);
@@ -360,6 +382,20 @@ function templateChangelog(blocks) {
           blocks
             .map(templateBlock)
             .join('\n\n --- \n\n');
+}
+
+/**
+ * Generate the Changelog issues body template
+ *
+ * @since 0.5.0
+ * @private
+ * 
+ * @param  {Object[]} blocks
+ * 
+ * @return {string}
+ */
+function templateIssueBody(body) {
+   return body.length ? body.join('\n') || range[0].body + '\n' : '*No changelog for this release.*';
 }
 
 /**
@@ -468,7 +504,7 @@ function getCommitBlocks(gren, releaseRanges) {
                      id: range[0].id,
                      release: range[0].name,
                      date: range[0].date,
-                     body: generateCommitsBody(gren, commits)
+                     body: generateCommitsBody(gren, commits) + '\n'
                   };
                });
          })
@@ -535,16 +571,32 @@ function getIssueBlocks(gren, releaseRanges) {
                               Date.parse(range[0].date)
                            );
                         })
-                        .map(templateIssue)
-                        .join('\n') || range[0].body + '\n';
+                        .map(templateIssue);
+
                      return {
                         id: range[0].id,
                         release: range[0].name,
                         date: range[0].date,
-                        body: body
+                        body: templateIssueBody(body)
                      };
                   });
       });
+}
+
+/**
+ * Sort releases by dates
+ *
+ * @since 0.5.0
+ * @private
+ *
+ * @param {Array} releaseDates
+ *
+ * @return {Array}
+ */
+function sortReleasesByDate(releaseDates) {
+   return releaseDates.sort(function (release1, release2) {
+      return new Date(release1.date) < new Date(release2.date) ? 1 : -1;
+   });
 }
 
 /**
@@ -552,17 +604,26 @@ function getIssueBlocks(gren, releaseRanges) {
  *
  * @since 0.5.0
  * @private
- * 
+ *
+ * @param  {GithubReleaseNotes} gren
  * @param  {Array} releaseDates The release dates
  * 
  * @return {Array}
  */
-function createReleaseRanges(releaseDates) {
+function createReleaseRanges(gren, releaseDates) {
    var ranges = [];
    var range = 2;
+   var sortedReleaseDates = sortReleasesByDate(releaseDates);
 
-   for(var i = 0; i<releaseDates.length-1; i++) {
-      ranges.push(releaseDates.slice(i, i+range));
+   if (sortedReleaseDates.length === 1 || gren.options.timeWrap === 'history') {
+      sortedReleaseDates.push({
+         id: 0,
+         date: new Date(0)
+      });
+   }
+
+   for(var i = 0; i<sortedReleaseDates.length-1; i++) {
+      ranges.push(sortedReleaseDates.slice(i, i+range));
    }
 
    return ranges;
@@ -579,7 +640,7 @@ function createReleaseRanges(releaseDates) {
 function generateReleaseDatesChangelogBody(gren) {
    var releaseActions = {
       history: getListReleases,
-      latest: getLatestTwoRelease
+      latest: getLastTwoReleases
    };
    var dataSource = {
       issues: getIssueBlocks,
@@ -588,7 +649,11 @@ function generateReleaseDatesChangelogBody(gren) {
 
    return releaseActions[gren.options.timeWrap](gren)
       .then(function (releases) {
-         var releaseRanges = createReleaseRanges(getReleaseDates(gren, releases));
+         if (releases.length === 0) {
+            throw chalk.red('There are no releases! Run gren to generate release notes');
+         }
+
+         var releaseRanges = createReleaseRanges(gren, getReleaseDates(gren, releases));
 
          return dataSource[gren.options.dataSource](gren, releaseRanges);
       })
@@ -636,7 +701,7 @@ function createChangelog(gren, body) {
          if(data.match(newReleaseName)) {
 
             if(gren.options.force) {
-               createFile(body + '\n --- \n\n' + data.replace(/^(#\s?\w*\n\n)/g, ''));
+               createFile(body + '\n\n --- \n\n' + data.replace(/^(#\s?\w*\n\n)/g, ''));
 
                return true;
             } else if(gren.options.override) {
@@ -682,7 +747,7 @@ function generateOptions() {
  * @since 0.5.0
  * @private
  * 
- * @return {boolean} If there is connectivity or not
+ * @return {Promise}
  */
 function hasNetwork() {
    return new Promise(function (resolve, reject) {
@@ -706,6 +771,7 @@ function hasNetwork() {
  */
 function GithubReleaseNotes(options) {
    this.options = Object.assign({}, defaults, options || utils.getBashOptions(process.argv));
+   this.options.tags = this.options.tags && this.options.tags.split(',');
    this.repo = null;
    this.issues = null;
    this.isEditingLatestRelease = false;
@@ -772,23 +838,22 @@ GithubReleaseNotes.prototype.release = function() {
       commits: getCommitBlocks
    };
 
-   return getLatestTwoRelease(this)
+   return getListReleases(this)
       .then(function (releases) {
-         return getLastTags(gren, releases || false);
+         return getLastTags(gren, releases.length ? releases : false);
       })
-      .then(function (tags) {
-         if(tags.length === 1) {
-            throw chalk.red('The latest tag is the latest release!');
-         }
-
+      .then(function (tags) {         
          loaded = utils.task('Getting the tag dates ranges');
 
          return Promise.all(getTagDates(gren, tags));
       })
-      .then(function (releaseDates) {         
+      .then(function (releaseDates) {       
          loaded();
 
-         return dataSource[gren.options.dataSource](gren, createReleaseRanges(releaseDates));
+         return dataSource[gren.options.dataSource](
+            gren,
+            createReleaseRanges(gren, releaseDates)
+         );
       })
       .then(function (blocks) {
          return prepareRelease(gren, blocks[0]);
