@@ -11,6 +11,10 @@
     "type": "git",
     "url": "git+https://github.com/alexcanessa/github-release-notes.git"
   },
+  "preferGlobal": "true",
+  "bin": {
+    "gren": "bin/gren.js"
+  },
   "keywords": [
     "Github",
     "Release",
@@ -31,7 +35,8 @@
     "chalk": "^1.1.3",
     "es6-promise": "^3.2.1",
     "github-api": "^2.1.0",
-    "is-online": "^5.1.1"
+    "is-online": "^5.1.1",
+    "object-assign": "^4.1.0"
   },
   "devDependencies": {
     "grunt": "^1.0.1",
