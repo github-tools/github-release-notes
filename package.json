@@ -39,9 +39,13 @@
     "object-assign": "^4.1.0"
   },
   "devDependencies": {
+    "eslint": "^3.6.0",
+    "eslint-config-standard": "^6.0.1",
+    "eslint-plugin-promise": "^2.0.1",
+    "eslint-plugin-standard": "^2.0.0",
     "grunt": "^1.0.1",
-    "grunt-contrib-jshint": "^1.0.0",
     "grunt-contrib-nodeunit": "^1.0.0",
+    "grunt-eslint": "^19.0.0",
     "grunt-jsdoc": "^2.1.0",
     "ink-docstrap": "^1.2.1"
   }
