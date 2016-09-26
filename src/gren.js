@@ -97,7 +97,7 @@ function createRelease(gren, releaseOptions) {
             ));
             reject(false);
          } else {            
-            console.log(chalk.green('\n\n' + release.name + ' has successfully created!'));
+            console.log(chalk.green('\n\n' + release.name + ' has been successfully created!'));
 
             resolve(true);
          }
@@ -869,7 +869,7 @@ GithubReleaseNotes.prototype.release = function() {
 };
 
 /**
- * Generate the Changelog based on milestones
+ * Generate the Changelog
  *
  * @since 0.5.0
  * @public
