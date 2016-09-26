@@ -7,8 +7,7 @@ var fs = require('fs');
 var chalk = require('chalk');
 var Promise = Promise || require('es6-promise').Promise;
 var isOnline = require('is-online');
-
-Object.prototype.assign ? Object.prototype.assign : require('object-assign');
+var ObjectAssign = require('object-assign');
 
 var defaults = {
    tags: false,
@@ -394,8 +393,8 @@ function templateChangelog(blocks) {
  * 
  * @return {string}
  */
-function templateIssueBody(body) {
-   return body.length ? body.join('\n') || range[0].body + '\n' : '*No changelog for this release.*';
+function templateIssueBody(body, rangeBody) {
+   return body.length ? body.join('\n') || rangeBody + '\n' : '*No changelog for this release.*';
 }
 
 /**
@@ -577,7 +576,7 @@ function getIssueBlocks(gren, releaseRanges) {
                         id: range[0].id,
                         release: range[0].name,
                         date: range[0].date,
-                        body: templateIssueBody(body)
+                        body: templateIssueBody(body, range[0].body)
                      };
                   });
       });
@@ -770,7 +769,7 @@ function hasNetwork() {
  * @constructor
  */
 function GithubReleaseNotes(options) {
-   this.options = Object.assign({}, defaults, options || utils.getBashOptions(process.argv));
+   this.options = ObjectAssign({}, defaults, options || utils.getBashOptions(process.argv));
    this.options.tags = this.options.tags && this.options.tags.split(',');
    this.repo = null;
    this.issues = null;
@@ -800,7 +799,7 @@ GithubReleaseNotes.prototype.init = function() {
          }
       })
       .then(function (optionData) {
-         gren.options = Object.assign(...optionData, gren.options);
+         gren.options = ObjectAssign(...optionData, gren.options);
 
          if(!gren.options.token) {
             throw chalk.red('You need to provide the token');
