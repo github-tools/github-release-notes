@@ -96,7 +96,7 @@ function createRelease(gren, releaseOptions) {
                responseText.errors[0].code
             ));
             reject(false);
-         } else {            
+         } else {
             console.log(chalk.green('\n\n' + release.name + ' has been successfully created!'));
 
             resolve(true);
