@@ -88,8 +88,10 @@ function getBashOptions(args) {
 
    for(var i=2;i<args.length;i++) {
       var paramArray = args[i].split('=');
-
-      settings[dashToCamelCase(paramArray[0].replace('--', ''))] = paramArray[1] || true;
+      var key = paramArray[0].replace('--', '');
+      var value = paramArray[1];
+      
+      settings[dashToCamelCase(key)] =  value || true;
    }
 
    return settings;
