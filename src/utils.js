@@ -1,6 +1,6 @@
 'use strict';
 
-let chalk = require('chalk');
+var chalk = require('chalk');
 
 /**
 * Print a task name in a custom format
@@ -24,15 +24,15 @@ function printTask(name) {
 * @return {Function}          The function to be fired when is loaded
 */
 function task(taskName) {
-    let time = process.hrtime();
+    var time = process.hrtime();
     process.stdout.write(chalk.green(taskName) + ': .');
 
-    let si = setInterval(function() {
+    var si = setInterval(function() {
         process.stdout.write('.');
     }, 100);
 
     return function(message) {
-        let diff = process.hrtime(time);
+        var diff = process.hrtime(time);
 
         process.stdout.write(message || '' + chalk.yellow(' (' + ((diff[0] * 1e9 + diff[1]) * 1e-9).toFixed(2) + ' secs)\n'));
         clearInterval(si);
@@ -84,12 +84,12 @@ function dashToCamelCase(value) {
 * @return {Object}     The object containg the key/value options
 */
 function getBashOptions(args) {
-    let settings = {};
+    var settings = {};
 
-    for (let i = 2; i < args.length; i++) {
-        let paramArray = args[i].split('=');
-        let key = paramArray[0].replace('--', '');
-        let value = paramArray[1];
+    for (var i = 2; i < args.length; i++) {
+        var paramArray = args[i].split('=');
+        var key = paramArray[0].replace('--', '');
+        var value = paramArray[1];
 
         settings[dashToCamelCase(key)] = value || true;
     }

@@ -1,8 +1,8 @@
 'use strict';
 
-let exec = require('child_process').exec;
-let chalk = require('chalk');
-let Promise = Promise || require('es6-promise').Promise;
+var exec = require('child_process').exec;
+var chalk = require('chalk');
+var Promise = Promise || require('es6-promise').Promise;
 
 /**
 * Execute a command in the bash and run a callback
@@ -62,11 +62,11 @@ function user(callback) {
 */
 function repo(callback) {
     return executeCommand('git config remote.origin.url', function(repo) {
-        let repoPath = repo
+        var repoPath = repo
         .replace(/([^:]*:)|\.[^.]+$/g, '')
         .split('/');
-        let user = repoPath[0];
-        let name = repoPath[1];
+        var user = repoPath[0];
+        var name = repoPath[1];
 
         return {
             username: user,
