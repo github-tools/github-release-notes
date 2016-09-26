@@ -139,10 +139,10 @@ function prepareRelease(gren, block) {
  * @since 0.5.0
  * @private
  * 
- * @param  {Boolean || Array} selectedTags
- * @param  {[Object]} tags
+ * @param  {Boolean|Array} selectedTags
+ * @param  {Object[]} tags
  * 
- * @return {Boolean || Array}
+ * @return {Boolean|Array}
  */
 function getSelectedTags(optionTags, tags) {  
    if (!optionTags) {
