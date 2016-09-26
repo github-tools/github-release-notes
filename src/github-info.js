@@ -27,7 +27,7 @@ function executeCommand(command, callback) {
    })
    .then(callback)
    .catch(function (error) {
-      throw chalk.red(error) + chalk.yellow('Make sure you\'re running the command from the repo folder');
+      throw chalk.red(error) + chalk.yellow('Make sure you\'re running the command from the repo folder, or you using the --username and --repo flags.');
    });
 }
 

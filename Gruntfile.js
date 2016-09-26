@@ -20,7 +20,7 @@ module.exports = function(grunt) {
 		},
 		jsdoc : {
 			dist : {
-				src: ['CHANGELOG.md', 'src/*.js'],
+				src: ['README.md', 'src/*.js'],
 				readme: 'README.md',
 				version: true,
 				options: {

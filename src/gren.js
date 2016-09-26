@@ -732,11 +732,11 @@ function createChangelog(gren, body) {
  * 
  * @return {Promise[]}
  */
-function generateOptions() {
+function generateOptions(options) {
    return Promise.all([
-      githubInfo.user(),
-      githubInfo.repo(),
-      githubInfo.token()
+      options.user ? Promise.resolve(options.user) : githubInfo.user(),
+      options.repo ? Promise.resolve(options.repo) : githubInfo.repo(),
+      options.token ? Promise.resolve(options.token) : githubInfo.token()
    ]);
 }
 
@@ -793,7 +793,7 @@ GithubReleaseNotes.prototype.init = function() {
    return hasNetwork()
       .then(function (success) {
          if(success) {
-            return generateOptions(gren, gren.options);
+            return generateOptions(gren.options);
          } else {
             throw chalk.red('You need to have network connectivity');
          }
