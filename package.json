@@ -1,22 +1,29 @@
 {
   "name": "github-release-notes",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Node module to publish release notes based on commits between the last two tags.",
   "main": "./github-release-notes.js",
   "scripts": {
     "start": "node github-release-notes.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "grunt test"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/alexcanessa/github-release-notes.git"
   },
+  "preferGlobal": "true",
+  "bin": {
+    "gren": "bin/gren.js"
+  },
   "keywords": [
     "Github",
     "Release",
     "notes",
-    "Release",
-    "Tag"
+    "Tag",
+    "Changelog",
+    "Changelog Generator",
+    "Issues",
+    "Commits"
   ],
   "author": "alexcanessa",
   "license": "ISC",
@@ -25,6 +32,21 @@
   },
   "homepage": "https://github.com/alexcanessa/github-release-notes#readme",
   "dependencies": {
-    "github-api": "git+https://github.com/alexcanessa/github.git"
+    "chalk": "^1.1.3",
+    "es6-promise": "^3.2.1",
+    "github-api": "^2.1.0",
+    "is-online": "^5.1.1",
+    "object-assign": "^4.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^3.6.0",
+    "eslint-config-standard": "^6.0.1",
+    "eslint-plugin-promise": "^2.0.1",
+    "eslint-plugin-standard": "^2.0.0",
+    "grunt": "^1.0.1",
+    "grunt-contrib-nodeunit": "^1.0.0",
+    "grunt-eslint": "^19.0.0",
+    "grunt-jsdoc": "^2.1.0",
+    "ink-docstrap": "^1.2.1"
   }
 }
