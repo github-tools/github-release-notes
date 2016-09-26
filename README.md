@@ -135,4 +135,4 @@ The usage would then be:
 gren --time-wrap=history --override
 ```
 
-To see a full example of the changelog here [CHANGELOG.md](#)
+To see a full example of the changelog here [CHANGELOG.md](https://github.com/github-tools/github-release-notes/blob/develop/CHANGELOG.md)
