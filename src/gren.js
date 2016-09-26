@@ -198,6 +198,10 @@ function getLastTags(gren, releases) {
                     reject(chalk.red(filteredTags[0].tag.name + ' is a release, use --override flag to override an existing release!'));
                 }
 
+                console.log('Tags found: ' + filteredTags.map(function (tag) {
+                    return tag.tag.name;
+                }).join(', '));
+
                 resolve(filteredTags);
             }
         });
@@ -518,15 +522,17 @@ function getCommitBlocks(gren, releaseRanges) {
  * @private
  *
  * @param  {GithubReleaseNotes} gren The gren object
+ * @param  {Array} releaseRanges The array of date ranges
  *
  * @return {Promise} The promise which resolves the list of the issues
  */
-function getClosedIssues(gren) {
+function getClosedIssues(gren, releaseRanges) {
     var loaded = utils.task('Getting all closed issues');
 
     return new Promise(function(resolve, reject) {
         gren.issues.listIssues({
-            state: 'closed'
+            state: 'closed',
+            since: releaseRanges[0][1].date
         }, function(err, issues) {
             loaded();
 
@@ -559,7 +565,7 @@ function getClosedIssues(gren) {
 function getIssueBlocks(gren, releaseRanges) {
     console.log('\nCreating the body blocks from issues:');
 
-    return getClosedIssues(gren)
+    return getClosedIssues(gren, releaseRanges)
         .then(function(issues) {
             return releaseRanges
                 .map(function(range) {
