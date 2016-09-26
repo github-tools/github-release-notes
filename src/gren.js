@@ -827,7 +827,7 @@ GithubReleaseNotes.prototype.init = function() {
  * @return {Promise}
  */
 GithubReleaseNotes.prototype.release = function() {
-    utils.printTask('Release');
+    utils.printTask('\nRelease');
 
     var loaded;
     var gren = this;
