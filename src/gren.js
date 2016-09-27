@@ -9,6 +9,9 @@ var chalk = require('chalk');
 var Promise = Promise || require('es6-promise').Promise;
 var isOnline = require('is-online');
 var ObjectAssign = require('deep-assign');
+var templateConfig = require('./templates.json');
+var configFileName = process.cwd() + '/gren.json';
+var configFile = fs.existsSync(configFileName) ? require(`${process.cwd()}/gren.json`) : {};
 
 var defaults = {
     tags: false,
@@ -21,7 +24,8 @@ var defaults = {
     includeMessages: 'commits', // || merges || all
     prerelease: false,
     dateZero: new Date(0),
-    override: false
+    override: false,
+    template: templateConfig
 };
 
 /**
@@ -318,10 +322,10 @@ function getLastTwoReleases(gren) {
  *
  * @return {string}
  */
-function templateCommits(message) {
+function templateCommits(gren, message) {
     return template.generate({
         '{{message}}': message
-    }, template.options.commit);
+    }, gren.options.template.commit);
 }
 
 /**
@@ -334,15 +338,15 @@ function templateCommits(message) {
  *
  * @return {string}
  */
-function templateLabels(issue) {
+function templateLabels(gren, issue) {
     return issue.labels.length ? issue.labels.map(function(label) {
         return template.generate({
             '{{label}}': label.name
-        }, template.options.issueInfo['{{label}}']);
+        }, gren.options.template.issueInfo['{{label}}']);
     })
     .join('') : template.generate({
         '{{label}}': 'closed'
-    }, template.options.issueInfo['{{label}}']);
+    }, gren.options.template.issueInfo['{{label}}']);
 }
 
 /**
@@ -355,12 +359,12 @@ function templateLabels(issue) {
  *
  * @return {string}
  */
-function templateBlock(block) {
+function templateBlock(gren, block) {
     var date = new Date(block.date);
     var releaseTemplate = template.generate({
         '{{release}}': block.release,
         '{{date}}': utils.formatDate(date)
-    }, template.generate(template.options.releaseInfo, template.options.release));
+    }, template.generate(gren.options.template.releaseInfo, gren.options.template.release));
 
     return releaseTemplate + '\n\n' +
         block.body;
@@ -376,14 +380,14 @@ function templateBlock(block) {
  *
  * @return {string}
  */
-function templateIssue(issue) {
-    var issueTemplate = template.generate(template.options.issueInfo, template.options.issue);
+function templateIssue(gren, issue) {
+    var issueTemplate = template.generate(gren.options.template.issueInfo, gren.options.template.issue);
 
     return template.generate({
-        '{{labels}}': templateLabels(issue),
+        '{{labels}}': templateLabels(gren, issue),
         '{{name}}': template.generate({
             '{{name}}': issue.title
-        }, template.options.issueInfo['{{name}}']),
+        }, gren.options.template.issueInfo['{{name}}']),
         '{{text}}': '#' + issue.number,
         '{{url}}': issue.html_url
     }, issueTemplate);
@@ -399,10 +403,10 @@ function templateIssue(issue) {
  *
  * @return {string}
  */
-function templateChangelog(blocks) {
+function templateChangelog(gren, blocks) {
     return '# Changelog\n\n' +
         blocks
-        .map(templateBlock)
+        .map(templateBlock.bind(null, gren))
         .join('\n\n --- \n\n');
 }
 
@@ -453,7 +457,7 @@ function generateCommitsBody(gren, messages) {
 
             return filterMap.commits(message);
         })
-        .map(templateCommits)
+        .map(templateCommits.bind(null, gren))
         .join('\n');
 }
 
@@ -597,7 +601,7 @@ function getIssueBlocks(gren, releaseRanges) {
                                 Date.parse(range[0].date)
                             );
                         })
-                        .map(templateIssue);
+                        .map(templateIssue.bind(null, gren));
 
                     return {
                         id: range[0].id,
@@ -684,7 +688,7 @@ function generateReleaseDatesChangelogBody(gren) {
             return dataSource[gren.options.dataSource](gren, releaseRanges);
         })
         .then(function(blocks) {
-            return templateChangelog(blocks);
+            return templateChangelog(gren, blocks);
         });
 }
 
@@ -788,7 +792,7 @@ function hasNetwork() {
  * @constructor
  */
 function GithubReleaseNotes(options) {
-    this.options = ObjectAssign({}, defaults, options || utils.getBashOptions(process.argv));
+    this.options = ObjectAssign({}, defaults, configFile, options || utils.getBashOptions(process.argv));
     this.options.tags = this.options.tags && this.options.tags.split(',');
     this.repo = null;
     this.issues = null;
