@@ -341,8 +341,8 @@ function templateLabels(issue) {
         }, template.options.issueInfo['{{label}}']);
     })
     .join('') : template.generate({
-                    '{{label}}': 'closed'
-                }, template.options.issueInfo['{{label}}']);
+        '{{label}}': 'closed'
+    }, template.options.issueInfo['{{label}}']);
 }
 
 /**
