@@ -6,6 +6,8 @@
 
 > Node module that generates release notes based on commit messages or closed issues between tags. It also can create a full changelog or add the latest release notes to the existing changelog file.
 
+If you want to include it in a task, you can use [grunt-github-release-notes](https://github.com/github-tools/grunt-github-release-notes)
+
 ## Installation
 
 Install `github-release-notes` via npm:
