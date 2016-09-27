@@ -2,12 +2,13 @@
 
 var utils = require('./utils');
 var githubInfo = require('./github-info');
+var template = require('./template');
 var Github = require('github-api');
 var fs = require('fs');
 var chalk = require('chalk');
 var Promise = Promise || require('es6-promise').Promise;
 var isOnline = require('is-online');
-var ObjectAssign = require('object-assign');
+var ObjectAssign = require('deep-assign');
 
 var defaults = {
     tags: false,
@@ -24,7 +25,7 @@ var defaults = {
 };
 
 /**
- * Edit arelease from a given tag (in the options)
+ * Edit a release from a given tag (in the options)
  *
  * @since 0.5.0
  * @private
@@ -198,7 +199,7 @@ function getLastTags(gren, releases) {
                     reject(chalk.red(filteredTags[0].tag.name + ' is a release, use --override flag to override an existing release!'));
                 }
 
-                console.log('Tags found: ' + filteredTags.map(function (tag) {
+                console.log('Tags found: ' + filteredTags.map(function(tag) {
                     return tag.tag.name;
                 }).join(', '));
 
@@ -318,7 +319,13 @@ function getLastTwoReleases(gren) {
  * @return {string}
  */
 function templateCommits(message) {
-    return '- ' + message;
+    console.log(template.generate({
+        '{{message}}': message
+    }, template.options.commit));
+
+    return template.generate({
+        '{{message}}': message
+    }, template.options.commit);
 }
 
 /**
@@ -332,10 +339,14 @@ function templateCommits(message) {
  * @return {string}
  */
 function templateLabels(issue) {
-    return issue.labels ? issue.labels.map(function(label) {
-        return '[**' + label.name + '**] ';
+    return issue.labels.length ? issue.labels.map(function(label) {
+        return template.generate({
+            '{{label}}': label.name
+        }, template.options.issueInfo['{{label}}']);
     })
-        .join('') : '[closed]';
+    .join('') : template.generate({
+                    '{{label}}': 'closed'
+                }, template.options.issueInfo['{{label}}']);
 }
 
 /**
@@ -350,8 +361,12 @@ function templateLabels(issue) {
  */
 function templateBlock(block) {
     var date = new Date(block.date);
+    var releaseTemplate = template.generate({
+        '{{release}}': block.release,
+        '{{date}}': utils.formatDate(date)
+    }, template.generate(template.options.releaseInfo, template.options.release));
 
-    return '## ' + block.release + ' (' + utils.formatDate(date) + ')' + '\n\n' +
+    return releaseTemplate + '\n\n' +
         block.body;
 }
 
@@ -366,7 +381,16 @@ function templateBlock(block) {
  * @return {string}
  */
 function templateIssue(issue) {
-    return '- ' + templateLabels(issue) + issue.title + ' [#' + issue.number + '](' + issue.html_url + ')';
+    var issueTemplate = template.generate(template.options.issueInfo, template.options.issue);
+
+    return template.generate({
+        '{{labels}}': templateLabels(issue),
+        '{{name}}': template.generate({
+            '{{name}}': issue.title
+        }, template.options.issueInfo['{{name}}']),
+        '{{text}}': '#' + issue.number,
+        '{{url}}': issue.html_url
+    }, issueTemplate);
 }
 
 /**
@@ -499,6 +523,8 @@ function getCommitsBetweenTwo(gren, since, until) {
 function getCommitBlocks(gren, releaseRanges) {
     console.log(chalk.blue('\nCreating the body blocks from commits:'));
 
+    console.log(releaseRanges);
+
     return Promise.all(
         releaseRanges
         .map(function(range) {
@@ -532,7 +558,7 @@ function getClosedIssues(gren, releaseRanges) {
     return new Promise(function(resolve, reject) {
         gren.issues.listIssues({
             state: 'closed',
-            since: releaseRanges[0][1].date
+            since: releaseRanges[releaseRanges.length - 1][1].date
         }, function(err, issues) {
             loaded();
 
@@ -601,7 +627,7 @@ function getIssueBlocks(gren, releaseRanges) {
  */
 function sortReleasesByDate(releaseDates) {
     return releaseDates.sort(function(release1, release2) {
-        return new Date(release1.date) < new Date(release2.date) ? 1 : -1;
+        return new Date(release2.date) - new Date(release1.date);
     });
 }
 
