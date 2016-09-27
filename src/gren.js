@@ -397,7 +397,7 @@ function templateChangelog(blocks) {
  * @return {string}
  */
 function templateIssueBody(body, rangeBody) {
-    return body.length ? body.join('\n') || rangeBody + '\n' : '*No changelog for this release.*';
+    return (body ? body.join('\n') : rangeBody || '*No changelog for this release.*') + '\n';
 }
 
 /**
