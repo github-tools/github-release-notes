@@ -319,10 +319,6 @@ function getLastTwoReleases(gren) {
  * @return {string}
  */
 function templateCommits(message) {
-    console.log(template.generate({
-        '{{message}}': message
-    }, template.options.commit));
-
     return template.generate({
         '{{message}}': message
     }, template.options.commit);
@@ -522,8 +518,6 @@ function getCommitsBetweenTwo(gren, since, until) {
  */
 function getCommitBlocks(gren, releaseRanges) {
     console.log(chalk.blue('\nCreating the body blocks from commits:'));
-
-    console.log(releaseRanges);
 
     return Promise.all(
         releaseRanges
