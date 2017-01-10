@@ -11,7 +11,7 @@ var isOnline = require('is-online');
 var ObjectAssign = require('deep-assign');
 var templateConfig = require('./templates.json');
 var configFileName = process.cwd() + '/gren.json';
-var configFile = fs.existsSync(configFileName) ? require(`${process.cwd()}/gren.json`) : {};
+var configFile = fs.existsSync(configFileName) ? require(process.cwd() + '/gren.json') : {};
 
 var defaults = {
     tags: false,
@@ -324,7 +324,7 @@ function getLastTwoReleases(gren) {
  */
 function templateCommits(gren, message) {
     return template.generate({
-        '{{message}}': message
+        message: message
     }, gren.options.template.commit);
 }
 
@@ -341,12 +341,12 @@ function templateCommits(gren, message) {
 function templateLabels(gren, issue) {
     return issue.labels.length ? issue.labels.map(function(label) {
         return template.generate({
-            '{{label}}': label.name
-        }, gren.options.template.issueInfo['{{label}}']);
+            label: label.name
+        }, gren.options.template.issueInfo.label);
     })
     .join('') : template.generate({
-        '{{label}}': 'closed'
-    }, gren.options.template.issueInfo['{{label}}']);
+        label: 'closed'
+    }, gren.options.template.issueInfo.label);
 }
 
 /**
@@ -362,8 +362,8 @@ function templateLabels(gren, issue) {
 function templateBlock(gren, block) {
     var date = new Date(block.date);
     var releaseTemplate = template.generate({
-        '{{release}}': block.release,
-        '{{date}}': utils.formatDate(date)
+        release: block.release,
+        date: utils.formatDate(date)
     }, template.generate(gren.options.template.releaseInfo, gren.options.template.release));
 
     return releaseTemplate + '\n\n' +
@@ -382,14 +382,15 @@ function templateBlock(gren, block) {
  */
 function templateIssue(gren, issue) {
     var issueTemplate = template.generate(gren.options.template.issueInfo, gren.options.template.issue);
+    var nameTemplate = template.generate({
+        name: issue.title
+    }, gren.options.template.issueInfo.name);
 
     return template.generate({
-        '{{labels}}': templateLabels(gren, issue),
-        '{{name}}': template.generate({
-            '{{name}}': issue.title
-        }, gren.options.template.issueInfo['{{name}}']),
-        '{{text}}': '#' + issue.number,
-        '{{url}}': issue.html_url
+        labels: templateLabels(gren, issue),
+        name: nameTemplate,
+        text: '#' + issue.number,
+        url: issue.html_url
     }, issueTemplate);
 }
 

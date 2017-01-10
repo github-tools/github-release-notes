@@ -2,14 +2,14 @@
     "commit": "- {{message}}",
     "issue": "- {{labels}} {{name}} {{link}}",
     "issueInfo": {
-        "{{labels}}": "{{labels}}",
-        "{{label}}": "[**{{label}}**]",
-        "{{name}}": "{{name}}",
-        "{{link}}": "[{{text}}]({{url}})"
+        "labels": "{{labels}}",
+        "label": "[**{{label}}**]",
+        "name": "{{name}}",
+        "link": "[{{text}}]({{url}})"
     },
     "release": "## {{release}} {{date}}",
     "releaseInfo": {
-        "{{release}}": "{{release}}",
-        "{{date}}": "({{date}})"
+        "release": "{{release}}",
+        "date": "({{date}})"
     }
 }
