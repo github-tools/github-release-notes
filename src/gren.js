@@ -6,7 +6,7 @@ var Github = require('github-api');
 var fs = require('fs');
 var chalk = require('chalk');
 var Promise = Promise || require('es6-promise').Promise;
-var isOnline = require('is-online');
+var connectivity = require('connectivity');
 var ObjectAssign = require('object-assign');
 
 var defaults = {
@@ -749,12 +749,12 @@ function generateOptions(options) {
  */
 function hasNetwork() {
     return new Promise(function(resolve, reject) {
-        isOnline(function(err, online) {
-            if (err) {
-                reject(chalk.red(err));
+        connectivity(function(isOnline) {
+            if (!isOnline) {
+                reject(chalk.red('You need to have network connectivity'));
             }
 
-            resolve(online);
+            resolve(isOnline);
         });
     });
 }
@@ -790,12 +790,8 @@ GithubReleaseNotes.prototype.init = function() {
     var gren = this;
 
     return hasNetwork()
-        .then(function(success) {
-            if (success) {
-                return generateOptions(gren.options);
-            } else {
-                throw chalk.red('You need to have network connectivity');
-            }
+        .then(function() {
+            return generateOptions(gren.options);
         })
         .then(function(optionData) {
             gren.options = ObjectAssign(...optionData, gren.options);
@@ -810,8 +806,6 @@ GithubReleaseNotes.prototype.init = function() {
 
             gren.repo = githubApi.getRepo(gren.options.username, gren.options.repo);
             gren.issues = githubApi.getIssues(gren.options.username, gren.options.repo);
-
-            return true;
         })
         .catch(function(error) {
             console.log(error);
