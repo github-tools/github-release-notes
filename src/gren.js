@@ -198,7 +198,7 @@ function getLastTags(gren, releases) {
                     reject(chalk.red(filteredTags[0].tag.name + ' is a release, use --override flag to override an existing release!'));
                 }
 
-                console.log('Tags found: ' + filteredTags.map(function (tag) {
+                console.log('Tags found: ' + filteredTags.map(function(tag) {
                     return tag.tag.name;
                 }).join(', '));
 
@@ -698,7 +698,7 @@ function createChangelog(gren, body) {
                 return;
             }
 
-            var newReleaseName = body.match(/(##\s[\w\.]+)/)[0];
+            var newReleaseName = body.match(/(##\s[\w\s.]+)/)[0];
 
             if (data.match(newReleaseName)) {
                 if (gren.options.force) {
