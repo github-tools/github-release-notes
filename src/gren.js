@@ -310,14 +310,15 @@ function templateCommits(gren, message) {
  * @return {string}
  */
 function templateLabels(gren, issue) {
-    return issue.labels.length ? issue.labels.map(function(label) {
+    if (!issue.labels.length) {
+        issue.labels.push({name: 'closed'});
+    }
+
+    return issue.labels.map(function(label) {
         return template.generate({
             label: label.name
         }, gren.options.template.issueInfo.label);
-    })
-    .join('') : template.generate({
-        label: 'closed'
-    }, gren.options.template.issueInfo.label);
+    }).join('');
 }
 
 /**
