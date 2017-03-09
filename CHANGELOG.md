@@ -15,7 +15,6 @@
 - [**enhancement**] Add the possibility to create a CHANGELOG file [#7](https://github.com/github-tools/github-release-notes/issues/7)
 - [**duplicate**] Tag name in the options [#2](https://github.com/github-tools/github-release-notes/issues/2)
 
-
  --- 
 
 ## v0.4.0 (03/03/2016)
