@@ -10,5 +10,7 @@ gren.init()
         return gren[action || 'release']();
     })
     .catch(function(error) {
+        utils.clearTasks(gren);
+
         console.error(error);
     });

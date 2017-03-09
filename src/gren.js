@@ -45,7 +45,7 @@ var defaults = {
  * @return {Promise}
  */
 function editRelease(gren, releaseId, releaseOptions) {
-    var loaded = utils.task('Updating latest release');
+    var loaded = utils.task(gren, 'Updating latest release');
 
     return gren.repo.updateRelease(releaseId, releaseOptions)
         .then(function(response) {
@@ -56,11 +56,6 @@ function editRelease(gren, releaseId, releaseOptions) {
             console.log(chalk.green('\n\n' + release.name + ' has been successfully updated!'));
 
             return release;
-        })
-        .catch(function(err) {
-            loaded();
-
-            throw err;
         });
 }
 
@@ -73,7 +68,7 @@ function editRelease(gren, releaseId, releaseOptions) {
  * @param  {GithubReleaseNotes} gren The gren object
  * @param  {Object} releaseOptions The options to build the release:
  * @example {
- *   "tag_name": "v1.0.0",
+ *   "tag_name": "1.0.0",
  *   "target_commitish": "master",
  *   "name": "v1.0.0",
  *   "body": "Description of the release",
@@ -84,7 +79,7 @@ function editRelease(gren, releaseId, releaseOptions) {
  * @return {Promise}
  */
 function createRelease(gren, releaseOptions) {
-    var loaded = utils.task('Preparing the release');
+    var loaded = utils.task(gren, 'Preparing the release');
 
     return gren.repo.createRelease(releaseOptions)
         .then(function(response) {
@@ -94,16 +89,6 @@ function createRelease(gren, releaseOptions) {
             console.log(chalk.green('\n\n' + release.name + ' has been successfully created!'));
 
             return release;
-        })
-        .catch(function(err) {
-            loaded();
-
-            var responseText = JSON.parse(err.request.responseText);
-
-            throw new Error(chalk.red(
-                responseText.message + '\n' +
-                responseText.errors[0].code
-            ));
         });
 }
 
@@ -121,7 +106,7 @@ function createRelease(gren, releaseOptions) {
 function prepareRelease(gren, block) {
     var releaseOptions = {
         tag_name: block.release,
-        name: gren.options.prefix + block.release,
+        name: block.name,
         body: block.body,
         draft: gren.options.draft,
         prerelease: gren.options.prerelease
@@ -129,9 +114,9 @@ function prepareRelease(gren, block) {
 
     if (block.id) {
         return editRelease(gren, block.id, releaseOptions);
-    } else {
-        return createRelease(gren, releaseOptions);
     }
+
+    return createRelease(gren, releaseOptions);
 }
 
 /**
@@ -174,7 +159,7 @@ function getSelectedTags(optionTags, tags) {
  * @return {Promise}
  */
 function getLastTags(gren, releases) {
-    var loaded = utils.task('Getting tags');
+    var loaded = utils.task(gren, 'Getting tags');
 
     return gren.repo.listTags()
         .then(function(response) {
@@ -203,11 +188,6 @@ function getLastTags(gren, releases) {
             }).join(', '));
 
             return filteredTags;
-        })
-        .catch(function(err) {
-            loaded();
-
-            throw new Error(err);
         });
 }
 
@@ -268,7 +248,7 @@ function getReleaseDates(gren, releases) {
  * @return {Promise} The promise which resolves an array of releases
  */
 function getListReleases(gren) {
-    var loaded = utils.task('Getting the list of releases');
+    var loaded = utils.task(gren, 'Getting the list of releases');
 
     return gren.repo.listReleases()
         .then(function(response) {
@@ -279,11 +259,6 @@ function getListReleases(gren) {
             process.stdout.write(releases.length + ' releases found\n');
 
             return releases;
-        })
-        .catch(function(err) {
-            loaded();
-
-            throw new Error(err);
         });
 }
 
@@ -348,7 +323,7 @@ function templateLabels(issue) {
 function templateBlock(block) {
     var date = new Date(block.date);
 
-    return '## ' + block.release + ' (' + utils.formatDate(date) + ')' + '\n\n' +
+    return '## ' + block.name + ' (' + utils.formatDate(date) + ')' + '\n\n' +
         block.body;
 }
 
@@ -519,7 +494,7 @@ function getCommitBlocks(gren, releaseRanges) {
  * @return {Promise} The promise which resolves the list of the issues
  */
 function getClosedIssues(gren, releaseRanges) {
-    var loaded = utils.task('Getting all closed issues');
+    var loaded = utils.task(gren, 'Getting all closed issues');
 
     return gren.issues.listIssues({
             state: 'closed',
@@ -535,11 +510,6 @@ function getClosedIssues(gren, releaseRanges) {
             process.stdout.write(filteredIssues.length + ' issues found\n');
 
             return filteredIssues;
-        })
-        .catch(function(err) {
-            loaded();
-
-            throw new Error(err);
         });
 }
 
@@ -574,6 +544,7 @@ function getIssueBlocks(gren, releaseRanges) {
                     return {
                         id: range[0].id,
                         release: range[0].name,
+                        name: gren.options.prefix + range[0].name,
                         date: range[0].date,
                         body: templateIssueBody(body, range[0].body)
                     };
@@ -741,6 +712,8 @@ function generateOptions(options) {
  */
 function hasNetwork() {
     return new Promise(function(resolve, reject) {
+        resolve();
+        return;
         connectivity(function(isOnline) {
             if (!isOnline) {
                 reject(chalk.red('You need to have network connectivity'));
@@ -782,6 +755,8 @@ function GithubReleaseNotes(options) {
  */
 GithubReleaseNotes.prototype.init = function() {
     var gren = this;
+
+    gren.tasks = [];
 
     return hasNetwork()
         .then(function() {
@@ -826,7 +801,7 @@ GithubReleaseNotes.prototype.release = function() {
             return getLastTags(gren, releases.length ? releases : false);
         })
         .then(function(tags) {
-            loaded = utils.task('Getting the tag dates ranges');
+            loaded = utils.task(gren, 'Getting the tag dates ranges');
 
             return Promise.all(getTagDates(gren, tags));
         })
