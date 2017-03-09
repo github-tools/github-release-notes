@@ -8,4 +8,7 @@ var action = utils.getBashOptions(process.argv)['action'];
 gren.init()
     .then(function() {
         return gren[action || 'release']();
+    })
+    .catch(function(error) {
+        console.error(error);
     });
