@@ -741,10 +741,6 @@ function generateOptions(options) {
  */
 function hasNetwork() {
     return new Promise(function(resolve, reject) {
-        resolve();
-
-        return;
-
         connectivity(function(isOnline) {
             if (!isOnline) {
                 reject(chalk.red('You need to have network connectivity'));
