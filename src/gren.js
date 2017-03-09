@@ -7,11 +7,10 @@ var Github = require('github-api');
 var fs = require('fs');
 var chalk = require('chalk');
 var Promise = Promise || require('es6-promise').Promise;
-var templateConfig = require('./templates.json');
 var connectivity = require('connectivity');
+var templateConfig = require('./templates.json');
 var ObjectAssign = require('object-assign');
-var configFileName = process.cwd() + '/gren.json';
-var configFile = fs.existsSync(configFileName) ? require(process.cwd() + '/gren.json') : {};
+var configFile = fs.existsSync(process.cwd() + '/gren.json') ? require(process.cwd() + '/gren.json') : {};
 
 var defaults = {
     tags: false,
