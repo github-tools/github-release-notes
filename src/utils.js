@@ -23,20 +23,45 @@ function printTask(name) {
 *
 * @return {Function}          The function to be fired when is loaded
 */
-function task(taskName) {
+function task(gren, taskName) {
     var time = process.hrtime();
     process.stdout.write(chalk.green(taskName) + ': .');
 
-    var si = setInterval(function() {
+    gren.tasks[taskName] = setInterval(function() {
         process.stdout.write('.');
     }, 100);
 
     return function(message) {
         var diff = process.hrtime(time);
+        var seconds = ((diff[0] * 1e9 + diff[1]) * 1e-9).toFixed(2);
 
-        process.stdout.write(message || '' + chalk.yellow(' (' + ((diff[0] * 1e9 + diff[1]) * 1e-9).toFixed(2) + ' secs)\n'));
-        clearInterval(si);
+        process.stdout.write(message || '' + chalk.yellow(' (' + seconds + ' secs)\n'));
+        clearInterval(gren.tasks[taskName]);
+
+        gren.tasks[taskName] = seconds;
     };
+}
+
+/**
+ * Clears all the tasks that are still running
+ *
+ * @since 0.6.0
+ * @public
+ *
+ * @param  {GithubReleaseNotes} gren
+ */
+function clearTasks(gren) {
+    if (!gren.tasks.length) {
+        return;
+    }
+
+    Object.keys(gren.tasks).forEach(function(taskName) {
+        clearInterval(gren.tasks[taskName]);
+    });
+
+    process.stdout.write(chalk.red('\nTask(s) stopped because of the following error:\n'));
+
+    gren.tasks = [];
 }
 
 /**
@@ -113,6 +138,7 @@ function formatDate(date) {
 module.exports = {
     printTask: printTask,
     task: task,
+    clearTasks: clearTasks,
     getBashOptions: getBashOptions,
     dashToCamelCase: dashToCamelCase,
     isInRange: isInRange,

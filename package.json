@@ -35,8 +35,7 @@
     "chalk": "^1.1.3",
     "connectivity": "^1.0.0",
     "es6-promise": "^3.2.1",
-    "github-api": "^2.1.0",
-    "is-online": "^5.1.1",
+    "github-api": "^3.0.0",
     "object-assign": "^4.1.0"
   },
   "devDependencies": {
