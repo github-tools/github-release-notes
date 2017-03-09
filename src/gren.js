@@ -497,9 +497,9 @@ function getClosedIssues(gren, releaseRanges) {
     var loaded = utils.task(gren, 'Getting all closed issues');
 
     return gren.issues.listIssues({
-            state: 'closed',
-            since: releaseRanges[0][1].date
-        })
+        state: 'closed',
+        since: releaseRanges[0][1].date
+    })
         .then(function(response) {
             loaded();
 
@@ -712,8 +712,6 @@ function generateOptions(options) {
  */
 function hasNetwork() {
     return new Promise(function(resolve, reject) {
-        resolve();
-        return;
         connectivity(function(isOnline) {
             if (!isOnline) {
                 reject(chalk.red('You need to have network connectivity'));
@@ -837,7 +835,7 @@ GithubReleaseNotes.prototype.changelog = function() {
         })
         .then(function(success) {
             return success;
-        })
+        });
 };
 
 module.exports = GithubReleaseNotes;
