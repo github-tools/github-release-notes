@@ -126,6 +126,9 @@ function getBashOptions(args) {
  * Converts an array like string to an actual Array,
  * converting also underscores to spaces
  *
+ * @since 0.6.0
+ * @public
+ *
  * @param  {string} arrayLike The string of items
  * e.g.
  * "wont_fix, duplicate, bug"
