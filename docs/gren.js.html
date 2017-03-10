@@ -103,7 +103,7 @@ var defaults = {
     prerelease: false,
     dateZero: new Date(0),
     override: false,
-    ignoredLabels: false, // || array of labels
+    ignoreLabels: false, // || array of labels
     ignoreIssuesWith: false, // || array of labels
     template: templateConfig
 };
@@ -397,7 +397,7 @@ function templateLabels(gren, issue) {
 
     return issue.labels
         .filter(function(label) {
-            return gren.options.ignoredLabels.indexOf(label.name) === -1;
+            return gren.options.ignoreLabels.indexOf(label.name) === -1;
         })
         .map(function(label) {
             return template.generate({
@@ -597,13 +597,13 @@ function getCommitBlocks(gren, releaseRanges) {
  * @since 0.6.0
  * @private
  *
- * @param  {Array} ignoredLabels    The labels to ignore
+ * @param  {Array} ignoreLabels    The labels to ignore
  * @param  {Array} labels   The labels to check
  *
  * @return {boolean}    If the labels array contain any of the ignore ones
  */
-function compareIssueLabels(ignoredLabels, labels) {
-    return ignoredLabels
+function compareIssueLabels(ignoreLabels, labels) {
+    return ignoreLabels
         .reduce(function(carry, ignoredLabel) {
             return carry &amp;&amp; labels.map(function(label) {
                 return label.name;
@@ -840,12 +840,10 @@ function generateOptions(options) {
  * @return {Promise}
  */
 function hasNetwork() {
-    return new Promise(function(resolve, reject) {
+    return new Promise(function(resolve) {
         connectivity(function(isOnline) {
             if (!isOnline) {
-                reject(chalk.red('You need to have network connectivity'));
-
-                return;
+                console.warn(chalk.yellow('WARNING: Looks like you don\'t have network connectivity!'));
             }
 
             resolve();
@@ -864,7 +862,7 @@ function hasNetwork() {
 function GithubReleaseNotes(options) {
     this.options = ObjectAssign({}, defaults, configFile, options || utils.getBashOptions(process.argv));
     this.options.tags = utils.convertStringToArray(this.options.tags);
-    this.options.ignoredLabels = utils.convertStringToArray(this.options.ignoredLabels);
+    this.options.ignoreLabels = utils.convertStringToArray(this.options.ignoreLabels);
     this.options.ignoreIssuesWith = utils.convertStringToArray(this.options.ignoreIssuesWith);
     this.repo = null;
     this.issues = null;
