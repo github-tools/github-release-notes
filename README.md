@@ -191,7 +191,7 @@ If you want to override the existing changelog, use `--override`.
 The usage would then be:
 
 ```
-gren --time-wrap=history --override
+gren --action=changelog --time-wrap=history --override
 ```
 
 To see a full example of the changelog here [CHANGELOG.md](https://github.com/github-tools/github-release-notes/blob/develop/CHANGELOG.md)
