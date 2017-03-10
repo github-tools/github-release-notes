@@ -9,8 +9,8 @@ var chalk = require('chalk');
 var Promise = Promise || require('es6-promise').Promise;
 var connectivity = require('connectivity');
 var templateConfig = require('./templates.json');
-var ObjectAssign = require('object-assign');
-var configFile = fs.existsSync(process.cwd() + '/gren.json') ? require(process.cwd() + '/gren.json') : {};
+var ObjectAssign = require('deep-assign');
+var configFile = fs.existsSync(process.cwd() + '/.gren.json') ? require(process.cwd() + '/.gren.json') : {};
 
 var defaults = {
     tags: false,
@@ -758,6 +758,7 @@ function hasNetwork() {
  */
 function GithubReleaseNotes(options) {
     this.options = ObjectAssign({}, defaults, configFile, options || utils.getBashOptions(process.argv));
+    console.log(this.options.template);
     this.options.tags = this.options.tags && this.options.tags.split(',');
     this.repo = null;
     this.issues = null;
