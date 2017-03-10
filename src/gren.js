@@ -24,6 +24,8 @@ var defaults = {
     prerelease: false,
     dateZero: new Date(0),
     override: false,
+    ignoredLabels: false, // || array of labels
+    ignoreIssuesWith: false, // || array of labels
     template: templateConfig
 };
 
@@ -136,7 +138,7 @@ function prepareRelease(gren, block) {
  * @return {Boolean|Array}
  */
 function getSelectedTags(optionTags, tags) {
-    if (!optionTags) {
+    if (!optionTags.length) {
         return false;
     }
 
@@ -314,11 +316,15 @@ function templateLabels(gren, issue) {
         issue.labels.push({name: 'closed'});
     }
 
-    return issue.labels.map(function(label) {
-        return template.generate({
-            label: label.name
-        }, gren.options.template.issueInfo.label);
-    }).join('');
+    return issue.labels
+        .filter(function(label) {
+            return gren.options.ignoredLabels.indexOf(label.name) === -1;
+        })
+        .map(function(label) {
+            return template.generate({
+                label: label.name
+            }, gren.options.template.issueInfo.label);
+        }).join('');
 }
 
 /**
@@ -507,6 +513,26 @@ function getCommitBlocks(gren, releaseRanges) {
 }
 
 /**
+ * Compare the ignored labels with the passed ones
+ *
+ * @since 0.6.0
+ * @private
+ *
+ * @param  {Array} ignoredLabels    The labels to ignore
+ * @param  {Array} labels   The labels to check
+ *
+ * @return {boolean}    If the labels array contain any of the ignore ones
+ */
+function compareIssueLabels(ignoredLabels, labels) {
+    return ignoredLabels
+        .reduce(function(carry, ignoredLabel) {
+            return carry && labels.map(function(label) {
+                return label.name;
+            }).indexOf(ignoredLabel) === -1;
+        }, true);
+}
+
+/**
  * Get all the closed issues from the current repo
  *
  * @since 0.5.0
@@ -528,7 +554,7 @@ function getClosedIssues(gren, releaseRanges) {
         loaded();
 
         var filteredIssues = response.data.filter(function(issue) {
-            return !issue.pull_request;
+            return !issue.pull_request && compareIssueLabels(gren.options.ignoreIssuesWith, issue.labels);
         });
 
         process.stdout.write(filteredIssues.length + ' issues found\n');
@@ -758,8 +784,9 @@ function hasNetwork() {
  */
 function GithubReleaseNotes(options) {
     this.options = ObjectAssign({}, defaults, configFile, options || utils.getBashOptions(process.argv));
-    console.log(this.options.template);
-    this.options.tags = this.options.tags && this.options.tags.split(',');
+    this.options.tags = utils.convertStringToArray(this.options.tags);
+    this.options.ignoredLabels = utils.convertStringToArray(this.options.ignoredLabels);
+    this.options.ignoreIssuesWith = utils.convertStringToArray(this.options.ignoreIssuesWith);
     this.repo = null;
     this.issues = null;
     this.isEditingLatestRelease = false;
