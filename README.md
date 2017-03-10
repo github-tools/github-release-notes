@@ -69,6 +69,56 @@ Following the options for the module:
 - `--include-messages=merges|commits|all` used to filter the messages added to the release notes. Default: `commits`
 - `--override=true|false` Override the release notes if existing. Default: `false`
 
+### Config file
+
+You can create a `.gren.json` file where the task will be ran, where to specify your options.
+The options in the file would be camelCase *e.g*:
+
+```json
+{
+    "action": "release",
+    "timeWrap": "history",
+    "dataSource": "commits"
+}
+```
+
+### Templates
+
+With **gren** you can decide how you want to output the informations, using the templates.
+
+The default configuration is the following:
+
+```json
+{
+    "...": "...",
+    "template": {
+        "commit": "- {{message}}",
+        "issue": "- {{labels}} {{name}} {{link}}",
+        "issueInfo": {
+            "labels": "{{labels}}",
+            "label": "[**{{label}}**]",
+            "name": "{{name}}",
+            "link": "[{{text}}]({{url}})"
+        },
+        "release": "## {{release}} {{date}}",
+        "releaseInfo": {
+            "release": "{{release}}",
+            "date": "({{date}})"
+        }
+    }
+}
+```
+
+To customise the templates you need to change the `.gren.json` config file. You only need to specify what you want to change *e.g.*
+
+```json
+{
+    "template": {
+        "issue": "- {{name}}"
+    }
+}
+```
+
 ## Examples
 
 The ways to use **gren** are various.
