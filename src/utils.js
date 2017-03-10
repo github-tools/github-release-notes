@@ -123,6 +123,38 @@ function getBashOptions(args) {
 }
 
 /**
+ * Converts an array like string to an actual Array,
+ * converting also underscores to spaces
+ *
+ * @since 0.6.0
+ * @public
+ *
+ * @param  {string} arrayLike The string of items
+ * e.g.
+ * "wont_fix, duplicate, bug"
+ *
+ * @return {Array}  The items with spaces instead of underscores.
+ */
+function convertStringToArray(arrayLike) {
+    if (!arrayLike) {
+        return [];
+    }
+
+    if (typeof arrayLike === 'object') {
+        return Object.keys(arrayLike).map(function(itemKey) {
+            return arrayLike[itemKey];
+        });
+    }
+
+    return arrayLike
+        .replace(/\s/g, '')
+        .split(',')
+        .map(function(itemName) {
+            return itemName.replace(/_/g, ' ', itemName);
+        });
+}
+
+/**
 * Format a date into a string
 *
 * @since 0.5.0
@@ -142,5 +174,6 @@ module.exports = {
     getBashOptions: getBashOptions,
     dashToCamelCase: dashToCamelCase,
     isInRange: isInRange,
+    convertStringToArray: convertStringToArray,
     formatDate: formatDate
 };
