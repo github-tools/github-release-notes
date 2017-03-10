@@ -59,7 +59,7 @@ function editRelease(gren, releaseId, releaseOptions) {
 
             var release = response.data;
 
-            console.log(chalk.green('\n\n' + release.name + ' has been successfully updated!'));
+            console.log(chalk.green(release.name + ' has been successfully updated!'));
 
             return release;
         });
@@ -92,7 +92,7 @@ function createRelease(gren, releaseOptions) {
             loaded();
             var release = response.data;
 
-            console.log(chalk.green('\n\n' + release.name + ' has been successfully created!'));
+            console.log(chalk.green(release.name + ' has been successfully created!'));
 
             return release;
         });
@@ -119,6 +119,12 @@ function prepareRelease(gren, block) {
     };
 
     if (block.id) {
+        if (!gren.options.override) {
+            console.warn(chalk.yellow('Skipping ' + block.release + ' (use --override to replace it)'));
+
+            return Promise.resolve();
+        }
+
         return editRelease(gren, block.id, releaseOptions);
     }
 
@@ -132,12 +138,16 @@ function prepareRelease(gren, block) {
  * @since 0.5.0
  * @private
  *
- * @param  {Boolean|Array} selectedTags
+ * @param  {Array|string} selectedTags
  * @param  {Object[]} tags
  *
  * @return {Boolean|Array}
  */
 function getSelectedTags(optionTags, tags) {
+    if (optionTags.indexOf('all') >= 0) {
+        return tags;
+    }
+
     if (!optionTags.length) {
         return false;
     }
@@ -184,10 +194,6 @@ function getLastTags(gren, releases) {
                         releaseId: releaseId
                     };
                 });
-
-            if (filteredTags[0].releaseId && !gren.options.override) {
-                throw chalk.red(filteredTags[0].tag.name + ' is a release, use --override flag to override an existing release!');
-            }
 
             console.log('Tags found: ' + filteredTags.map(function(tag) {
                 return tag.tag.name;
@@ -575,7 +581,7 @@ function getClosedIssues(gren, releaseRanges) {
  * @return {Promise[]}
  */
 function getIssueBlocks(gren, releaseRanges) {
-    console.log('\nCreating the body blocks from releases:');
+    console.log('Creating the body blocks from releases:');
 
     return getClosedIssues(gren, releaseRanges)
         .then(function(issues) {
@@ -862,7 +868,9 @@ GithubReleaseNotes.prototype.release = function() {
             );
         })
         .then(function(blocks) {
-            return prepareRelease(gren, blocks[0]);
+            return blocks.reduce(function(carry, block) {
+                return carry.then(prepareRelease.bind(null, gren, block));
+            }, Promise.resolve());
         });
 };
 

@@ -60,7 +60,7 @@ The module will look for the last tag, get all the issues closed in the time bet
 Following the options for the module:
 
 - `--action=release|changelog` The **gren** action to run. Default: `release` _(see details below for changelog generator)_
-- `--tags=0.1.0|0.2.0,0.1.0` A specific tag or the range of tags to build the release notes from.
+- `--tags=0.1.0|0.2.0,0.1.0|all` A specific tag or the range of tags to build the release notes from. You can also specify `all` to write all releases. _(To override  existing releases use the --override flag)_
 - `--ignore-labels=wont_fix|wont_fix,duplicate` One or more labels to ignore in the output. Default: `false` _(it will still output the issue, just without the specified labels)_
 - `--ignore-issues-with=wont_fix|wont_fix,duplicate` Ignore issues that contains one of the specified labels. Default: `false`
 - `--time-wrap=latest|history` The release notes you want to include in the changelog. Default: `latest` _Only applicable to the `changelog` action_
@@ -152,6 +152,14 @@ If you want then to override, simple use:
 gren --override --tags=0.3.0
 ```
 
+### Write all existing tags
+
+You can run the task to generate release notes for all existing tags.
+Releases that already exist will be skipped. To override them, use the flag `--override`
+
+```
+gren --override --tags=all
+```
 
 ## Changelog Generator
 
