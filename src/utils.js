@@ -51,7 +51,7 @@ function task(gren, taskName) {
  * @param  {GithubReleaseNotes} gren
  */
 function clearTasks(gren) {
-    if (!gren.tasks.length) {
+    if (!Object.keys(gren.tasks.length)) {
         return;
     }
 
