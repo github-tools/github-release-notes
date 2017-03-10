@@ -62,7 +62,7 @@ Following the options for the module:
 - `--action=release|changelog` The **gren** action to run. Default: `release` _(see details below for changelog generator)_
 - `--tags=0.1.0|0.2.0,0.1.0` A specific tag or the range of tags to build the release notes from.
 - `--ignore-labels=wont_fix|wont_fix,duplicate` One or more labels to ignore in the output. Default: `false` _(it will still output the issue, just without the specified labels)_
-- `--ignore-issues-with=wont_fix|wont_fix,duplicate` Ignore issues that contains one of the specified issues. Default: `false`
+- `--ignore-issues-with=wont_fix|wont_fix,duplicate` Ignore issues that contains one of the specified labels. Default: `false`
 - `--time-wrap=latest|history` The release notes you want to include in the changelog. Default: `latest` _Only applicable to the `changelog` action_
 - `--changelog-filename=CHANGELOG.md` The name of the changelog file. Default: `CHANGELOG.md`
 - `--data-source=issues|commits` The informations you want to use to build release notes. Default: `issues`
@@ -91,13 +91,10 @@ The options in the file would be camelCase *e.g*:
 
 ### Templates
 
-With **gren** you can decide how you want to output the informations, using the templates.
-
-The default configuration is the following:
+You can configure the output of **gren** using templates. Set your own configuration inside the config file, which will be merged with the defaults, shown below:
 
 ```json
 {
-    "...": "...",
     "template": {
         "commit": "- {{message}}",
         "issue": "- {{labels}} {{name}} {{link}}",
@@ -112,16 +109,6 @@ The default configuration is the following:
             "release": "{{release}}",
             "date": "({{date}})"
         }
-    }
-}
-```
-
-To customise the templates you need to change the `.gren.json` config file. You only need to specify what you want to change *e.g.*
-
-```json
-{
-    "template": {
-        "issue": "- {{name}}"
     }
 }
 ```
