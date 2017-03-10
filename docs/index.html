@@ -40,7 +40,7 @@
 			<li class="dropdown">
 				<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Global<b class="caret"></b></a>
 				<ul class="dropdown-menu ">
-					<li><a href="global.html#dashToCamelCase">dashToCamelCase</a></li><li><a href="global.html#formatDate">formatDate</a></li><li><a href="global.html#getBashOptions">getBashOptions</a></li><li><a href="global.html#isInRange">isInRange</a></li><li><a href="global.html#printTask">printTask</a></li><li><a href="global.html#repo">repo</a></li><li><a href="global.html#task">task</a></li><li><a href="global.html#token">token</a></li><li><a href="global.html#user">user</a></li>
+					<li><a href="global.html#clearTasks">clearTasks</a></li><li><a href="global.html#convertStringToArray">convertStringToArray</a></li><li><a href="global.html#dashToCamelCase">dashToCamelCase</a></li><li><a href="global.html#formatDate">formatDate</a></li><li><a href="global.html#getBashOptions">getBashOptions</a></li><li><a href="global.html#isInRange">isInRange</a></li><li><a href="global.html#printTask">printTask</a></li><li><a href="global.html#repo">repo</a></li><li><a href="global.html#task">task</a></li><li><a href="global.html#token">token</a></li><li><a href="global.html#user">user</a></li>
 				</ul>
 			</li>
 			
@@ -111,6 +111,8 @@
 <ul>
 <li><code>--action=release|changelog</code> The <strong>gren</strong> action to run. Default: <code>release</code> <em>(see details below for changelog generator)</em></li>
 <li><code>--tags=0.1.0|0.2.0,0.1.0</code> A specific tag or the range of tags to build the release notes from.</li>
+<li><code>--ignore-labels=wont_fix|wont_fix,duplicate</code> One or more labels to ignore in the output. Default: <code>false</code> <em>(it will still output the issue, just without the specified labels)</em></li>
+<li><code>--ignore-issues-with=wont_fix|wont_fix,duplicate</code> Ignore issues that contains one of the specified issues. Default: <code>false</code></li>
 <li><code>--time-wrap=latest|history</code> The release notes you want to include in the changelog. Default: <code>latest</code> <em>Only applicable to the <code>changelog</code> action</em></li>
 <li><code>--changelog-filename=CHANGELOG.md</code> The name of the changelog file. Default: <code>CHANGELOG.md</code></li>
 <li><code>--data-source=issues|commits</code> The informations you want to use to build release notes. Default: <code>issues</code></li>
@@ -120,7 +122,40 @@
 <li><code>--include-messages=merges|commits|all</code> used to filter the messages added to the release notes. Default: <code>commits</code></li>
 <li><code>--override=true|false</code> Override the release notes if existing. Default: <code>false</code></li>
 </ul>
-<h2>Examples</h2><p>The ways to use <strong>gren</strong> are various.</p>
+<h3>Config file</h3><p>You can create a <code>.gren.json</code> file where the task will be ran, where to specify your options.<br>The options in the file would be camelCase <em>e.g</em>:</p>
+<pre class="prettyprint source lang-json"><code>{
+    &quot;action&quot;: &quot;release&quot;,
+    &quot;timeWrap&quot;: &quot;history&quot;,
+    &quot;dataSource&quot;: &quot;commits&quot;,
+    &quot;ignoreIssuesWith&quot;: [
+        &quot;wontfix&quot;,
+        &quot;duplicate&quot;
+    ]
+}</code></pre><h3>Templates</h3><p>With <strong>gren</strong> you can decide how you want to output the informations, using the templates.</p>
+<p>The default configuration is the following:</p>
+<pre class="prettyprint source lang-json"><code>{
+    &quot;...&quot;: &quot;...&quot;,
+    &quot;template&quot;: {
+        &quot;commit&quot;: &quot;- {{message}}&quot;,
+        &quot;issue&quot;: &quot;- {{labels}} {{name}} {{link}}&quot;,
+        &quot;issueInfo&quot;: {
+            &quot;labels&quot;: &quot;{{labels}}&quot;,
+            &quot;label&quot;: &quot;[**{{label}}**]&quot;,
+            &quot;name&quot;: &quot;{{name}}&quot;,
+            &quot;link&quot;: &quot;[{{text}}]({{url}})&quot;
+        },
+        &quot;release&quot;: &quot;## {{release}} {{date}}&quot;,
+        &quot;releaseInfo&quot;: {
+            &quot;release&quot;: &quot;{{release}}&quot;,
+            &quot;date&quot;: &quot;({{date}})&quot;
+        }
+    }
+}</code></pre><p>To customise the templates you need to change the <code>.gren.json</code> config file. You only need to specify what you want to change <em>e.g.</em></p>
+<pre class="prettyprint source lang-json"><code>{
+    &quot;template&quot;: {
+        &quot;issue&quot;: &quot;- {{name}}&quot;
+    }
+}</code></pre><h2>Examples</h2><p>The ways to use <strong>gren</strong> are various.</p>
 <h3>Simple</h3><p>The simple way, just looks for the last tag, gets all the issues closed between that tag and the one before and creates the new release with the generated body.</p>
 <pre class="prettyprint source"><code>gren</code></pre><h3>Commit messages</h3><p>Adding the flag <code>--data-source=commits</code> will change the source of the release notes to be the commit messages.</p>
 <pre class="prettyprint source"><code>gren --data-source=commits</code></pre><h3>Release specific tags</h3><p>The flag <code>--tags</code> accepts one or two tags.<br>If you only give one tag, it will get the issues (or commit messages) between that tag and the one before.<br>If you give two tags it will generate the release notes with the issues (or commit messages) between those two tag dates.</p>
@@ -184,7 +219,7 @@
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a>
 	
-		on Wed Mar 8th 2017
+		on Fri Mar 10th 2017
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
