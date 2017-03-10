@@ -698,7 +698,7 @@ function createChangelog(gren, body) {
                 return;
             }
 
-            var newReleaseName = body.match(/(##\s[\w\.]+)/)[0];
+            var newReleaseName = body.match(/(##\s[\w\s.]+)/)[0];
 
             if (data.match(newReleaseName)) {
                 if (gren.options.force) {
