@@ -1,0 +1,187 @@
+/* Reset Basic Elements
+ * ============================================== */
+    body, h1, h2, h3, h4, h5, h6,
+    p, blockquote, pre, hr,
+    dl, dd, ol, ul, figure {
+        margin: 0;
+        padding: 0;
+    }
+
+/* Basic Styling
+ * ============================================== */
+    body {
+        font-family: $base-font-family;
+        font-size: $base-font-size;
+        line-height: $base-line-height;
+        font-weight: 300;
+        color: $text-color;
+        background-color: $background-color;
+        -webkit-text-size-adjust: 100%;
+    }
+
+/* Set Margin Bottom for Vertical Rhythm
+ * ============================================== */
+    h1, h2, h3, h4, h5, h6,
+    p, blockquote, pre,
+    ul, ol, dl, figure,
+    %vertical-rhythm {
+        margin-bottom: $spacing-unit / 2;
+    }
+
+/* Images and Figures
+ * ============================================== */
+    img {
+        max-width: 100%;
+        vertical-align: middle;
+    }
+
+    figure > img {
+        display: block;
+    }
+
+    figcaption {
+        font-size: $small-font-size;
+    }
+
+/* Lists
+ * ============================================== */
+    ul, ol {
+        margin-left: $spacing-unit;
+    }
+
+    li {
+        > ul,
+        > ol {
+             margin-bottom: 0;
+        }
+    }
+
+/* Headers
+ * ============================================== */
+    h1, h2, h3, h4, h5, h6 {
+        font-weight: bold;
+        margin: 0px;
+    }
+
+    h1 {font-size: 1.9em !important;}
+    h2, {font-size: 1.5em !important;}
+    h3 {font-size: 1.3em;}
+    h4 {font-size: 1em;}
+    h5 {font-size: .9em;}
+    h6 {font-size: .8em;}
+
+
+/* Links
+ * ============================================== */
+    a {
+        color: darken($brand-color, 10%);
+        text-decoration: none;
+
+        &:hover {
+            color: darken($brand-color, 20%);
+            text-decoration: none;
+        }
+    }
+
+/* Block Quotes
+ * ============================================== */
+    blockquote {
+        color: #BBB;
+        border-left: 4px solid $brand-color;
+        padding-left: $spacing-unit / 2;
+        font-size: 17px;
+        letter-spacing: -1px;
+        font-style: italic;
+
+        > :last-child {
+            margin-bottom: 0;
+        }
+    }
+
+/* Code Blocks
+ * ============================================== */
+    pre,
+    code {
+        font-size: 13px;
+        border: 1px solid $grey-color-light;
+        font-family: Menlo, Monaco, "Andale Mono", serif;
+    }
+
+    code {
+        padding: 1px 3px;
+        background-color: #FFF;
+        border-radius: 5px;
+    }
+
+    pre {
+        border-radius: 3px;
+        padding: 8px 12px;
+        overflow-x: scroll;
+        background-color: #F5F5F5;
+
+        > code {
+            background-color: #F5F5F5;
+            border: 0;
+            padding-right: 0;
+            padding-left: 0;
+        }
+    }
+
+/* Wrapper
+ * ============================================== */
+    .wrapper {
+        max-width: -webkit-calc(#{$content-width} - (#{$spacing-unit} * 2));
+        max-width:         calc(#{$content-width} - (#{$spacing-unit} * 2));
+        margin-right: auto;
+        margin-left: auto;
+        padding-right: $spacing-unit;
+        padding-left: $spacing-unit;
+        @extend %clearfix;
+
+        @include media-query($on-laptop) {
+            max-width: -webkit-calc(#{$content-width} - (#{$spacing-unit}));
+            max-width:         calc(#{$content-width} - (#{$spacing-unit}));
+            padding-right: $spacing-unit / 2;
+            padding-left: $spacing-unit / 2;
+        }
+    }
+
+/* Clear Fix
+ * ============================================== */
+    %clearfix {
+
+        &:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+    }
+
+/* TABLES
+ * =============================================== */
+    table {
+        border-collapse: collapse;
+        border-spacing: 0
+    }
+
+    :not(.highlight)>table {
+    margin: 0 auto 1.5em auto
+    }
+
+    :not(.highlight)>table tr {
+        background-color: #fff;
+        border-top: 1px solid #ccc
+    }
+
+    :not(.highlight)>table tr th, :not(.highlight)>table tr td {
+        padding: 6px 13px;
+        border: 1px solid #ddd
+    }
+
+    :not(.highlight)>table tr th {
+        font-weight: bold
+    }
+
+    :not(.highlight)>table tr:nth-child(2n) {
+        background-color: #f8f8f8
+    }
