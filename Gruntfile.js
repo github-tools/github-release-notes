@@ -32,6 +32,6 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.registerTask('ship', ['eslint', 'jsdoc']);
     grunt.registerTask('test', ['eslint', 'nodeunit']);
+    grunt.registerTask('ship', ['test', 'jsdoc']);
 };

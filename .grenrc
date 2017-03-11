@@ -1,0 +1,6 @@
+{
+    "ignoreIssuesWith": [
+        "duplicate",
+        "wontfix"
+    ]
+}

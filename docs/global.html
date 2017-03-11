@@ -40,7 +40,7 @@
 			<li class="dropdown">
 				<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Global<b class="caret"></b></a>
 				<ul class="dropdown-menu ">
-					<li><a href="global.html#dashToCamelCase">dashToCamelCase</a></li><li><a href="global.html#formatDate">formatDate</a></li><li><a href="global.html#getBashOptions">getBashOptions</a></li><li><a href="global.html#isInRange">isInRange</a></li><li><a href="global.html#printTask">printTask</a></li><li><a href="global.html#repo">repo</a></li><li><a href="global.html#task">task</a></li><li><a href="global.html#token">token</a></li><li><a href="global.html#user">user</a></li>
+					<li><a href="global.html#clearTasks">clearTasks</a></li><li><a href="global.html#convertStringToArray">convertStringToArray</a></li><li><a href="global.html#dashToCamelCase">dashToCamelCase</a></li><li><a href="global.html#formatDate">formatDate</a></li><li><a href="global.html#getBashOptions">getBashOptions</a></li><li><a href="global.html#isInRange">isInRange</a></li><li><a href="global.html#printTask">printTask</a></li><li><a href="global.html#repo">repo</a></li><li><a href="global.html#task">task</a></li><li><a href="global.html#token">token</a></li><li><a href="global.html#user">user</a></li>
 				</ul>
 			</li>
 			
@@ -150,6 +150,320 @@
         <h3 class="subsection-title">Methods</h3>
 
         <dl>
+            
+<hr>
+<dt>
+    <h4 class="name" id="clearTasks"><span class="type-signature"></span>clearTasks(gren)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Clears all the tasks that are still running</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>gren</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="GithubReleaseNotes.html">GithubReleaseNotes</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+	<dt class="tag-since method-doc-label method-doc-details-label">Since:</dt>
+	<dd class="tag-since">
+		<ul class="dummy">
+			<li>0.6.0</li>
+		</ul>
+	</dd>
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="utils.js.html">utils.js</a>,
+				 <a href="utils.js.html#sunlight-1-line-53">line 53</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="convertStringToArray"><span class="type-signature"></span>convertStringToArray(arrayLike)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Converts an array like string to an actual Array,<br>converting also underscores to spaces</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arrayLike</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The string of items<br>e.g.<br>&quot;wont_fix, duplicate, bug&quot;</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+	<dt class="tag-since method-doc-label method-doc-details-label">Since:</dt>
+	<dd class="tag-since">
+		<ul class="dummy">
+			<li>0.6.0</li>
+		</ul>
+	</dd>
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="utils.js.html">utils.js</a>,
+				 <a href="utils.js.html#sunlight-1-line-138">line 138</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    <p>The items with spaces instead of underscores.</p>
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array</span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
             
 <hr>
 <dt>
@@ -265,7 +579,7 @@
 		<ul class="dummy">
 			<li>
 				<a href="utils.js.html">utils.js</a>,
-				 <a href="utils.js.html#sunlight-1-line-68">line 68</a>
+				 <a href="utils.js.html#sunlight-1-line-93">line 93</a>
 			</li>
 		</ul>
 	</dd>
@@ -434,7 +748,7 @@
 		<ul class="dummy">
 			<li>
 				<a href="utils.js.html">utils.js</a>,
-				 <a href="utils.js.html#sunlight-1-line-109">line 109</a>
+				 <a href="utils.js.html#sunlight-1-line-166">line 166</a>
 			</li>
 		</ul>
 	</dd>
@@ -599,7 +913,7 @@
 		<ul class="dummy">
 			<li>
 				<a href="utils.js.html">utils.js</a>,
-				 <a href="utils.js.html#sunlight-1-line-86">line 86</a>
+				 <a href="utils.js.html#sunlight-1-line-111">line 111</a>
 			</li>
 		</ul>
 	</dd>
@@ -816,7 +1130,7 @@
 		<ul class="dummy">
 			<li>
 				<a href="utils.js.html">utils.js</a>,
-				 <a href="utils.js.html#sunlight-1-line-54">line 54</a>
+				 <a href="utils.js.html#sunlight-1-line-79">line 79</a>
 			</li>
 		</ul>
 	</dd>

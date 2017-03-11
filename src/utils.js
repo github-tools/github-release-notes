@@ -1,6 +1,8 @@
 'use strict';
 
 var chalk = require('chalk');
+var fs = require('fs');
+require('require-yaml');
 
 /**
 * Print a task name in a custom format
@@ -23,20 +25,45 @@ function printTask(name) {
 *
 * @return {Function}          The function to be fired when is loaded
 */
-function task(taskName) {
+function task(gren, taskName) {
     var time = process.hrtime();
     process.stdout.write(chalk.green(taskName) + ': .');
 
-    var si = setInterval(function() {
+    gren.tasks[taskName] = setInterval(function() {
         process.stdout.write('.');
     }, 100);
 
     return function(message) {
         var diff = process.hrtime(time);
+        var seconds = ((diff[0] * 1e9 + diff[1]) * 1e-9).toFixed(2);
 
-        process.stdout.write(message || '' + chalk.yellow(' (' + ((diff[0] * 1e9 + diff[1]) * 1e-9).toFixed(2) + ' secs)\n'));
-        clearInterval(si);
+        process.stdout.write(message || '' + chalk.yellow(' (' + seconds + ' secs)\n'));
+        clearInterval(gren.tasks[taskName]);
+
+        gren.tasks[taskName] = seconds;
     };
+}
+
+/**
+ * Clears all the tasks that are still running
+ *
+ * @since 0.6.0
+ * @public
+ *
+ * @param  {GithubReleaseNotes} gren
+ */
+function clearTasks(gren) {
+    if (!Object.keys(gren.tasks.length)) {
+        return;
+    }
+
+    Object.keys(gren.tasks).forEach(function(taskName) {
+        clearInterval(gren.tasks[taskName]);
+    });
+
+    process.stdout.write(chalk.red('\nTask(s) stopped because of the following error:\n'));
+
+    gren.tasks = [];
 }
 
 /**
@@ -98,6 +125,38 @@ function getBashOptions(args) {
 }
 
 /**
+ * Converts an array like string to an actual Array,
+ * converting also underscores to spaces
+ *
+ * @since 0.6.0
+ * @public
+ *
+ * @param  {string} arrayLike The string of items
+ * e.g.
+ * "wont_fix, duplicate, bug"
+ *
+ * @return {Array}  The items with spaces instead of underscores.
+ */
+function convertStringToArray(arrayLike) {
+    if (!arrayLike) {
+        return [];
+    }
+
+    if (typeof arrayLike === 'object') {
+        return Object.keys(arrayLike).map(function(itemKey) {
+            return arrayLike[itemKey];
+        });
+    }
+
+    return arrayLike
+        .replace(/\s/g, '')
+        .split(',')
+        .map(function(itemName) {
+            return itemName.replace(/_/g, ' ', itemName);
+        });
+}
+
+/**
 * Format a date into a string
 *
 * @since 0.5.0
@@ -110,11 +169,57 @@ function formatDate(date) {
     return ('0' + date.getDate()).slice(-2) + '/' + ('0' + (date.getMonth() + 1)).slice(-2) + '/' + date.getFullYear();
 }
 
+/**
+ * Gets the content from a filepath a returns an object
+ *
+ * @since  0.6.0
+ * @public
+ *
+ * @param  {string} filepath
+ * @return {Object|boolean}
+ */
+function requireConfig(filepath) {
+    if (!fs.existsSync(filepath)) {
+        return false;
+    }
+
+    if (filepath.match(/\./g).length === 1) {
+        return JSON.parse(fs.readFileSync(filepath, "utf8"));
+    }
+
+    return require(filepath);
+}
+
+/**
+ * Get configuration from the one of the config files
+ *
+ * @since 0.6.0
+ * @public
+ *
+ * @param  {string} path Path where to look for config files
+ * @return {Object} The configuration from the first found file or empty object
+ */
+function getConfigFromFile(path) {
+    return [
+            '.grenrc.yml',
+            '.grenrc.json',
+            '.grenrc.yaml',
+            '.grenrc.js',
+            '.grenrc'
+        ]
+        .reduce(function(carry, filename) {
+            return carry || requireConfig(path + '/' + filename);
+        }, false) || {};
+}
+
 module.exports = {
     printTask: printTask,
     task: task,
+    clearTasks: clearTasks,
     getBashOptions: getBashOptions,
     dashToCamelCase: dashToCamelCase,
     isInRange: isInRange,
-    formatDate: formatDate
+    convertStringToArray: convertStringToArray,
+    formatDate: formatDate,
+    getConfigFromFile: getConfigFromFile
 };
