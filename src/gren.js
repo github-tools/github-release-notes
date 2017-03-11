@@ -1,6 +1,5 @@
 'use strict';
 
-require('require-yaml');
 var utils = require('./utils');
 var githubInfo = require('./github-info');
 var template = require('./template');

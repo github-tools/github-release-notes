@@ -2,6 +2,7 @@
 
 var chalk = require('chalk');
 var fs = require('fs');
+require('require-yaml');
 
 /**
 * Print a task name in a custom format
@@ -200,9 +201,9 @@ function requireConfig(filepath) {
  */
 function getConfigFromFile(path) {
     return [
+            '.grenrc.yml',
             '.grenrc.json',
             '.grenrc.yaml',
-            '.grenrc.yml',
             '.grenrc.js',
             '.grenrc'
         ]
