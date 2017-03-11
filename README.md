@@ -59,18 +59,35 @@ The module will look for the last tag, get all the issues closed in the time bet
 
 Following the options for the module:
 
-- `--action=release|changelog` The **gren** action to run. Default: `release` _(see details below for changelog generator)_
-- `--tags=0.1.0|0.2.0,0.1.0|all` A specific tag or the range of tags to build the release notes from. You can also specify `all` to write all releases. _(To override  existing releases use the --override flag)_
-- `--ignore-labels=wont_fix|wont_fix,duplicate` One or more labels to ignore in the output. Default: `false` _(it will still output the issue, just without the specified labels)_
-- `--ignore-issues-with=wont_fix|wont_fix,duplicate` Ignore issues that contains one of the specified labels. Default: `false`
-- `--time-wrap=latest|history` The release notes you want to include in the changelog. Default: `latest` _Only applicable to the `changelog` action_
-- `--changelog-filename=CHANGELOG.md` The name of the changelog file. Default: `CHANGELOG.md`
-- `--data-source=issues|commits` The informations you want to use to build release notes. Default: `issues`
-- `--draft=true|false` To set the release as a draft. Default: `false`
-- `--prerelease=true|false` To set the release as a prerelease. Default: `false`
-- `--prefix=v` Add a prefix to the tag version `e.g. v1.0.1`. Default: `null`
-- `--include-messages=merges|commits|all` used to filter the messages added to the release notes. Default: `commits`
-- `--override=true|false` Override the release notes if existing. Default: `false`
+### Global options
+
+| Command | Options | Description | Default |
+| ------- | ------- | ----------- | ------- |
+| `--username` | **Required** | The username of the repo _e.g. `github-tools`_ | `null` |
+| `--repo` | **Required** | The repository name _e.g. `github-release-notes`_ | `null` |
+| `--action`| `release` `changelog` | The **gren** action to run. _(see details below for changelog generator)_ | `release` |
+| `--ignore-labels` | `wont_fix` `wont_fix,duplicate` | Ignore issues that contains one of the specified labels. | `false` |
+| `--ignore-issues-with` | `wont_fix` `wont_fix,duplicate` | Ignore issues that contains one of the specified labels. | `false` |
+| `--data-source` | `issues` `commits` | The informations you want to use to build release notes. | `issues` |
+| `--prefix` | **String** `e.g. v1.0.1` | Add a prefix to the tag version. | `null` |
+| `--override` | **Flag** | Override the release notes if existing. | `false` |
+| `--include-messages` | `merge` `commits` `all` | Filter the messages added to the release notes. _Only used when `data-source` used is `commits` | `commits` |
+
+### Release options
+
+| Command | Options | Description | Default |
+| ------- | ------- | ----------- | ------- |
+| `--draft` | **Flag** | Set the release as a draft. | `false` |
+| `--prerelease` | **Flag** | To set the release as a prerelease. | `false` |
+| `--tags`    |   `0.1.0` `0.2.0,0.1.0` `all` |   A specific tag or the range of tags to build the release notes from. You can also specify `all` to write all releases. _(To override  existing releases use the --override flag)_ | `false` |
+
+### Changelog options
+
+| Command | Options | Description | Default |
+| ------- | ------- | ----------- | ------- |
+| `--time-wrap` | `latest` `history` | The release notes you want to include in the changelog. | `latest` |
+| `--changelog-filename` | **String**, like `changelog.md` | The name of the changelog file. | `CHANGELOG.md` |
+
 
 ### Config file
 
@@ -173,7 +190,7 @@ gren --override --tags=all
 
 **gren** can also update generate the changelog.
 
-The following command, will generate the release notes for the latest release, and add it to an existing file or create it in the same directory where you run the command.
+The following command, will get the latest release notes, and add it to an existing file or create it in the same directory where you run the command.
 
 ```shell
 gren --action=changelog
@@ -187,9 +204,9 @@ The generated release notes will be added at the top of the file, and will look 
 
 ### Generate a full changelog
 
-If tou want to generate the whole changelog, you need to use the `--time-wrap=history`. This will generate a changelog based on issues (or on commit messages if the `--data-source=commits` is present).
+If tou want to generate the whole changelog, you need to use the `--time-wrap=history`. This will generate the changelog based on all release notes.
 
-If you want to override the existing changelog, use `--override`.
+If you want to override the existing changelog, use `--override`. This will also generate the release notes from scratch.
 
 The usage would then be:
 

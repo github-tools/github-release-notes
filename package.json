@@ -1,53 +1,57 @@
 {
-  "name": "github-release-notes",
-  "version": "0.6.0",
-  "description": "Node module to publish release notes based on commits between the last two tags.",
-  "main": "./github-release-notes.js",
-  "scripts": {
-    "start": "node github-release-notes.js",
-    "test": "grunt test"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/alexcanessa/github-release-notes.git"
-  },
-  "preferGlobal": "true",
-  "bin": {
-    "gren": "bin/gren.js"
-  },
-  "keywords": [
-    "Github",
-    "Release",
-    "notes",
-    "Tag",
-    "Changelog",
-    "Changelog Generator",
-    "Issues",
-    "Commits"
-  ],
-  "author": "alexcanessa",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/alexcanessa/github-release-notes/issues"
-  },
-  "homepage": "https://github.com/alexcanessa/github-release-notes#readme",
-  "dependencies": {
-    "chalk": "^1.1.3",
-    "connectivity": "^1.0.0",
-    "deep-assign": "^2.0.0",
-    "es6-promise": "^3.2.1",
-    "github-api": "^3.0.0",
-    "require-yaml": "0.0.1"
-  },
-  "devDependencies": {
-    "eslint": "^3.6.0",
-    "eslint-config-standard": "^6.0.1",
-    "eslint-plugin-promise": "^3.5.0",
-    "eslint-plugin-standard": "^2.0.0",
-    "grunt": "^1.0.1",
-    "grunt-contrib-nodeunit": "^1.0.0",
-    "grunt-eslint": "^19.0.0",
-    "grunt-jsdoc": "^2.1.0",
-    "ink-docstrap": "^1.2.1"
-  }
+    "name": "github-release-notes",
+    "version": "0.6.0",
+    "description": "Node module to publish release notes based on commits between the last two tags.",
+    "main": "./github-release-notes.js",
+    "scripts": {
+        "start": "node github-release-notes.js",
+        "test": "grunt test",
+        "docs": "node_modules/.bin/jsdoc -c .jsdoc.conf.json --verbose"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/alexcanessa/github-release-notes.git"
+    },
+    "preferGlobal": "true",
+    "bin": {
+        "gren": "bin/gren.js"
+    },
+    "keywords": [
+        "Github",
+        "Release",
+        "notes",
+        "Tag",
+        "Changelog",
+        "Changelog Generator",
+        "Issues",
+        "Commits"
+    ],
+    "author": "alexcanessa",
+    "contributors": [
+        "Alex Canessa <canessa.alex@gmail.com>"
+    ],
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/alexcanessa/github-release-notes/issues"
+    },
+    "homepage": "https://github.com/alexcanessa/github-release-notes#readme",
+    "dependencies": {
+        "chalk": "^1.1.3",
+        "connectivity": "^1.0.0",
+        "deep-assign": "^2.0.0",
+        "es6-promise": "^3.2.1",
+        "github-api": "^3.0.0",
+        "require-yaml": "0.0.1"
+    },
+    "devDependencies": {
+        "eslint": "^3.6.0",
+        "eslint-config-standard": "^6.0.1",
+        "eslint-plugin-promise": "^3.5.0",
+        "eslint-plugin-standard": "^2.0.0",
+        "grunt": "^1.0.1",
+        "grunt-contrib-nodeunit": "^1.0.0",
+        "grunt-eslint": "^19.0.0",
+        "jsdoc": "^3.4.3",
+        "minami": "^1.1.1"
+    }
 }

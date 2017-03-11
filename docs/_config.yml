@@ -1,0 +1,15 @@
+# Site settings
+title: Github Release Notes
+description: > # Node module to publish release notes based on commits between the last two tags.
+baseurl: "/github-release-notes"
+docsurl: "github-release-notes/"
+url: "http://github-tools.github.io/github-release-notes" # the base hostname & protocol for your site
+twitter_username: alexcanessa
+github_username: alexcanessa
+
+# Build settings
+markdown: redcarpet
+markdown_ext:  markdown,mkdown,mkdn,mkd,md
+
+redcarpet:
+  extensions: ["tables", "autolink", "strikethrough", "space_after_headers", "fenced_code_blocks"]
