@@ -74,7 +74,7 @@ Following the options for the module:
 
 ### Config file
 
-You can create a `.gren.json` file where the task will be ran, where to specify your options.
+You can create a configuration file where the task will be ran, where to specify your options.
 The options in the file would be camelCase *e.g*:
 
 ```json
@@ -89,7 +89,15 @@ The options in the file would be camelCase *e.g*:
 }
 ```
 
-### Templates
+The accepted file extensions are the following:
+
+- `.grenrc`
+- `.grenrc.json`
+- `.grenrc.yml`
+- `.grenrc.yaml`
+- `.grenrc.js`
+
+#### Templates
 
 You can configure the output of **gren** using templates. Set your own configuration inside the config file, which will be merged with the defaults, shown below:
 

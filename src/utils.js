@@ -1,6 +1,8 @@
 'use strict';
 
 var chalk = require('chalk');
+var fs = require('fs');
+require('require-yaml');
 
 /**
 * Print a task name in a custom format
@@ -167,6 +169,49 @@ function formatDate(date) {
     return ('0' + date.getDate()).slice(-2) + '/' + ('0' + (date.getMonth() + 1)).slice(-2) + '/' + date.getFullYear();
 }
 
+/**
+ * Gets the content from a filepath a returns an object
+ *
+ * @since  0.6.0
+ * @public
+ *
+ * @param  {string} filepath
+ * @return {Object|boolean}
+ */
+function requireConfig(filepath) {
+    if (!fs.existsSync(filepath)) {
+        return false;
+    }
+
+    if (filepath.match(/\./g).length === 1) {
+        return JSON.parse(fs.readFileSync(filepath, "utf8"));
+    }
+
+    return require(filepath);
+}
+
+/**
+ * Get configuration from the one of the config files
+ *
+ * @since 0.6.0
+ * @public
+ *
+ * @param  {string} path Path where to look for config files
+ * @return {Object} The configuration from the first found file or empty object
+ */
+function getConfigFromFile(path) {
+    return [
+            '.grenrc.yml',
+            '.grenrc.json',
+            '.grenrc.yaml',
+            '.grenrc.js',
+            '.grenrc'
+        ]
+        .reduce(function(carry, filename) {
+            return carry || requireConfig(path + '/' + filename);
+        }, false) || {};
+}
+
 module.exports = {
     printTask: printTask,
     task: task,
@@ -175,5 +220,6 @@ module.exports = {
     dashToCamelCase: dashToCamelCase,
     isInRange: isInRange,
     convertStringToArray: convertStringToArray,
-    formatDate: formatDate
+    formatDate: formatDate,
+    getConfigFromFile: getConfigFromFile
 };

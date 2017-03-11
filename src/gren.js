@@ -10,7 +10,7 @@ var Promise = Promise || require('es6-promise').Promise;
 var connectivity = require('connectivity');
 var templateConfig = require('./templates.json');
 var ObjectAssign = require('deep-assign');
-var configFile = fs.existsSync(process.cwd() + '/.gren.json') ? require(process.cwd() + '/.gren.json') : {};
+var configFile = utils.getConfigFromFile(process.cwd());
 
 var defaults = {
     tags: false,
@@ -120,7 +120,7 @@ function prepareRelease(gren, block) {
 
     if (block.id) {
         if (!gren.options.override) {
-            console.warn(chalk.yellow('Skipping ' + block.release + ' (use --override to replace it)'));
+            console.warn(chalk.black(chalk.bgYellow('Skipping ' + block.release + ' (use --override to replace it)')));
 
             return Promise.resolve();
         }
