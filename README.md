@@ -204,5 +204,3 @@ To see a full example of the changelog here [CHANGELOG.md](https://github.com/gi
 ## JavaScript documentation
 
 Find the full documentation for JavaScript function here: [http://github-tools.github.io/github-release-notes/](http://github-tools.github.io/github-release-notes/)
-
-Find 
