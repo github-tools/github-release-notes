@@ -1,6 +1,7 @@
 {
     "ignoreIssuesWith": [
         "duplicate",
-        "wontfix"
+        "wontfix",
+        "invalid"
     ]
 }
