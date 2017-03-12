@@ -183,6 +183,7 @@ function getLastTags(gren, releases) {
 
             var tags = response.data;
             var filteredTags = (getSelectedTags(gren.options.tags, tags) || [tags[0], tags[1]])
+                .filter(Boolean)
                 .map(function(tag) {
                     var tagRelease = releases && releases.filter(function(release) {
                         return release.tag_name === tag.name;
@@ -419,6 +420,7 @@ function templateIssueBody(body, rangeBody) {
  * @return {string}
  */
 function generateCommitsBody(gren, messages) {
+    messages.length === 1 && messages.push(null);
     return messages
         .slice(0, -1)
         .filter(function(message) {
@@ -483,8 +485,8 @@ function getCommitsBetweenTwo(gren, since, until) {
     };
 
     return gren.repo.listCommits(options)
-        .then(function(commits) {
-            return commitMessages(commits);
+        .then(function(response) {
+            return commitMessages(response.data);
         });
 }
 
@@ -509,6 +511,7 @@ function getCommitBlocks(gren, releaseRanges) {
                 .then(function(commits) {
                     return {
                         id: range[0].id,
+                        name: gren.options.prefix + range[0].name,
                         release: range[0].name,
                         date: range[0].date,
                         body: generateCommitsBody(gren, commits) + '\n'
