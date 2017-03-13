@@ -1,6 +1,6 @@
 {
     "name": "github-release-notes",
-    "version": "0.6.2",
+    "version": "0.6.3",
     "description": "Node module to publish release notes based on commits between the last two tags.",
     "main": "./github-release-notes.js",
     "scripts": {
