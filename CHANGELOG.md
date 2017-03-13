@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.6.3 (13/03/2017)
+
+- [**bug**] Fix multiple repo information [#48](https://github.com/github-tools/github-release-notes/issues/48)
+
+
+ --- 
+
 ## 0.6.2 (13/03/2017)
 
 - [**bug**] Remove unused option user.name [#45](https://github.com/github-tools/github-release-notes/issues/45)
