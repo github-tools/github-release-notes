@@ -32,25 +32,6 @@ function executeCommand(command, callback) {
 }
 
 /**
-* Get user informations
-*
-* @since 0.5.0
-* @public
-*
-* @param  {Function} callback
-*
-* @return {Promise} The promise that resolves user informations ({ user: username})
-*/
-function user(callback) {
-    return executeCommand('git config user.name', function(user) {
-        return {
-            user: user
-        };
-    })
-    .then(callback);
-}
-
-/**
 * Get repo informations
 *
 * @since 0.5.0
@@ -96,7 +77,6 @@ function token(callback) {
 }
 
 module.exports = {
-    user: user,
     repo: repo,
     token: token
 };
