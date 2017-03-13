@@ -755,7 +755,6 @@ function createChangelog(gren, body) {
  */
 function generateOptions(options) {
     return Promise.all([
-        options.user ? Promise.resolve(options.user) : githubInfo.user(),
         options.repo ? Promise.resolve(options.repo) : githubInfo.repo(),
         options.token ? Promise.resolve(options.token) : githubInfo.token()
     ]);
