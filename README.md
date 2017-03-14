@@ -17,207 +17,43 @@ Install `github-release-notes` via npm:
 npm install github-release-notes -g
 ```
 
-## Usage
+## Setup
 
-**gren** can be ran through the terminal, but before you can use it, you need to set up a couple of things.
-
-### Github Informations
-
-**gren** by default looks for your local git configuration to get the repo informations. This means you can run the command directly from the git repo folder.
-
-Otherwise, you can run it from wherever and specify a different repo as target, with:
-
-```shell
-gren --username=[username] --repo=[repo name]
-```
-
-#### Token
-
-To work, **gren** needs a `github token` (that can be easily generated following [this link](https://help.github.com/articles/creating-an-access-token-for-command-line-use/)). _You only need "repo" scope._
-
-Once generated, you can run the gren command with the token as variable:
-
-```shell
-gren --token=your_token_here
-```
-
-Or you can add it to your `~/.bash_profile` or `~/.zshrc`) as follows:
+First generate a `github token` at [this link](https://help.github.com/articles/creating-an-access-token-for-command-line-use/)). _You only need "repo" scope._
+Then add this to  `~/.bash_profile` or `~/.zshrc`):
 
 ```shell
 export GREN_GITHUB_TOKEN=your_token_here
 ```
 
-And you're ready to use it! Just run this command in your terminal:
+## Basic Usage
 
 ```shell
+# Navigate to your project directory
+cd ~/Path/to/repo
+# Run the task
 gren
 ```
 
-The module will look for the last tag, get all the issues closed in the time between that tag and the one before, and it will build release notes and draft the new release!
-
-## Options
-
-Following the options for the module:
-
-### Global options
-
-| Command | Options | Description | Default |
-| ------- | ------- | ----------- | ------- |
-| `--username` | **Required** | The username of the repo _e.g. `github-tools`_ | `null` |
-| `--repo` | **Required** | The repository name _e.g. `github-release-notes`_ | `null` |
-| `--action`| `release` `changelog` | The **gren** action to run. _(see details below for changelog generator)_ | `release` |
-| `--ignore-labels` | `wont_fix` `wont_fix,duplicate` | Ignore issues that contains one of the specified labels. | `false` |
-| `--ignore-issues-with` | `wont_fix` `wont_fix,duplicate` | Ignore issues that contains one of the specified labels. | `false` |
-| `--data-source` | `issues` `commits` | The informations you want to use to build release notes. | `issues` |
-| `--prefix` | **String** `e.g. v1.0.1` | Add a prefix to the tag version. | `null` |
-| `--override` | **Flag** | Override the release notes if existing. | `false` |
-| `--include-messages` | `merge` `commits` `all` | Filter the messages added to the release notes. _Only used when `data-source` used is `commits` | `commits` |
-
-### Release options
-
-| Command | Options | Description | Default |
-| ------- | ------- | ----------- | ------- |
-| `--draft` | **Flag** | Set the release as a draft. | `false` |
-| `--prerelease` | **Flag** | To set the release as a prerelease. | `false` |
-| `--tags`    |   `0.1.0` `0.2.0,0.1.0` `all` |   A specific tag or the range of tags to build the release notes from. You can also specify `all` to write all releases. _(To override  existing releases use the --override flag)_ | `false` |
-
-### Changelog options
-
-| Command | Options | Description | Default |
-| ------- | ------- | ----------- | ------- |
-| `--time-wrap` | `latest` `history` | The release notes you want to include in the changelog. | `latest` |
-| `--changelog-filename` | **String**, like `changelog.md` | The name of the changelog file. | `CHANGELOG.md` |
-
-
-### Config file
-
-You can create a configuration file where the task will be ran, where to specify your options.
-The options in the file would be camelCase *e.g*:
-
-```json
-{
-    "action": "release",
-    "timeWrap": "history",
-    "dataSource": "commits",
-    "ignoreIssuesWith": [
-        "wontfix",
-        "duplicate"
-    ]
-}
-```
-
-The accepted file extensions are the following:
-
-- `.grenrc`
-- `.grenrc.json`
-- `.grenrc.yml`
-- `.grenrc.yaml`
-- `.grenrc.js`
-
-#### Templates
-
-You can configure the output of **gren** using templates. Set your own configuration inside the config file, which will be merged with the defaults, shown below:
-
-```json
-{
-    "template": {
-        "commit": "- {{message}}",
-        "issue": "- {{labels}} {{name}} {{link}}",
-        "issueInfo": {
-            "labels": "{{labels}}",
-            "label": "[**{{label}}**]",
-            "name": "{{name}}",
-            "link": "[{{text}}]({{url}})"
-        },
-        "release": "## {{release}} {{date}}",
-        "releaseInfo": {
-            "release": "{{release}}",
-            "date": "({{date}})"
-        }
-    }
-}
-```
-
-## Examples
-
-The ways to use **gren** are various.
-
-### Simple
-
-The simple way, just looks for the last tag, gets all the issues closed between that tag and the one before and creates the new release with the generated body.
-
-```
-gren
-```
-
-### Commit messages
-
-Adding the flag `--data-source=commits` will change the source of the release notes to be the commit messages.
-
-```
-gren --data-source=commits
-```
-
-### Release specific tags
-
-The flag `--tags` accepts one or two tags.
-If you only give one tag, it will get the issues (or commit messages) between that tag and the one before.
-If you give two tags it will generate the release notes with the issues (or commit messages) between those two tag dates.
-
-```
-gren --tags=2.0.0,1.0.0
-```
-
-### Override an existing release
-
-If you trying to create an existing release, **gren** will throw an error *"0.3.0 is a release, use --override flag to override an existing release!*
-If you want then to override, simple use:
-
-```
-gren --override --tags=0.3.0
-```
-
-### Write all existing tags
-
-You can run the task to generate release notes for all existing tags.
-Releases that already exist will be skipped. To override them, use the flag `--override`
-
-```
-gren --override --tags=all
-```
-
-## Changelog Generator
-
-**gren** can also update generate the changelog.
-
-The following command, will get the latest release notes, and add it to an existing file or create it in the same directory where you run the command.
+Otherwise, you can run it anywhere passing the repo information:
 
 ```shell
-gren --action=changelog
+gren --username=[username] --repo=[repo name]
 ```
 
-The generated release notes will be added at the top of the file, and will look like this:
+To use a specific token you can specify it as option:
 
-> # Changelog
-##  v0.4.3 (02/03/2016)
-[**bug**] This is a issue name [#123](https://github.com/github-tools/github-tools)
-
-### Generate a full changelog
-
-If tou want to generate the whole changelog, you need to use the `--time-wrap=history`. This will generate the changelog based on all release notes.
-
-If you want to override the existing changelog, use `--override`. This will also generate the release notes from scratch.
-
-The usage would then be:
-
-```
-gren --action=changelog --time-wrap=history --override
+```shell
+gren --token=[your token]
 ```
 
-To see a full example of the changelog here [CHANGELOG.md](https://github.com/github-tools/github-release-notes/blob/develop/CHANGELOG.md)
+### Demo
 
----
+![gren demo](./docs/images/examples/exec_gren.gif)
 
-## JavaScript documentation
+### Actions
 
-Find the full documentation for JavaScript function here: [http://github-tools.github.io/github-release-notes/](http://github-tools.github.io/github-release-notes/)
+**Gren** has two main usages: `release` and `changelog`.
+You can select the action with the `--action` option.
+
+[See few examples here](https://github-tools.github.io/github-release-notes/examples.html)

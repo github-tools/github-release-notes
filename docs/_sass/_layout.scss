@@ -1,7 +1,7 @@
 /* Site Header
  * ============================================== */
     .site-header {
-        min-height: 450px;
+        min-height: 100px;
         background-color: $brand-color;
         background-image: url('');
         background-size: cover;
@@ -9,7 +9,6 @@
         background-attachment: fixed;
 
         @include media-query($on-palm) {
-            min-height: 250px;
             background-position: center -250px;
         }
     }
@@ -18,8 +17,8 @@
 
     .site-header h1 {
         display: block;
-        font-size: 80px !important;
-        line-height: 80px;
+        font-size: 40px !important;
+        line-height: 40px;
         letter-spacing: 3px;
         text-align: center;
         padding-top: 20px;
@@ -36,7 +35,7 @@
     .site-header span {
         border: 10px solid #FFF;
         padding: 0.3em 0.5em;
-        margin: 10px 20px;
+        margin: 0 20px 20px;
         display: inline-block;
 
         @include media-query($on-palm) {
@@ -49,7 +48,6 @@
         float: right;
         line-height: 56px;
         margin-right: 25px;
-        padding-bottom: 100px;
 
         .page-link {
             line-height: $base-line-height;
@@ -90,6 +88,7 @@
     .page-heading {
         font-size: 20px;
         padding-top: 2px;
+        color: $brand-color;
     }
 
 /* Archive

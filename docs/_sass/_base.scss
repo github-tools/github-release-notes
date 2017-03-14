@@ -91,39 +91,9 @@
         padding-left: $spacing-unit / 2;
         font-size: 17px;
         letter-spacing: -1px;
-        font-style: italic;
 
         > :last-child {
             margin-bottom: 0;
-        }
-    }
-
-/* Code Blocks
- * ============================================== */
-    pre,
-    code {
-        font-size: 13px;
-        border: 1px solid $grey-color-light;
-        font-family: Menlo, Monaco, "Andale Mono", serif;
-    }
-
-    code {
-        padding: 1px 3px;
-        background-color: #FFF;
-        border-radius: 5px;
-    }
-
-    pre {
-        border-radius: 3px;
-        padding: 8px 12px;
-        overflow-x: scroll;
-        background-color: #F5F5F5;
-
-        > code {
-            background-color: #F5F5F5;
-            border: 0;
-            padding-right: 0;
-            padding-left: 0;
         }
     }
 
@@ -184,4 +154,8 @@
 
     :not(.highlight)>table tr:nth-child(2n) {
         background-color: #f8f8f8
+    }
+
+    td {
+        text-align: left;
     }
