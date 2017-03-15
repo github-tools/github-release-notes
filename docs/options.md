@@ -77,19 +77,25 @@ You can configure the output of **gren** using templates. Set your own configura
 {
     "template": {
         "commit": "- {{message}}",
-        "issue": "- {{labels}} {{name}} {{link}}",
-        "issueInfo": {
-            "labels": "{{labels}}",
-            "label": "[**{{label}}**]",
-            "name": "{{name}}",
-            "link": "[{{text}}]({{url}})"
-        },
-        "release": "## {{release}} {{date}}",
-        "releaseInfo": {
-            "release": "{{release}}",
-            "date": "({{date}})"
-        }
+        "issue": "- {{labels}} {{name}} [{{text}}]({{url}})",
+        "label": "[**{{label}}**]",
+        "release": "## {{release}} {{date}}"
     }
 }
 ```
 {% endraw %}
+
+If you're using a `.grenrc.js` config file, you can use JavaScript to manipulate the templates using functions as values.
+The function will have an object as first parameter, containing all the values to display. _i.e._
+
+```javascript
+/* .grenrc.js */
+
+module.exports = {
+    template: {
+        issue: function (placeholders) {
+            return '- ' + placeholders.labels + ' | ' + placeholders.name.toLowerCase();
+        }
+    }
+}
+```

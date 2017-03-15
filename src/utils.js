@@ -184,7 +184,7 @@ function requireConfig(filepath) {
     }
 
     if (filepath.match(/\./g).length === 1) {
-        return JSON.parse(fs.readFileSync(filepath, "utf8"));
+        return JSON.parse(fs.readFileSync(filepath, 'utf8'));
     }
 
     return require(filepath);
@@ -201,15 +201,15 @@ function requireConfig(filepath) {
  */
 function getConfigFromFile(path) {
     return [
-            '.grenrc.yml',
-            '.grenrc.json',
-            '.grenrc.yaml',
-            '.grenrc.js',
-            '.grenrc'
-        ]
-        .reduce(function(carry, filename) {
-            return carry || requireConfig(path + '/' + filename);
-        }, false) || {};
+        '.grenrc.yml',
+        '.grenrc.json',
+        '.grenrc.yaml',
+        '.grenrc.js',
+        '.grenrc'
+    ]
+    .reduce(function(carry, filename) {
+        return carry || requireConfig(path + '/' + filename);
+    }, false) || {};
 }
 
 module.exports = {
