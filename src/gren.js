@@ -9,7 +9,7 @@ var chalk = require('chalk');
 var Promise = Promise || require('es6-promise').Promise;
 var connectivity = require('connectivity');
 var templateConfig = require('./templates.json');
-var ObjectAssign = require('deep-assign');
+var ObjectAssign = require('object-assign-deep');
 var configFile = utils.getConfigFromFile(process.cwd());
 
 var defaults = {
@@ -117,6 +117,8 @@ function prepareRelease(gren, block) {
         draft: gren.options.draft,
         prerelease: gren.options.prerelease
     };
+
+    console.log(block.body);
 
     if (block.id) {
         if (!gren.options.override) {
@@ -330,7 +332,7 @@ function templateLabels(gren, issue) {
         .map(function(label) {
             return template.generate({
                 label: label.name
-            }, gren.options.template.issueInfo.label);
+            }, gren.options.template.label);
         }).join('');
 }
 
@@ -349,7 +351,7 @@ function templateBlock(gren, block) {
     var releaseTemplate = template.generate({
         release: block.name,
         date: utils.formatDate(date)
-    }, template.generate(gren.options.template.releaseInfo, gren.options.template.release));
+    }, gren.options.template.release);
 
     return releaseTemplate + '\n\n' + block.body;
 }
@@ -365,17 +367,12 @@ function templateBlock(gren, block) {
  * @return {string}
  */
 function templateIssue(gren, issue) {
-    var issueTemplate = template.generate(gren.options.template.issueInfo, gren.options.template.issue);
-    var nameTemplate = template.generate({
-        name: issue.title
-    }, gren.options.template.issueInfo.name);
-
     return template.generate({
         labels: templateLabels(gren, issue),
-        name: nameTemplate,
+        name: issue.title,
         text: '#' + issue.number,
         url: issue.html_url
-    }, issueTemplate);
+    }, gren.options.template.issue);
 }
 
 /**
@@ -796,6 +793,8 @@ function GithubReleaseNotes(options) {
     this.repo = null;
     this.issues = null;
     this.isEditingLatestRelease = false;
+
+
 }
 
 /**
