@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Home - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="GithubReleaseNotes.html">GithubReleaseNotes</a><ul class='methods'><li data-type='method'><a href="GithubReleaseNotes.html#changelog">changelog</a></li><li data-type='method'><a href="GithubReleaseNotes.html#init">init</a></li><li data-type='method'><a href="GithubReleaseNotes.html#release">release</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#clearTasks">clearTasks</a></li><li><a href="global.html#commitMessages">commitMessages</a></li><li><a href="global.html#compareIssueLabels">compareIssueLabels</a></li><li><a href="global.html#convertStringToArray">convertStringToArray</a></li><li><a href="global.html#createChangelog">createChangelog</a></li><li><a href="global.html#createRelease">createRelease</a></li><li><a href="global.html#createReleaseRanges">createReleaseRanges</a></li><li><a href="global.html#dashToCamelCase">dashToCamelCase</a></li><li><a href="global.html#editRelease">editRelease</a></li><li><a href="global.html#executeCommand">executeCommand</a></li><li><a href="global.html#formatDate">formatDate</a></li><li><a href="global.html#generate">generate</a></li><li><a href="global.html#generateCommitsBody">generateCommitsBody</a></li><li><a href="global.html#generateOptions">generateOptions</a></li><li><a href="global.html#generateReleaseDatesChangelogBody">generateReleaseDatesChangelogBody</a></li><li><a href="global.html#getBashOptions">getBashOptions</a></li><li><a href="global.html#getClosedIssues">getClosedIssues</a></li><li><a href="global.html#getCommitBlocks">getCommitBlocks</a></li><li><a href="global.html#getCommitsBetweenTwo">getCommitsBetweenTwo</a></li><li><a href="global.html#getConfigFromFile">getConfigFromFile</a></li><li><a href="global.html#getIssueBlocks">getIssueBlocks</a></li><li><a href="global.html#getLastTags">getLastTags</a></li><li><a href="global.html#getLastTwoReleases">getLastTwoReleases</a></li><li><a href="global.html#getListReleases">getListReleases</a></li><li><a href="global.html#getReleaseDates">getReleaseDates</a></li><li><a href="global.html#getSelectedTags">getSelectedTags</a></li><li><a href="global.html#getTagDates">getTagDates</a></li><li><a href="global.html#hasNetwork">hasNetwork</a></li><li><a href="global.html#isInRange">isInRange</a></li><li><a href="global.html#prepareRelease">prepareRelease</a></li><li><a href="global.html#printTask">printTask</a></li><li><a href="global.html#repo">repo</a></li><li><a href="global.html#requireConfig">requireConfig</a></li><li><a href="global.html#sortReleasesByDate">sortReleasesByDate</a></li><li><a href="global.html#task">task</a></li><li><a href="global.html#templateBlock">templateBlock</a></li><li><a href="global.html#templateChangelog">templateChangelog</a></li><li><a href="global.html#templateCommits">templateCommits</a></li><li><a href="global.html#templateIssue">templateIssue</a></li><li><a href="global.html#templateIssueBody">templateIssueBody</a></li><li><a href="global.html#templateLabels">templateLabels</a></li><li><a href="global.html#token">token</a></li></ul>
+</nav>
+
+<div id="main">
+    
+
+    
+
+
+
+    
+
+
+
+
+
+
+
+
+
+    
+
+
+    <section class="readme">
+        <article><h1>Github Release Notes</h1><p><a href="https://badge.fury.io/js/github-release-notes"><img src="https://badge.fury.io/js/github-release-notes.svg" alt="npm version"></a>
+<a href="http://standardjs.com"><img src="https://img.shields.io/badge/code%20style-standard-brightgreen.svg" alt="js-standard-style"></a>
+<a href="https://travis-ci.org/github-tools/github-release-notes"><img src="https://travis-ci.org/github-tools/github-release-notes.svg?branch=master" alt="Build Status"></a>
+<a href="https://gitter.im/github-release-notes/Lobby?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge&amp;utm_content=badge"><img src="https://badges.gitter.im/github-release-notes/Lobby.svg" alt="Join the chat at https://gitter.im/github-release-notes/Lobby"></a></p>
+<blockquote>
+<p>Node module that generates release notes based on commit messages or closed issues between tags. It also can create a full changelog or add the latest release notes to the existing changelog file.</p>
+</blockquote>
+<p>If you want to include it in a task, you can use <a href="https://github.com/github-tools/grunt-github-release-notes">grunt-github-release-notes</a></p>
+<h2>Installation</h2><p>Install <code>github-release-notes</code> via npm:</p>
+<pre class="prettyprint source lang-shell"><code>npm install github-release-notes -g</code></pre><h2>Setup</h2><p>First generate a <code>github token</code> at <a href="https://help.github.com/articles/creating-an-access-token-for-command-line-use/">this link</a>. <em>You only need &quot;repo&quot; scope.</em>
+Then add this to  <code>~/.bash_profile</code> or <code>~/.zshrc</code>):</p>
+<pre class="prettyprint source lang-shell"><code>export GREN_GITHUB_TOKEN=your_token_here</code></pre><h2>Basic Usage</h2><pre class="prettyprint source lang-shell"><code># Navigate to your project directory
+cd ~/Path/to/repo
+# Run the task
+gren</code></pre><p>Otherwise, you can run it anywhere passing the repo information:</p>
+<pre class="prettyprint source lang-shell"><code>gren --username=[username] --repo=[repo name]</code></pre><p>To use a specific token you can specify it as option:</p>
+<pre class="prettyprint source lang-shell"><code>gren --token=[your token]</code></pre><h3>Demo</h3><p><img src="./docs/images/examples/exec_gren.gif" alt="gren demo"></p>
+<h3>Actions</h3><p><strong>Gren</strong> has two main usages: <code>release</code> and <code>changelog</code>.
+You can select the action with the <code>--action</code> option.</p>
+<p><a href="https://github-tools.github.io/github-release-notes">See full documentation here</a></p></article>
+    </section>
+
+
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Wed Mar 15 2017 02:19:27 GMT+0000 (GMT) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>
