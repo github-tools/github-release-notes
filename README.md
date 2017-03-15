@@ -56,4 +56,4 @@ gren --token=[your token]
 **Gren** has two main usages: `release` and `changelog`.
 You can select the action with the `--action` option.
 
-[See full documentation here](https://github-tools.github.io/github-release-notes/examples.html)
+[See full documentation here](https://github-tools.github.io/github-release-notes)
