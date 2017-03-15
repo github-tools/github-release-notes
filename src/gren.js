@@ -118,8 +118,6 @@ function prepareRelease(gren, block) {
         prerelease: gren.options.prerelease
     };
 
-    console.log(block.body);
-
     if (block.id) {
         if (!gren.options.override) {
             console.warn(chalk.black(chalk.bgYellow('Skipping ' + block.release + ' (use --override to replace it)')));
