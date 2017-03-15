@@ -1,2 +1,9 @@
 docs/
 node_modules/
+Gruntfile.js
+.grenrc
+.grenrc.*
+.jsdoc.conf.json
+.eslintrc
+.editorconfig
+.travis.yml
