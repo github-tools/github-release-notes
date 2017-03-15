@@ -2,6 +2,7 @@ module.exports = {
     "ignoreIssuesWith": [
         "duplicate",
         "wontfix",
-        "invalid"
+        "invalid",
+        "help_wanted"
     ]
 }
