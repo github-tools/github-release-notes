@@ -17,7 +17,7 @@ npm install github-release-notes -g
 
 ## Setup
 
-First generate a `github token` at [this link](https://help.github.com/articles/creating-an-access-token-for-command-line-use/)). _You only need "repo" scope._
+First generate a `github token` at [this link](https://help.github.com/articles/creating-an-access-token-for-command-line-use/). _You only need "repo" scope._
 Then add this to  `~/.bash_profile` or `~/.zshrc`):
 
 ```shell
