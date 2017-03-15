@@ -791,8 +791,6 @@ function GithubReleaseNotes(options) {
     this.repo = null;
     this.issues = null;
     this.isEditingLatestRelease = false;
-
-
 }
 
 /**
