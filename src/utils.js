@@ -207,9 +207,9 @@ function getConfigFromFile(path) {
         '.grenrc.js',
         '.grenrc'
     ]
-        .reduce(function(carry, filename) {
-            return carry || requireConfig(path + '/' + filename);
-        }, false) || {};
+    .reduce(function(carry, filename) {
+        return carry || requireConfig(path + '/' + filename);
+    }, false) || {};
 }
 
 module.exports = {
