@@ -6,11 +6,12 @@ module.exports = {
         "help wanted"
     ],
     "template": {
-        issue: ({ text, name, url, labels }) => {
-            labels = labels.slice(0, -1);
+        "issue": "- [{{text}}]({{url}}) {{name}}",
+        "group": ({ heading }) => {
+            heading = heading.charAt(0).toUpperCase() + heading.slice(1);
 
-            return `- [${text}](${url}) ${name} - ${labels}`;
-        },
-        "label": "_{{label}}_,"
-    }
-}
+            return `#### ${heading}s\n`;
+        }
+    },
+    "groupBy": "label"
+};
