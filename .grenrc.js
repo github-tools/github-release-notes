@@ -3,6 +3,6 @@ module.exports = {
         "duplicate",
         "wontfix",
         "invalid",
-        "help_wanted"
+        "help wanted"
     ]
 }
