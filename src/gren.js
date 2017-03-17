@@ -696,48 +696,34 @@ function generateReleaseDatesChangelogBody(gren) {
  * @return {boolean}
  */
 function createChangelog(gren, body) {
+    var filePath = process.cwd() + '/' + gren.options.changelogFilename;
+
     function createFile(fileBody) {
-        fs.writeFile(gren.options.changelogFilename, fileBody, function(err) {
-            if (err) {
-                throw err;
-            }
+        fs.writeFileSync(filePath, fileBody);
 
-            process.stdout.write('\n' + chalk.green('The changelog file has been saved!\n'));
+        process.stdout.write('\n' + chalk.green('The changelog file has been saved!\n'));
 
-            return true;
-        });
+        return Promise.resolve();
     }
 
-    try {
-        fs.readFile(gren.options.changelogFilename, 'utf-8', function(err, data) {
-            if (err) {
-                console.error(chalk.red(err));
-                return;
-            }
-
-            var newReleaseName = body.match(/(##\s[\w\s.]+)/)[0];
-
-            if (data.match(newReleaseName)) {
-                if (gren.options.force) {
-                    createFile(body + '\n\n --- \n\n' + data.replace(/^(#\s?\w*\n\n)/g, ''));
-
-                    return true;
-                } else if (gren.options.override) {
-                    createFile(body);
-
-                    return true;
-                }
-
-                console.error(chalk.red('\nThis release is already in the changelog\n'));
-
-                return false;
-            }
-
-            createFile(body + '\n --- \n\n' + data.replace(/^(#\s?\w*\n\n)/g, ''));
-        });
-    } catch (e) {
-        createFile(body);
+    if (!fs.existsSync(filePath)) {
+        return createFile(body);
     }
+
+    var data = fs.readFileSync(filePath, 'utf-8');
+    var newReleaseName = body.match(/(##\s[\w\s.]+)/)[0];
+
+    if (data.match(newReleaseName)) {
+        if (gren.options.force) {
+            return createFile(body + '\n\n --- \n\n' + data.replace(/^(#\s?\w*\n\n)/g, ''));
+        } else if (gren.options.override) {
+            return createFile(body);
+        }
+
+        return Promise.reject('This release is already in the changelog\n');
+    }
+
+    return createFile(body + '\n --- \n' + data.replace(/^(#\s?\w*\n\n)/g, ''));
 }
 
 /**
@@ -887,9 +873,6 @@ GithubReleaseNotes.prototype.changelog = function() {
     return generateReleaseDatesChangelogBody(this)
         .then(function(changelogBody) {
             return createChangelog(gren, changelogBody);
-        })
-        .then(function(success) {
-            return success;
         });
 };
 
