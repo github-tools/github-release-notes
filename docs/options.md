@@ -19,7 +19,7 @@ To pass it to the `GithubReleaseNotes` class, in the [configuration file](#confi
 | `username` | **Required** | The username of the repo _e.g. `github-tools`_ | `null` |
 | `repo` | **Required** | The repository name _e.g. `github-release-notes`_ | `null` |
 | `action`| `release` `changelog` | The **gren** action to run. _(see details below for changelog generator)_ | `release` |
-| `ignore-labels` | `wont_fix` `wont_fix,duplicate` | Ignore issues that contains one of the specified labels. | `false` |
+| `ignore-labels` | `wont_fix` `wont_fix,duplicate` | Ignore the specified labels. | `false` |
 | `ignore-issues-with` | `wont_fix` `wont_fix,duplicate` | Ignore issues that contains one of the specified labels. | `false` |
 | `data-source` | `issues` `commits` | The informations you want to use to build release notes. | `issues` |
 | `prefix` | **String** `e.g. v` | Add a prefix to the tag version. | `null` |
