@@ -6,11 +6,10 @@ module.exports = {
         "help wanted"
     ],
     "template": {
-        issue: ({ text, name, url, labels }) => {
-            labels = labels.slice(0, -1);
-
-            return `- [${text}](${url}) ${name} - ${labels}`;
-        },
-        "label": "_{{label}}_,"
+        "issue": "- [{{text}}]({{url}}) {{name}}"
+    },
+    "groupBy": {
+        "Framework Enhancements:": ["enhancement"],
+        "Bug Fixes:": ["bug"]
     }
-}
+};

@@ -19,7 +19,7 @@ To pass it to the `GithubReleaseNotes` class, in the [configuration file](#confi
 | `username` | **Required** | The username of the repo _e.g. `github-tools`_ | `null` |
 | `repo` | **Required** | The repository name _e.g. `github-release-notes`_ | `null` |
 | `action`| `release` `changelog` | The **gren** action to run. _(see details below for changelog generator)_ | `release` |
-| `ignore-labels` | `wont_fix` `wont_fix,duplicate` | Ignore issues that contains one of the specified labels. | `false` |
+| `ignore-labels` | `wont_fix` `wont_fix,duplicate` | Ignore the specified labels. | `false` |
 | `ignore-issues-with` | `wont_fix` `wont_fix,duplicate` | Ignore issues that contains one of the specified labels. | `false` |
 | `data-source` | `issues` `commits` | The informations you want to use to build release notes. | `issues` |
 | `prefix` | **String** `e.g. v` | Add a prefix to the tag version. | `null` |
@@ -33,6 +33,7 @@ To pass it to the `GithubReleaseNotes` class, in the [configuration file](#confi
 | `draft` | **Flag** | Set the release as a draft. | `false` |
 | `prerelease` | **Flag** | To set the release as a prerelease. | `false` |
 | `tags`    |   `0.1.0` `0.2.0,0.1.0` `all` |   A specific tag or the range of tags to build the release notes from. You can also specify `all` to write all releases. _(To override  existing releases use the --override flag)_ | `false` |
+| `group-by` | `label` `{...}` | Group the issues using the labels as group headings. You can set custom headings for groups of labels. [See example]({{ "example#group-by" | relative_url }}) | `false` |
 
 ### Changelog options
 
@@ -79,7 +80,9 @@ You can configure the output of **gren** using templates. Set your own configura
         "commit": "- {{message}}",
         "issue": "- {{labels}} {{name}} [{{text}}]({{url}})",
         "label": "[**{{label}}**]",
-        "release": "## {{release}} {{date}}"
+        "noLabel": "closed",
+        "release": "## {{release}} {{date}}",
+        "group": "#### {{heading}}\n"
     }
 }
 ```

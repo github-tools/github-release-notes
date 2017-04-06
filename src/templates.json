@@ -2,5 +2,7 @@
     "commit": "- {{message}}",
     "issue": "- {{labels}} {{name}} [{{text}}]({{url}})",
     "label": "[**{{label}}**]",
-    "release": "## {{release}} {{date}}"
+    "noLabel": "closed",
+    "release": "## {{release}} {{date}}",
+    "group": "#### {{heading}}\n"
 }

@@ -26,7 +26,8 @@ var defaults = {
     override: false,
     ignoreLabels: false, // || array of labels
     ignoreIssuesWith: false, // || array of labels
-    template: templateConfig
+    template: templateConfig,
+    groupBy: false
 };
 
 /**
@@ -293,7 +294,7 @@ function getLastTwoReleases(gren) {
 }
 
 /**
- * Return a string with a - to be a bulvar list (used for a mapping)
+ * Return the templated commit message
  *
  * @since 0.1.0
  * @private
@@ -319,8 +320,8 @@ function templateCommits(gren, message) {
  * @return {string}
  */
 function templateLabels(gren, issue) {
-    if (!issue.labels.length) {
-        issue.labels.push({name: 'closed'});
+    if (!issue.labels.length && gren.options.template.noLabel) {
+        issue.labels.push({name: gren.options.template.noLabel});
     }
 
     return issue.labels
@@ -402,6 +403,31 @@ function templateChangelog(gren, blocks) {
  */
 function templateIssueBody(body, rangeBody) {
     return (body.length ? body.join('\n') : rangeBody || '*No changelog for this release.*') + '\n';
+}
+
+/**
+ * Generates the template for the groups
+ *
+ * @since  0.8.0
+ * @private
+ *
+ * @param  {GithubReleaseNotes} gren
+ * @param  {Object} groups The groups to template e.g.
+ * {
+ *     'bugs': [{...}, {...}, {...}]
+ * }
+ *
+ * @return {string}
+ */
+function templateGroups(gren, groups) {
+    return Object.keys(groups).map(function(group) {
+        var heading = template.generate({
+            heading: group
+        }, gren.options.template.group);
+        var body = groups[group].join('\n');
+
+        return heading + '\n' + body;
+    });
 }
 
 /**
@@ -568,6 +594,90 @@ function getClosedIssues(gren, releaseRanges) {
 }
 
 /**
+ * Group the issues based on their first label
+ *
+ * @since 0.8.0
+ * @private
+ *
+ * @param  {GithubReleaseNotes} gren
+ * @param  {Array} issues
+ *
+ * @return {string}
+ */
+function groupByLabel(gren, issues) {
+    var groups = [];
+
+    issues.forEach(function(issue) {
+        if (!issue.labels.length && gren.options.template.noLabel) {
+            issue.labels.push({name: gren.options.template.noLabel});
+        }
+
+        var labelName = issue.labels[0].name;
+
+        if (!groups[labelName]) {
+            groups[labelName] = [];
+        }
+
+        groups[labelName].push(templateIssue(gren, issue));
+    });
+
+    return templateGroups(gren,  utils.sortObject(groups));
+}
+
+/**
+ * Create groups of issues based on labels
+ *
+ * @since  0.8.0
+ * @private
+ *
+ * @param {GithubReleaseNotes} gren
+ * @param  {Array} issues The array of all the issues.
+ *
+ * @return {Array}
+ */
+function groupBy(gren, issues) {
+    var groupBy = gren.options.groupBy;
+
+    if (!groupBy) {
+        return issues.map(templateIssue.bind(null, gren));
+    }
+
+    if (groupBy === 'label') {
+        return groupByLabel(gren, issues);
+    }
+
+    if (typeof groupBy !== 'object') {
+        throw chalk.red('The option for groupBy is invalid, please check the documentation');
+    }
+
+    var allLabels = Object.keys(groupBy).reduce(function(carry, group) {
+        return carry.concat(groupBy[group]);
+    }, []);
+
+    var groups = Object.keys(groupBy).reduce(function(carry, group) {
+        var groupIssues = issues.filter(function(issue) {
+            if (!issue.labels.length && gren.options.template.noLabel) {
+                issue.labels.push({name: gren.options.template.noLabel});
+            }
+
+            return issue.labels.some(function(label) {
+                var isOtherLabel = groupBy[group].indexOf('...') !== -1 && allLabels.indexOf(label.name) === -1;
+
+                return groupBy[group].indexOf(label.name) !== -1 || isOtherLabel;
+            });
+        }).map(templateIssue.bind(null, gren));
+
+        if (groupIssues.length) {
+            carry[group] = groupIssues;
+        }
+
+        return carry;
+    }, {});
+
+    return templateGroups(gren, groups);
+}
+
+/**
  * Get the blocks of issues based on release dates
  *
  * @since 0.5.0
@@ -585,15 +695,15 @@ function getIssueBlocks(gren, releaseRanges) {
         .then(function(issues) {
             return releaseRanges
                 .map(function(range) {
-                    var body = (!range[0].body || gren.options.override) &&
-                        issues.filter(function(issue) {
-                            return utils.isInRange(
-                                Date.parse(issue.closed_at),
-                                Date.parse(range[1].date),
-                                Date.parse(range[0].date)
-                            );
-                        })
-                        .map(templateIssue.bind(null, gren));
+                    var filteredIssues = issues.filter(function(issue) {
+                        return utils.isInRange(
+                            Date.parse(issue.closed_at),
+                            Date.parse(range[1].date),
+                            Date.parse(range[0].date)
+                        );
+                    });
+
+                    var body = (!range[0].body || gren.options.override) && groupBy(gren, filteredIssues);
 
                     return {
                         id: range[0].id,

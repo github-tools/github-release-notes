@@ -5,6 +5,25 @@ var fs = require('fs');
 require('require-yaml');
 
 /**
+ * Sort an object by its keys
+ *
+ * @since 0.8.0
+ * @public
+ *
+ * @param  {Object} object
+ * @return {Object}
+ */
+function sortObject(object) {
+    return Object.keys(object)
+        .sort()
+        .reduce(function(result, key) {
+            result[key] = object[key];
+
+            return result;
+        }, {});
+}
+
+/**
 * Print a task name in a custom format
 *
 * @since 0.5.0
@@ -213,6 +232,7 @@ function getConfigFromFile(path) {
 }
 
 module.exports = {
+    sortObject: sortObject,
     printTask: printTask,
     task: task,
     clearTasks: clearTasks,
