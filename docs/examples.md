@@ -62,6 +62,41 @@ gren --tags=all
 
 ![exec gren all tags]({{ "images/examples/exec_gren_all_tags.gif" | relative_rul }})
 
+### Group by
+
+You can group the issues in the release notes. So far the only way to group them is by label and you can do it in two different ways:
+
+1. Just using the first label of an issue to group it.
+
+```json
+{
+    "groupBy": "label"
+}
+```
+
+2. Using an object where the keys are the group names, and the values are the arrays of labels included in that group.
+
+```json
+{
+    "groupBy": {
+        "Bug fixes:": ["bug"],
+        "Framework Enhancements:": ["enhancement"]
+    }
+}
+```
+
+An issue with no label will be included using the template option `no-label` (default "_closed_") as group name.
+To list all the issues that have any other label, use `"..."` as label name.
+
+```json
+{
+    "groupBy": {
+        "Bug fixes:": ["bug"],
+        "Other stuff:": ["..."] // This will include the issues that have any label but not "bug"
+    }
+}
+```
+
 ### Changelog
 
 There different ways to generate the changelog:
