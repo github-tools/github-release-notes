@@ -6,12 +6,10 @@ module.exports = {
         "help wanted"
     ],
     "template": {
-        "issue": "- [{{text}}]({{url}}) {{name}}",
-        "group": ({ heading }) => {
-            heading = heading.charAt(0).toUpperCase() + heading.slice(1);
-
-            return `#### ${heading}s\n`;
-        }
+        "issue": "- [{{text}}]({{url}}) {{name}}"
     },
-    "groupBy": "label"
+    "groupBy": {
+        "Framework Enhancements:": ["enhancement"],
+        "Bug Fixes:": ["bug"]
+    }
 };
