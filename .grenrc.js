@@ -1,4 +1,5 @@
 module.exports = {
+    "prefix": "v",
     "ignoreIssuesWith": [
         "duplicate",
         "wontfix",
