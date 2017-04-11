@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.8.0 (11/04/2017)
+
+#### Framework Enhancements:
+
+- [#64](https://github.com/github-tools/github-release-notes/issues/64) Get the options with an external npm tool
+- [#61](https://github.com/github-tools/github-release-notes/issues/61) Rework the Changelog generator function
+- [#55](https://github.com/github-tools/github-release-notes/issues/55) Create a group-by-label option 
+
+---
+
 ## v0.7.2 (17/03/2017)
 
 #### Bug Fixes:
