@@ -241,5 +241,6 @@ module.exports = {
     isInRange: isInRange,
     convertStringToArray: convertStringToArray,
     formatDate: formatDate,
-    getConfigFromFile: getConfigFromFile
+    getConfigFromFile: getConfigFromFile,
+    noop: function() {}
 };

@@ -88,7 +88,7 @@ You can group the issues in the release notes. So far the only way to group them
 An issue with no label will be included using the template option `no-label` (default "_closed_") as group name.
 To list all the issues that have any other label, use `"..."` as label name.
 
-```json
+```javascript
 {
     "groupBy": {
         "Bug fixes:": ["bug"],
@@ -99,15 +99,15 @@ To list all the issues that have any other label, use `"..."` as label name.
 
 ### Changelog
 
-There different ways to generate the changelog:
+The `changelog` action will generate a `CHANGELOG.md` file where you run the script. The content of the file will be generated in different ways, depending of the options you provide:
 
-1. Get last release notes from github and prepend them to the `CHANGELOG.md` file.
+1. Get release notes from github releases, which you might have generated with this tool or not. _N.B. if the file exists already the script **won't** override it, unless you use the flag `--override`_ 
 ```shell
 gren --action=changelog
 ```
-2. Use all release notes from github and prepend them to the `CHANGELOG.md` file.
+2. Generate the release notes independently using the `gren` script. This will allows you to use all the [options]({{ "options#global-options" | relative_url }}) that the release script uses.
 ```shell
-gren --action=changelog --time-wrap=history
+gren --action=changelog --generate --tags=all
 ```
 3. Override existing release notes and generate new ones from the task and replace the `CHANGELOG.md` file.
 ```shell
@@ -116,7 +116,7 @@ gren --action=changelog --time-wrap=history --override
 
 You can also change the filename with the option `--changelog-filename`. For a complete reference, check the [options]({{ "options#changelog-options" | relative_url }}).
 
-The changelog will look like this:
+The changelog will look like this (depending of your template configuration):
 
 > # Changelog
 ##  v0.4.3 (02/03/2016)

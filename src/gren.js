@@ -23,6 +23,7 @@ var defaults = {
     includeMessages: 'commits', // || merges || all
     prerelease: false,
     dateZero: new Date(0),
+    generate: false,
     override: false,
     ignoreLabels: false, // || array of labels
     ignoreIssuesWith: false, // || array of labels
@@ -235,28 +236,6 @@ function getTagDates(gren, tags) {
  * @since 0.5.0
  * @private
  *
- * @param  {Object[]} releases A list of release Objects
- *
- * @return {Array} The list of the dates
- */
-function getReleaseDates(gren, releases) {
-    return [].concat(releases).map(function(release) {
-        return {
-            id: release.id,
-            name: release.name,
-            tag_name: release.tag_name,
-            date: release.created_at,
-            body: release.body || null
-        };
-    });
-}
-
-/**
- * Get all releases
- *
- * @since 0.5.0
- * @private
- *
  * @param  {GithubReleaseNotes} gren The gren object
  *
  * @return {Promise} The promise which resolves an array of releases
@@ -273,23 +252,6 @@ function getListReleases(gren) {
             process.stdout.write(releases.length + ' releases found\n');
 
             return releases;
-        });
-}
-
-/**
- * Get the latest releases
- *
- * @since 0.5.0
- * @private
- *
- * @param  {GithubReleaseNotes} gren The gren object
- *
- * @return {Promise} The promise which resolves the tag name of the release
- */
-function getLastTwoReleases(gren) {
-    return getListReleases(gren)
-        .then(function(releases) {
-            return releases.slice(0, 2);
         });
 }
 
@@ -336,23 +298,24 @@ function templateLabels(gren, issue) {
 }
 
 /**
- * Generate the MD template a block
+ * Generate the releases bodies from a release Objects Array
  *
- * @since 0.5.0
+ * @since 0.8.0
  * @private
  *
- * @param  {Object} block ({name: 'v1.2.3', body: []})
+ * @param  {GithubReleaseNotes} gren
+ * @param  {Array} releases The release Objects Array coming from GitHub
  *
  * @return {string}
  */
-function templateBlock(gren, block) {
-    var date = new Date(block.date);
-    var releaseTemplate = template.generate({
-        release: block.name,
-        date: utils.formatDate(date)
-    }, gren.options.template.release);
-
-    return releaseTemplate + '\n\n' + block.body;
+function templateReleases(gren, releases) {
+    return releases.map(function(release) {
+        return template.generate({
+            release: release.name,
+            date: utils.formatDate(new Date(release.published_at)),
+            body: release.body
+        }, gren.options.template.release);
+    }).join(gren.options.template.releaseSeparator);
 }
 
 /**
@@ -372,23 +335,6 @@ function templateIssue(gren, issue) {
         text: '#' + issue.number,
         url: issue.html_url
     }, gren.options.template.issue);
-}
-
-/**
- * Generate the Changelog MD template
- *
- * @since 0.5.0
- * @private
- *
- * @param  {Object[]} blocks
- *
- * @return {string}
- */
-function templateChangelog(gren, blocks) {
-    return '# Changelog\n\n' +
-        blocks
-            .map(templateBlock.bind(null, gren))
-            .join('\n\n --- \n\n');
 }
 
 /**
@@ -527,18 +473,18 @@ function getCommitBlocks(gren, releaseRanges) {
 
     return Promise.all(
         releaseRanges
-        .map(function(range) {
-            return getCommitsBetweenTwo(gren, range[1].date, range[0].date)
-                .then(function(commits) {
-                    return {
-                        id: range[0].id,
-                        name: gren.options.prefix + range[0].name,
-                        release: range[0].name,
-                        date: range[0].date,
-                        body: generateCommitsBody(gren, commits) + '\n'
-                    };
-                });
-        })
+            .map(function(range) {
+                return getCommitsBetweenTwo(gren, range[1].date, range[0].date)
+                    .then(function(commits) {
+                        return {
+                            id: range[0].id,
+                            name: gren.options.prefix + range[0].name,
+                            release: range[0].name,
+                            published_at: range[0].date,
+                            body: generateCommitsBody(gren, commits) + '\n'
+                        };
+                    });
+            })
     );
 }
 
@@ -621,7 +567,7 @@ function groupByLabel(gren, issues) {
         groups[labelName].push(templateIssue(gren, issue));
     });
 
-    return templateGroups(gren,  utils.sortObject(groups));
+    return templateGroups(gren, utils.sortObject(groups));
 }
 
 /**
@@ -709,7 +655,7 @@ function getIssueBlocks(gren, releaseRanges) {
                         id: range[0].id,
                         release: range[0].name,
                         name: gren.options.prefix + range[0].name,
-                        date: range[0].date,
+                        published_at: range[0].date,
                         body: templateIssueBody(body, range[0].body)
                     };
                 });
@@ -763,77 +709,74 @@ function createReleaseRanges(gren, releaseDates) {
 }
 
 /**
- * Generate a CHANGELOG.md file based on Time and issues
+ * Generate release blocks based on issues or commit messages
+ * depending on the option.
  *
- * @since 0.5.0
- * @private
+ * @param  {GithubReleaseNotes} gren
  *
- * @return {Promise[]}
+ * @return {Promise} Resolving the release blocks
  */
-function generateReleaseDatesChangelogBody(gren) {
-    var releaseActions = {
-        history: getListReleases,
-        latest: getLastTwoReleases
-    };
+function getReleaseBlocks(gren) {
+    var loaded;
     var dataSource = {
         issues: getIssueBlocks,
         commits: getCommitBlocks
     };
 
-    return releaseActions[gren.options.timeWrap](gren)
+    return getListReleases(gren)
         .then(function(releases) {
-            if (releases.length === 0) {
-                throw chalk.red('There are no releases! Run gren to generate release notes');
-            }
-
-            var releaseRanges = createReleaseRanges(gren, getReleaseDates(gren, releases));
-
-            return dataSource[gren.options.dataSource](gren, releaseRanges);
+            return getLastTags(gren, releases.length ? releases : false);
         })
-        .then(function(blocks) {
-            return templateChangelog(gren, blocks);
+        .then(function(tags) {
+            loaded = utils.task(gren, 'Getting the tag dates ranges');
+
+            return Promise.all(getTagDates(gren, tags));
+        })
+        .then(function(releaseDates) {
+            loaded();
+
+            return dataSource[gren.options.dataSource](
+                gren,
+                createReleaseRanges(gren, releaseDates)
+            );
         });
 }
 
 /**
- * Create the CHANGELOG.md file
+ * Check if the changelog file exists
  *
- * @since 0.5.0
+ * @since 0.8.0
  * @private
  *
- * @param  {string} body
+ * @param  {GithubReleaseNotes} gren
  *
- * @return {boolean}
+ * @return {Promise}
+ */
+function checkChangelogFile(gren) {
+    var filePath = process.cwd() + '/' + gren.options.changelogFilename;
+
+    if (fs.existsSync(filePath) && !gren.options.override) {
+        Promise.reject(chalk.red('Looks like there is already a changelog, to override it use --override'));
+    }
+
+    return Promise.resolve();
+}
+
+/**
+ * Create the changelog file
+ *
+ * @since 0.8.0
+ * @private
+ *
+ * @param  {GithubReleaseNotes} gren
+ * @param  {string} body The body of the file
  */
 function createChangelog(gren, body) {
     var filePath = process.cwd() + '/' + gren.options.changelogFilename;
 
-    function createFile(fileBody) {
-        fs.writeFileSync(filePath, fileBody);
+    fs.writeFileSync(filePath, gren.options.template.changelogTitle + body);
 
-        process.stdout.write('\n' + chalk.green('The changelog file has been saved!\n'));
-
-        return Promise.resolve();
-    }
-
-    if (!fs.existsSync(filePath)) {
-        return createFile(body);
-    }
-
-    var data = fs.readFileSync(filePath, 'utf-8');
-    var newReleaseName = body.match(/(##\s[\w\s.]+)/)[0];
-
-    if (data.match(newReleaseName)) {
-        if (gren.options.force) {
-            return createFile(body + '\n\n --- \n\n' + data.replace(/^(#\s?\w*\n\n)/g, ''));
-        } else if (gren.options.override) {
-            return createFile(body);
-        }
-
-        return Promise.reject('This release is already in the changelog\n');
-    }
-
-    return createFile(body + '\n --- \n' + data.replace(/^(#\s?\w*\n\n)/g, ''));
+    console.log(chalk.green('\nChangelog created!'));
 }
 
 /**
@@ -936,30 +879,9 @@ GithubReleaseNotes.prototype.init = function() {
 GithubReleaseNotes.prototype.release = function() {
     utils.printTask('\nRelease');
 
-    var loaded;
     var gren = this;
-    var dataSource = {
-        issues: getIssueBlocks,
-        commits: getCommitBlocks
-    };
 
-    return getListReleases(this)
-        .then(function(releases) {
-            return getLastTags(gren, releases.length ? releases : false);
-        })
-        .then(function(tags) {
-            loaded = utils.task(gren, 'Getting the tag dates ranges');
-
-            return Promise.all(getTagDates(gren, tags));
-        })
-        .then(function(releaseDates) {
-            loaded();
-
-            return dataSource[gren.options.dataSource](
-                gren,
-                createReleaseRanges(gren, releaseDates)
-            );
-        })
+    return getReleaseBlocks(this)
         .then(function(blocks) {
             return blocks.reduce(function(carry, block) {
                 return carry.then(prepareRelease.bind(null, gren, block));
@@ -968,9 +890,11 @@ GithubReleaseNotes.prototype.release = function() {
 };
 
 /**
- * Generate the Changelog
+ * Generate the Changelog based on the github releases, or
+ * from fresh generated releases.
  *
  * @since 0.5.0
+ *
  * @public
  *
  * @param {string} type The type of changelog
@@ -980,9 +904,23 @@ GithubReleaseNotes.prototype.changelog = function() {
 
     var gren = this;
 
-    return generateReleaseDatesChangelogBody(this)
-        .then(function(changelogBody) {
-            return createChangelog(gren, changelogBody);
+    return checkChangelogFile(this)
+        .then(function() {
+            if (gren.options.generate) {
+                return getReleaseBlocks(gren);
+            }
+
+            return getListReleases(gren);
+        })
+        .then(function(releases) {
+            if (releases.length === 0) {
+                throw chalk.red('There are no releases, use --generate to create release notes, or run the release command.');
+            }
+
+            return Promise.resolve(releases);
+        })
+        .then(function(releases) {
+            createChangelog(gren, templateReleases(gren, releases));
         });
 };
 
