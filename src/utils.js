@@ -2,6 +2,7 @@
 
 var chalk = require('chalk');
 var fs = require('fs');
+var minimist = require('minimist');
 require('require-yaml');
 
 /**
@@ -130,17 +131,7 @@ function dashToCamelCase(value) {
 * @return {Object}     The object containg the key/value options
 */
 function getBashOptions(args) {
-    var settings = {};
-
-    for (var i = 2; i < args.length; i++) {
-        var paramArray = args[i].split('=');
-        var key = paramArray[0].replace('--', '');
-        var value = paramArray[1];
-
-        settings[dashToCamelCase(key)] = value || true;
-    }
-
-    return settings;
+    return minimist(args.slice(2));
 }
 
 /**
