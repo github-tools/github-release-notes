@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.8.1 (13/04/2017)
+*No changelog for this release.*
+
+---
+
 ## v0.8.0 (11/04/2017)
 
 #### Framework Enhancements:
