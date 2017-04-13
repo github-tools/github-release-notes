@@ -131,7 +131,16 @@ function dashToCamelCase(value) {
 * @return {Object}     The object containg the key/value options
 */
 function getBashOptions(args) {
-    return minimist(args.slice(2));
+    var options = minimist(args.slice(2));
+    var settings = {};
+
+    Object.keys(options).forEach(function(optionName) {
+        if (optionName !== '_') {
+            settings[dashToCamelCase(optionName)] = options[optionName];
+        }
+    });
+
+    return settings;
 }
 
 /**

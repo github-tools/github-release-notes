@@ -15,7 +15,6 @@ exports['utils'] = {
         let bashOptions = utils.getBashOptions([null, null, '--key=value', '--key2=value2']);
 
         test.deepEqual(JSON.stringify(bashOptions), JSON.stringify({
-            _: [],
             key: 'value',
             key2: 'value2'
         }), 'Given an array of node arguments.');
