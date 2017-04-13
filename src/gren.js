@@ -14,9 +14,10 @@ var configFile = utils.getConfigFromFile(process.cwd());
 
 var defaults = {
     tags: false,
-    timeWrap: 'latest', // || history
     changelogFilename: 'CHANGELOG.md',
     dataSource: 'issues', // || commits
+    onlyMilestones: false,
+    milestoneMatch: 'Release {{tag_name}}',
     draft: false,
     force: false,
     prefix: '',
@@ -509,6 +510,22 @@ function compareIssueLabels(ignoreLabels, labels) {
 }
 
 /**
+ * Filter the issue based on gren options and labels
+ *
+ * @since 0.9.0
+ * @private
+ *
+ * @param  {GithubReleaseNotes} gren
+ * @param  {Object} issue
+ *
+ * @return {Boolean}
+ */
+function filterIssue(gren, issue) {
+    return !issue.pull_request && compareIssueLabels(gren.options.ignoreIssuesWith, issue.labels) &&
+        !((gren.options.onlyMilestones || gren.options.dataSource === 'milestones') && !issue.milestone);
+}
+
+/**
  * Get all the closed issues from the current repo
  *
  * @since 0.5.0
@@ -529,9 +546,7 @@ function getClosedIssues(gren, releaseRanges) {
     .then(function(response) {
         loaded();
 
-        var filteredIssues = response.data.filter(function(issue) {
-            return !issue.pull_request && compareIssueLabels(gren.options.ignoreIssuesWith, issue.labels);
-        });
+        var filteredIssues = response.data.filter(filterIssue.bind(null, gren));
 
         process.stdout.write(filteredIssues.length + ' issues found\n');
 
@@ -624,6 +639,31 @@ function groupBy(gren, issues) {
 }
 
 /**
+ * Filter the issue based on the date range, or if is in the release
+ * milestone.
+ *
+ * @since 0.9.0
+ * @private
+ *
+ * @param  {GithubReleaseNotes} gren
+ * @param  {Array} range The release ranges
+ * @param  {Object} issue GitHub issue
+ *
+ * @return {Boolean}
+ */
+function filterBlockIssue(gren, range, issue) {
+    if (gren.options.dataSource === 'milestones') {
+        return gren.options.milestoneMatch.replace('{{tag_name}}', range[0].name) === issue.milestone.title;
+    }
+
+    return utils.isInRange(
+        Date.parse(issue.closed_at),
+        Date.parse(range[1].date),
+        Date.parse(range[0].date)
+    );
+}
+
+/**
  * Get the blocks of issues based on release dates
  *
  * @since 0.5.0
@@ -641,14 +681,7 @@ function getIssueBlocks(gren, releaseRanges) {
         .then(function(issues) {
             return releaseRanges
                 .map(function(range) {
-                    var filteredIssues = issues.filter(function(issue) {
-                        return utils.isInRange(
-                            Date.parse(issue.closed_at),
-                            Date.parse(range[1].date),
-                            Date.parse(range[0].date)
-                        );
-                    });
-
+                    var filteredIssues = issues.filter(filterBlockIssue.bind(null, gren, range));
                     var body = (!range[0].body || gren.options.override) && groupBy(gren, filteredIssues);
 
                     return {
@@ -694,7 +727,7 @@ function createReleaseRanges(gren, releaseDates) {
     var range = 2;
     var sortedReleaseDates = sortReleasesByDate(releaseDates);
 
-    if (sortedReleaseDates.length === 1 || gren.options.timeWrap === 'history') {
+    if (sortedReleaseDates.length === 1) {
         sortedReleaseDates.push({
             id: 0,
             date: new Date(0)
@@ -720,7 +753,8 @@ function getReleaseBlocks(gren) {
     var loaded;
     var dataSource = {
         issues: getIssueBlocks,
-        commits: getCommitBlocks
+        commits: getCommitBlocks,
+        milestones: getIssueBlocks
     };
 
     return getListReleases(gren)
@@ -829,7 +863,6 @@ function GithubReleaseNotes(options) {
     this.options.ignoreIssuesWith = utils.convertStringToArray(this.options.ignoreIssuesWith);
     this.repo = null;
     this.issues = null;
-    this.isEditingLatestRelease = false;
 }
 
 /**
