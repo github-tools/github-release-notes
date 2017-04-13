@@ -1,7 +1,10 @@
 # Changelog
 
 ## v0.8.1 (13/04/2017)
-*No changelog for this release.*
+
+#### Bug Fixes:
+
+- [#70](https://github.com/github-tools/github-release-notes/issues/70) Options don't get converted to camelCase from bash
 
 ---
 
