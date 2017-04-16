@@ -16,6 +16,7 @@ To pass it to the `GithubReleaseNotes` class, in the [configuration file](#confi
 
 | Command | Options | Description | Default |
 | ------- | ------- | ----------- | ------- |
+| `api-url` | **Optional** | Override the GitHub API URL, allows **gren** to connect to a private [GHE](https://enterprise.github.com/) installation. _e.g. `https://my-enterprise-domain.com/api/v3`_ | `null` |
 | `username` | **Required** | The username of the repo _e.g. `github-tools`_ | `null` |
 | `repo` | **Required** | The repository name _e.g. `github-release-notes`_ | `null` |
 | `action`| `release` `changelog` | The **gren** action to run. _(see details below for changelog generator)_ | `release` |
