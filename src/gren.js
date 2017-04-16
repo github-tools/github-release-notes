@@ -861,7 +861,7 @@ GithubReleaseNotes.prototype.init = function() {
 
             var githubApi = new Github({
                 token: gren.options.token
-            });
+            }, gren.options.apiUrl);
 
             gren.repo = githubApi.getRepo(gren.options.username, gren.options.repo);
             gren.issues = githubApi.getIssues(gren.options.username, gren.options.repo);
