@@ -35,6 +35,16 @@ Adding the flag `--data-source=commits` will change the source of the release no
 gren --data-source=commits
 ```
 
+### Milestones
+
+You can base your release notes on milestones.
+The way the script will _link_ the releases to your milestones is by the tag name, using the option `milestone-match`.
+ _e.g._ `Release {{tag_name}}` will match the milestone titles that have the relative tag name, in this case something like `Release 0.4.1`.
+
+ ```
+gren --data-source=milestones --milestone-match="v{{tag_name}}"
+ ``` 
+
 ### Release specific tags
 
 The flag `--tags` accepts one or two tags.
