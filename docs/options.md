@@ -16,18 +16,20 @@ To pass it to the `GithubReleaseNotes` class, in the [configuration file](#confi
 
 | Command | Options | Description | Default |
 | ------- | ------- | ----------- | ------- |
-| `api-url` | **Optional** | Override the GitHub API URL, allows **gren** to connect to a private [GHE](https://enterprise.github.com/) installation. _e.g. `https://my-enterprise-domain.com/api/v3`_ | `null` |
 | `username` | **Required** | The username of the repo _e.g. `github-tools`_ | `null` |
 | `repo` | **Required** | The repository name _e.g. `github-release-notes`_ | `null` |
+| `api-url` | **Optional** | Override the GitHub API URL, allows **gren** to connect to a private [GHE](https://enterprise.github.com/) installation. _e.g. `https://my-enterprise-domain.com/api/v3`_ | `null` |
 | `action`| `release` `changelog` | The **gren** action to run. _(see details below for changelog generator)_ | `release` |
 | `tags`    |   `0.1.0` `0.2.0,0.1.0` `all` |   A specific tag or the range of tags to build the release notes from. You can also specify `all` to write all releases. _(To override  existing releases use the --override flag)_ | `false` |
 | `ignore-labels` | `wont_fix` `wont_fix,duplicate` | Ignore the specified labels. | `false` |
 | `ignore-issues-with` | `wont_fix` `wont_fix,duplicate` | Ignore issues that contains one of the specified labels. | `false` |
-| `data-source` | `issues` `commits` | The informations you want to use to build release notes. | `issues` |
+| `data-source` | `issues` `commits` `milestones` | The informations you want to use to build release notes. For more informations about the `milestones` option, [have a look here]({{ "example#milestones" | relative_url }}) | `issues` |
+| `milestone-match` | **String** | The title that the script needs to match to link the release to the milestone. [See further details]({{ "example#milestones" | relative_url }}) | `null` |
 | `prefix` | **String** `e.g. v` | Add a prefix to the tag version. | `null` |
 | `override` | **Flag** | Override the release notes if existing. | `false` |
 | `include-messages` | `merge` `commits` `all` | Filter the messages added to the release notes. _Only used when `data-source` used is `commits` | `commits` |
 | `group-by` | `label` `{...}` | Group the issues using the labels as group headings. You can set custom headings for groups of labels. [See example]({{ "example#group-by" | relative_url }}) | `false` |
+| `only-milestones` | **Flag** | Add to the release bodies only the issues that have a milestone | `false` |
 
 ### Release options
 
