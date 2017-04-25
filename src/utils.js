@@ -2,7 +2,9 @@
 
 var chalk = require('chalk');
 var fs = require('fs');
-var minimist = require('minimist');
+var program = require('commander');
+var pckg = require(process.cwd() + '/package.json');
+var ObjectAssign = require('object-assign-deep');
 require('require-yaml');
 
 /**
@@ -106,6 +108,7 @@ function isInRange(value, min, max) {
 * Transforms a dasherize string into a camel case one.
 *
 * @since 0.3.2
+* @deprecated
 * @public
 *
 * @param  {string} value The dasherize string
@@ -131,16 +134,71 @@ function dashToCamelCase(value) {
 * @return {Object}     The object containg the key/value options
 */
 function getBashOptions(args) {
-    var options = minimist(args.slice(2));
-    var settings = {};
+    console.log(args);
 
-    Object.keys(options).forEach(function(optionName) {
-        if (optionName !== '_') {
-            settings[dashToCamelCase(optionName)] = options[optionName];
-        }
-    });
+    var action;
 
-    return settings;
+    program
+        .version(pckg.version)
+        .usage('[command] [options]')
+        .option('-u, --username <username>', 'The username of the repo e.g. github-tools.')
+        .option('-r, --repo <repo>', 'The repository name e.g. github-release-notes.')
+        .option('-T, --token <token>', 'Github token with repo permissions.')
+        .option('-a, --api-url <api-url>', 'Override the GitHub API URL, allows ' + chalk.green('gren') + ' to connect to a private GHE installation. e.g. https://my-enterprise-domain.com/api/v3.')
+        .option('-o, --override', 'Override the existing release notes.')
+        .option('-t, --tags <tags...>', 'A specific tag or the range of tags to build the release notes from. You can also specify all to write all releases. [latest]', convertStringToArray, false)
+        .option('-i, --ignore-labels <labels...>', 'Ignore the specified labels.', convertStringToArray, false)
+        .option('-I, --ignore-issues-with <labels...>', 'Ignore issues that contains one of the specified labels.', convertStringToArray, false)
+        .option('-s, --data-source <source-type>', 'The informations you want to use to build release notes. [issues]', /^(issues|commits|milestones)$/i, 'issues')
+        .option('-M, --milestone-match <title>', 'The title that the script needs to match to link the release to the milestone. [Release {{tag_name}}]', false)
+        .option('-p, --prefix <prefix>', 'Add a prefix to the tag version. e.g. "v"', '')
+        .option('-m, --include-messages <type>', 'Filter the messages added to the release notes. Only used when data-source used is commits. [commits]', /^(merge|commits|all)$/i, 'commits')
+        .option('-g, --group-by <labels|Object>', 'Group the issues using the labels as group headings. You can set custom headings for groups of labels.', false)
+        .option('-O, --only-milestones', 'Add to the release bodies only the issues that have a milestone.', false)
+        .on('--help', function() {
+            console.log('\n    To see a command option, run [command] --help. e.g.\n\n    ' + chalk.green('$ gren release --help'));
+        });
+
+    program
+        .command('release')
+        .description('Generate release notes on the GitHub repo.')
+        .option('-d, --draft', 'Set the release as a draft.', false)
+        .option('-P, --prerelease', 'Set the release as prerelease.', false)
+        .action(function() {
+            action = 'release';
+        })
+        .on('--help', function() {
+            console.log('  Examples:');
+            console.log();
+            console.log('    $ release --tags=all');
+            console.log();
+        });
+
+    program
+        .command('changelog')
+        .description('The changelog action.')
+        .option('-G, --generate', 'Generate the changelog with GithubReleaseNotes rather then using the repo releases. See ' + chalk.blue('$ gren release --help') + ' for all the options.', false)
+        .option('-c, --changelog-filename <filename>', 'The name of the changelog file. [CHANGELOG.md]', 'CHANGELOG.md')
+        .action(function() {
+            action = 'changelog';
+        });
+
+    program.parse(args);
+
+    var commands = ObjectAssign({}, program.opts(), ...program.commands
+        .map(function(command) {
+            return command.opts();
+        }), { action: action });
+
+    return Object.keys(commands)
+        .filter(function(command) {
+            return commands[command];
+        })
+        .reduce(function(carry, command) {
+            carry[command] = commands[command];
+
+            return carry;
+        }, {});
 }
 
 /**
@@ -241,6 +299,5 @@ module.exports = {
     isInRange: isInRange,
     convertStringToArray: convertStringToArray,
     formatDate: formatDate,
-    getConfigFromFile: getConfigFromFile,
-    noop: function() {}
+    getConfigFromFile: getConfigFromFile
 };
