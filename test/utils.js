@@ -9,17 +9,6 @@ exports['utils'] = {
         test.deepEqual(utils.formatDate(new Date(0)), '01/01/1970', 'Given a date object.');
         test.done();
     },
-    'Should return the options in a key/value format': function (test) {
-        test.expect(1);
-
-        let bashOptions = utils.getBashOptions([null, null, '--key=value', '--key2=value2']);
-
-        test.deepEqual(JSON.stringify(bashOptions), JSON.stringify({
-            key: 'value',
-            key2: 'value2'
-        }), 'Given an array of node arguments.');
-        test.done();
-    },
     'Should return a camelCase string': function (test) {
         test.expect(2);
 
