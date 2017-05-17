@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>template.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="GithubReleaseNotes.html">GithubReleaseNotes</a><ul class='methods'><li data-type='method'><a href="GithubReleaseNotes.html#changelog">changelog</a></li><li data-type='method'><a href="GithubReleaseNotes.html#init">init</a></li><li data-type='method'><a href="GithubReleaseNotes.html#release">release</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#checkChangelogFile">checkChangelogFile</a></li><li><a href="global.html#clearTasks">clearTasks</a></li><li><a href="global.html#commitMessages">commitMessages</a></li><li><a href="global.html#compareIssueLabels">compareIssueLabels</a></li><li><a href="global.html#convertStringToArray">convertStringToArray</a></li><li><a href="global.html#createChangelog">createChangelog</a></li><li><a href="global.html#createRelease">createRelease</a></li><li><a href="global.html#createReleaseRanges">createReleaseRanges</a></li><li><a href="global.html#dashToCamelCase">dashToCamelCase</a></li><li><a href="global.html#editRelease">editRelease</a></li><li><a href="global.html#executeCommand">executeCommand</a></li><li><a href="global.html#filterBlockIssue">filterBlockIssue</a></li><li><a href="global.html#filterIssue">filterIssue</a></li><li><a href="global.html#formatDate">formatDate</a></li><li><a href="global.html#generate">generate</a></li><li><a href="global.html#generateCommitsBody">generateCommitsBody</a></li><li><a href="global.html#generateOptions">generateOptions</a></li><li><a href="global.html#getBashOptions">getBashOptions</a></li><li><a href="global.html#getClosedIssues">getClosedIssues</a></li><li><a href="global.html#getCommitBlocks">getCommitBlocks</a></li><li><a href="global.html#getCommitsBetweenTwo">getCommitsBetweenTwo</a></li><li><a href="global.html#getConfigFromFile">getConfigFromFile</a></li><li><a href="global.html#getIssueBlocks">getIssueBlocks</a></li><li><a href="global.html#getLastTags">getLastTags</a></li><li><a href="global.html#getListReleases">getListReleases</a></li><li><a href="global.html#getReleaseBlocks">getReleaseBlocks</a></li><li><a href="global.html#getSelectedTags">getSelectedTags</a></li><li><a href="global.html#getTagDates">getTagDates</a></li><li><a href="global.html#groupBy">groupBy</a></li><li><a href="global.html#groupByLabel">groupByLabel</a></li><li><a href="global.html#hasNetwork">hasNetwork</a></li><li><a href="global.html#isInRange">isInRange</a></li><li><a href="global.html#prepareRelease">prepareRelease</a></li><li><a href="global.html#printTask">printTask</a></li><li><a href="global.html#repo">repo</a></li><li><a href="global.html#requireConfig">requireConfig</a></li><li><a href="global.html#sortObject">sortObject</a></li><li><a href="global.html#sortReleasesByDate">sortReleasesByDate</a></li><li><a href="global.html#task">task</a></li><li><a href="global.html#templateCommits">templateCommits</a></li><li><a href="global.html#templateGroups">templateGroups</a></li><li><a href="global.html#templateIssue">templateIssue</a></li><li><a href="global.html#templateIssueBody">templateIssueBody</a></li><li><a href="global.html#templateLabels">templateLabels</a></li><li><a href="global.html#templateReleases">templateReleases</a></li><li><a href="global.html#token">token</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">template.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>'use strict';
+
+/**
+ * Generate the templated string based on
+ * a placeholders Object
+ *
+ * @since  0.6.0
+ * @private
+ *
+ * @param  {Object} placeholders All the keys/values to update
+ * @param  {string|Function} string The string or the function that needs to be replaced
+ *
+ * @return {string}
+ */
+function generate(placeholders, string) {
+    if (typeof string === 'function') {
+        return string(placeholders);
+    }
+
+    return Object.keys(placeholders)
+        .reduce(function(carry, placeholder) {
+            var placeholderRegExp = new RegExp('{{' + placeholder + '}}', 'g');
+
+            return carry.replace(placeholderRegExp, placeholders[placeholder]);
+        }, string);
+}
+
+module.exports = {
+    generate: generate
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Wed May 17 2017 16:07:43 GMT+0100 (BST) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

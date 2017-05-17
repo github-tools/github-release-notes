@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>utils.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="GithubReleaseNotes.html">GithubReleaseNotes</a><ul class='methods'><li data-type='method'><a href="GithubReleaseNotes.html#changelog">changelog</a></li><li data-type='method'><a href="GithubReleaseNotes.html#init">init</a></li><li data-type='method'><a href="GithubReleaseNotes.html#release">release</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#checkChangelogFile">checkChangelogFile</a></li><li><a href="global.html#clearTasks">clearTasks</a></li><li><a href="global.html#commitMessages">commitMessages</a></li><li><a href="global.html#compareIssueLabels">compareIssueLabels</a></li><li><a href="global.html#convertStringToArray">convertStringToArray</a></li><li><a href="global.html#createChangelog">createChangelog</a></li><li><a href="global.html#createRelease">createRelease</a></li><li><a href="global.html#createReleaseRanges">createReleaseRanges</a></li><li><a href="global.html#dashToCamelCase">dashToCamelCase</a></li><li><a href="global.html#editRelease">editRelease</a></li><li><a href="global.html#executeCommand">executeCommand</a></li><li><a href="global.html#filterBlockIssue">filterBlockIssue</a></li><li><a href="global.html#filterIssue">filterIssue</a></li><li><a href="global.html#formatDate">formatDate</a></li><li><a href="global.html#generate">generate</a></li><li><a href="global.html#generateCommitsBody">generateCommitsBody</a></li><li><a href="global.html#generateOptions">generateOptions</a></li><li><a href="global.html#getBashOptions">getBashOptions</a></li><li><a href="global.html#getClosedIssues">getClosedIssues</a></li><li><a href="global.html#getCommitBlocks">getCommitBlocks</a></li><li><a href="global.html#getCommitsBetweenTwo">getCommitsBetweenTwo</a></li><li><a href="global.html#getConfigFromFile">getConfigFromFile</a></li><li><a href="global.html#getIssueBlocks">getIssueBlocks</a></li><li><a href="global.html#getLastTags">getLastTags</a></li><li><a href="global.html#getListReleases">getListReleases</a></li><li><a href="global.html#getReleaseBlocks">getReleaseBlocks</a></li><li><a href="global.html#getSelectedTags">getSelectedTags</a></li><li><a href="global.html#getTagDates">getTagDates</a></li><li><a href="global.html#groupBy">groupBy</a></li><li><a href="global.html#groupByLabel">groupByLabel</a></li><li><a href="global.html#hasNetwork">hasNetwork</a></li><li><a href="global.html#isInRange">isInRange</a></li><li><a href="global.html#prepareRelease">prepareRelease</a></li><li><a href="global.html#printTask">printTask</a></li><li><a href="global.html#repo">repo</a></li><li><a href="global.html#requireConfig">requireConfig</a></li><li><a href="global.html#sortObject">sortObject</a></li><li><a href="global.html#sortReleasesByDate">sortReleasesByDate</a></li><li><a href="global.html#task">task</a></li><li><a href="global.html#templateCommits">templateCommits</a></li><li><a href="global.html#templateGroups">templateGroups</a></li><li><a href="global.html#templateIssue">templateIssue</a></li><li><a href="global.html#templateIssueBody">templateIssueBody</a></li><li><a href="global.html#templateLabels">templateLabels</a></li><li><a href="global.html#templateReleases">templateReleases</a></li><li><a href="global.html#token">token</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">utils.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>'use strict';
+
+var chalk = require('chalk');
+var fs = require('fs');
+var minimist = require('minimist');
+require('require-yaml');
+
+/**
+ * Sort an object by its keys
+ *
+ * @since 0.8.0
+ * @public
+ *
+ * @param  {Object} object
+ * @return {Object}
+ */
+function sortObject(object) {
+    return Object.keys(object)
+        .sort()
+        .reduce(function(result, key) {
+            result[key] = object[key];
+
+            return result;
+        }, {});
+}
+
+/**
+* Print a task name in a custom format
+*
+* @since 0.5.0
+* @public
+*
+* @param  {string} name The name of the task
+*/
+function printTask(name) {
+    process.stdout.write(chalk.blue(name + ' task:\n===================================\n'));
+}
+/**
+* Outputs the task status
+*
+* @since 0.5.0
+* @public
+*
+* @param  {string} taskName The task name
+*
+* @return {Function}          The function to be fired when is loaded
+*/
+function task(gren, taskName) {
+    var time = process.hrtime();
+    process.stdout.write(chalk.green(taskName) + ': .');
+
+    gren.tasks[taskName] = setInterval(function() {
+        process.stdout.write('.');
+    }, 100);
+
+    return function(message) {
+        var diff = process.hrtime(time);
+        var seconds = ((diff[0] * 1e9 + diff[1]) * 1e-9).toFixed(2);
+
+        process.stdout.write(message || '' + chalk.yellow(' (' + seconds + ' secs)\n'));
+        clearInterval(gren.tasks[taskName]);
+
+        gren.tasks[taskName] = seconds;
+    };
+}
+
+/**
+ * Clears all the tasks that are still running
+ *
+ * @since 0.6.0
+ * @public
+ *
+ * @param  {GithubReleaseNotes} gren
+ */
+function clearTasks(gren) {
+    if (!Object.keys(gren.tasks.length)) {
+        return;
+    }
+
+    Object.keys(gren.tasks).forEach(function(taskName) {
+        clearInterval(gren.tasks[taskName]);
+    });
+
+    process.stdout.write(chalk.red('\nTask(s) stopped because of the following error:\n'));
+
+    gren.tasks = [];
+}
+
+/**
+* Check if e value is between a min and a max
+*
+* @since 0.5.0
+* @public
+*
+* @param  {number}  value
+* @param  {number}  min
+* @param  {number}  max
+*
+* @return {Boolean}
+*/
+function isInRange(value, min, max) {
+    return !Math.floor((value - min) / (max - min));
+}
+
+/**
+* Transforms a dasherize string into a camel case one.
+*
+* @since 0.3.2
+* @public
+*
+* @param  {string} value The dasherize string
+*
+* @return {string}       The camel case string
+*/
+function dashToCamelCase(value) {
+    return value
+    .toLowerCase()
+    .replace(/-([a-z])/g, function(match) {
+        return match[1].toUpperCase();
+    });
+}
+
+/**
+* Create a literal object of the node module options
+*
+* @since 0.1.0
+* @public
+*
+* @param  {Array} args The array of arguments (the module arguments start from index 2)
+*
+* @return {Object}     The object containg the key/value options
+*/
+function getBashOptions(args) {
+    var options = minimist(args.slice(2));
+    var settings = {};
+
+    Object.keys(options).forEach(function(optionName) {
+        if (optionName !== '_') {
+            settings[dashToCamelCase(optionName)] = options[optionName];
+        }
+    });
+
+    return settings;
+}
+
+/**
+ * Converts an array like string to an actual Array,
+ * converting also underscores to spaces
+ *
+ * @since 0.6.0
+ * @public
+ *
+ * @param  {string} arrayLike The string of items
+ * e.g.
+ * "wont_fix, duplicate, bug"
+ *
+ * @return {Array}  The items with spaces instead of underscores.
+ */
+function convertStringToArray(arrayLike) {
+    if (!arrayLike) {
+        return [];
+    }
+
+    if (typeof arrayLike === 'object') {
+        return Object.keys(arrayLike).map(function(itemKey) {
+            return arrayLike[itemKey];
+        });
+    }
+
+    return arrayLike
+        .replace(/\s/g, '')
+        .split(',')
+        .map(function(itemName) {
+            return itemName.replace(/_/g, ' ', itemName);
+        });
+}
+
+/**
+* Format a date into a string
+*
+* @since 0.5.0
+* @public
+*
+* @param  {Date} date
+* @return {string}
+*/
+function formatDate(date) {
+    return ('0' + date.getDate()).slice(-2) + '/' + ('0' + (date.getMonth() + 1)).slice(-2) + '/' + date.getFullYear();
+}
+
+/**
+ * Gets the content from a filepath a returns an object
+ *
+ * @since  0.6.0
+ * @public
+ *
+ * @param  {string} filepath
+ * @return {Object|boolean}
+ */
+function requireConfig(filepath) {
+    if (!fs.existsSync(filepath)) {
+        return false;
+    }
+
+    if (filepath.match(/\./g).length === 1) {
+        return JSON.parse(fs.readFileSync(filepath, 'utf8'));
+    }
+
+    return require(filepath);
+}
+
+/**
+ * Get configuration from the one of the config files
+ *
+ * @since 0.6.0
+ * @public
+ *
+ * @param  {string} path Path where to look for config files
+ * @return {Object} The configuration from the first found file or empty object
+ */
+function getConfigFromFile(path) {
+    return [
+        '.grenrc.yml',
+        '.grenrc.json',
+        '.grenrc.yaml',
+        '.grenrc.js',
+        '.grenrc'
+    ]
+    .reduce(function(carry, filename) {
+        return carry || requireConfig(path + '/' + filename);
+    }, false) || {};
+}
+
+module.exports = {
+    sortObject: sortObject,
+    printTask: printTask,
+    task: task,
+    clearTasks: clearTasks,
+    getBashOptions: getBashOptions,
+    dashToCamelCase: dashToCamelCase,
+    isInRange: isInRange,
+    convertStringToArray: convertStringToArray,
+    formatDate: formatDate,
+    getConfigFromFile: getConfigFromFile,
+    noop: function() {}
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Wed May 17 2017 16:07:43 GMT+0100 (BST) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>
