@@ -1,13 +1,13 @@
 'use strict';
 
 var GithubReleaseNotes = require('./src/gren');
-var gren = new GithubReleaseNotes();
 var utils = require('./src/utils');
-var action = utils.getBashOptions(process.argv)['action'];
+var options = utils.getBashOptions(process.argv);
+var gren = new GithubReleaseNotes(options);
 
 gren.init()
     .then(function() {
-        return gren[action || 'release']();
+        return gren[option.action]();
     })
     .catch(function(error) {
         utils.clearTasks(gren);

@@ -37,10 +37,10 @@
   "homepage": "https://github.com/alexcanessa/github-release-notes#readme",
   "dependencies": {
     "chalk": "^1.1.3",
+    "commander": "^2.9.0",
     "connectivity": "^1.0.0",
     "es6-promise": "^3.2.1",
     "github-api": "^3.0.0",
-    "minimist": "^1.2.0",
     "object-assign-deep": "0.0.4",
     "require-yaml": "0.0.1"
   },

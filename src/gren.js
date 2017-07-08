@@ -13,6 +13,7 @@ var ObjectAssign = require('object-assign-deep');
 var configFile = utils.getConfigFromFile(process.cwd());
 
 var defaults = {
+    action: 'release',
     tags: false,
     changelogFilename: 'CHANGELOG.md',
     dataSource: 'issues', // || commits
@@ -857,7 +858,7 @@ function hasNetwork() {
  * @constructor
  */
 function GithubReleaseNotes(options) {
-    this.options = ObjectAssign({}, defaults, configFile, options || utils.getBashOptions(process.argv));
+    this.options = ObjectAssign({}, defaults, configFile, options);
     this.options.tags = utils.convertStringToArray(this.options.tags);
     this.options.ignoreLabels = utils.convertStringToArray(this.options.ignoreLabels);
     this.options.ignoreIssuesWith = utils.convertStringToArray(this.options.ignoreIssuesWith);
@@ -886,7 +887,7 @@ GithubReleaseNotes.prototype.init = function() {
             return generateOptions(gren.options);
         })
         .then(function(optionData) {
-            gren.options = ObjectAssign(...optionData, gren.options);
+            gren.options = ObjectAssign({}, ...optionData, gren.options);
 
             if (!gren.options.token) {
                 throw chalk.red('You need to provide the token');
