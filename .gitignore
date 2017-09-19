@@ -3,3 +3,5 @@ node_modules/
 npm-debug.log
 docs/_site
 docs/.sass-cache
+dest
+bin
