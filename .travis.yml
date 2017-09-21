@@ -2,7 +2,7 @@ language:
   - node_js
 
 node_js:
-  - "5.1"
+  - "7.0"
 
 cache:
   directories:
