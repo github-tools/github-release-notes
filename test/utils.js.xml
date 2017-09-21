@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+  
+  <testsuite name="utils.js"
+             errors="0"
+             failures="0"
+             tests="4">
+    
+      
+      <testcase name="utils - Should return the string of the formatted date">
+        
+      </testcase>
+    
+      
+      <testcase name="utils - Should return the options in a key/value format">
+        
+      </testcase>
+    
+      
+      <testcase name="utils - Should return a camelCase string">
+        
+      </testcase>
+    
+      
+      <testcase name="utils - Should return if a number is in between a range">
+        
+      </testcase>
+    
+  </testsuite>
+

@@ -6,6 +6,8 @@ const sass = require('gulp-sass');
 const gulpIf = require('gulp-if');
 const ghPages = require('gulp-gh-pages');
 const babel = require('gulp-babel');
+const chmod = require('gulp-chmod');
+const nodeunit = require('gulp-nodeunit');
 
 gulp.task('deploy', ['build'], function() {
   return gulp.src('./docs/**/*')
@@ -17,13 +19,18 @@ gulp.task('scripts', () => {
         .pipe(babel({
             presets: ['es2015']
         }))
-        .pipe(gulp.dest('dest'));
+        .pipe(gulp.dest('dist'));
+
+    gulp.src('./lib/src/**/*.json')
+        .pipe(gulp.dest('dist'));
 
     gulp.src('./lib/*.js')
         .pipe(babel({
             presets: ['es2015']
         }))
+        .pipe(chmod(0o755))
         .pipe(gulp.dest('bin'));
+
 });
 
 gulp.task('lint', () => {
@@ -47,11 +54,14 @@ gulp.task('watch', () => {
 });
 
 gulp.task('test', () => {
-    return gulp.src(['test/*.js'])
-        .pipe(mocha({
-            compilers: 'js:babel-register'
+    gulp.src('test/**/*.js')
+        .pipe(nodeunit({
+            reporter: 'junit',
+            reporterOptions: {
+                output: 'test'
+            }
         }));
 });
 
-gulp.task('build', ['lint', 'scripts'/*, 'test'*/]);
+gulp.task('build', ['lint', 'scripts', 'test']);
 gulp.task('default', ['build', 'watch']);

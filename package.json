@@ -1,74 +1,81 @@
 {
-  "name": "github-release-notes",
-  "version": "0.9.0",
-  "description": "Node module to publish release notes based on commits between the last two tags.",
-  "main": "./github-release-notes.js",
-  "scripts": {
-    "start": "node github-release-notes.js",
-    "test": "grunt test",
-    "docs": "node_modules/.bin/jsdoc -c .jsdoc.conf.json --verbose"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/alexcanessa/github-release-notes.git"
-  },
-  "preferGlobal": "true",
-  "bin": {
-    "gren": "bin/gren.js"
-  },
-  "keywords": [
-    "Github",
-    "Release",
-    "notes",
-    "Tag",
-    "Changelog",
-    "Changelog Generator",
-    "Issues",
-    "Commits"
-  ],
-  "author": "alexcanessa",
-  "contributors": [
-    "Alex Canessa <canessa.alex@gmail.com>"
-  ],
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/alexcanessa/github-release-notes/issues"
-  },
-  "homepage": "https://github.com/alexcanessa/github-release-notes#readme",
-  "dependencies": {
-    "chalk": "^1.1.3",
-    "commander": "^2.11.0",
-    "connectivity": "^1.0.0",
-    "es6-promise": "^3.2.1",
-    "github-api": "^3.0.0",
-    "minimist": "^1.2.0",
-    "object-assign-deep": "0.0.4",
-    "require-yaml": "0.0.1"
-  },
-  "devDependencies": {
-    "babel-cli": "^6.24.1",
-    "babel-eslint": "^7.2.3",
-    "babel-preset-env": "^1.4.0",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-register": "^6.24.1",
-    "chai": "^4.0.2",
-    "eslint-config-semistandard": "^11.0.0",
-    "eslint-config-standard": "^10.2.1",
-    "eslint-plugin-babel": "^4.1.1",
-    "eslint-plugin-import": "^2.6.0",
-    "eslint-plugin-node": "^5.1.0",
-    "eslint-plugin-promise": "^3.5.0",
-    "eslint-plugin-standard": "^3.0.1",
-    "gulp": "^3.9.1",
-    "gulp-babel": "^6.1.2",
-    "gulp-eslint": "^4.0.0",
-    "gulp-gh-pages": "^0.5.4",
-    "gulp-if": "^2.0.2",
-    "gulp-mocha": "^4.3.1",
-    "gulp-sass": "^3.1.0",
-    "gulp-watch": "^4.3.11",
-    "gulp-zip": "^4.0.0",
-    "jsdoc": "^3.4.3",
-    "minami": "^1.1.1"
-  }
+    "name": "github-release-notes",
+    "version": "0.9.0",
+    "description": "Node module to publish release notes based on commits between the last two tags.",
+    "main": "./github-release-notes.js",
+    "scripts": {
+        "start": "node github-release-notes.js",
+        "test": "gulp test",
+        "docs": "node_modules/.bin/jsdoc -c .jsdoc.conf.json --verbose"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/alexcanessa/github-release-notes.git"
+    },
+    "directories": {
+        "bin": "./bin",
+        "lib": "./lib",
+        "dest": "./dest"
+    },
+    "preferGlobal": "true",
+    "bin": {
+        "gren": "bin/gren.js"
+    },
+    "keywords": [
+        "Github",
+        "Release",
+        "notes",
+        "Tag",
+        "Changelog",
+        "Changelog Generator",
+        "Issues",
+        "Commits"
+    ],
+    "author": "alexcanessa",
+    "contributors": [
+        "Alex Canessa <canessa.alex@gmail.com>"
+    ],
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/alexcanessa/github-release-notes/issues"
+    },
+    "homepage": "https://github.com/alexcanessa/github-release-notes#readme",
+    "dependencies": {
+        "chalk": "^1.1.3",
+        "commander": "^2.11.0",
+        "connectivity": "^1.0.0",
+        "es6-promise": "^3.2.1",
+        "github-api": "^3.0.0",
+        "minimist": "^1.2.0",
+        "object-assign-deep": "0.0.4",
+        "require-yaml": "0.0.1"
+    },
+    "devDependencies": {
+        "babel-cli": "^6.24.1",
+        "babel-eslint": "^7.2.3",
+        "babel-preset-env": "^1.4.0",
+        "babel-preset-es2015": "^6.24.1",
+        "babel-register": "^6.24.1",
+        "chai": "^4.0.2",
+        "eslint-config-semistandard": "^11.0.0",
+        "eslint-config-standard": "^10.2.1",
+        "eslint-plugin-babel": "^4.1.1",
+        "eslint-plugin-import": "^2.6.0",
+        "eslint-plugin-node": "^5.1.0",
+        "eslint-plugin-promise": "^3.5.0",
+        "eslint-plugin-standard": "^3.0.1",
+        "gulp": "^3.9.1",
+        "gulp-babel": "^6.1.2",
+        "gulp-chmod": "^2.0.0",
+        "gulp-eslint": "^4.0.0",
+        "gulp-gh-pages": "^0.5.4",
+        "gulp-if": "^2.0.2",
+        "gulp-mocha": "^4.3.1",
+        "gulp-nodeunit": "^0.1.0",
+        "gulp-sass": "^3.1.0",
+        "gulp-watch": "^4.3.11",
+        "gulp-zip": "^4.0.0",
+        "jsdoc": "^3.4.3",
+        "minami": "^1.1.1"
+    }
 }
