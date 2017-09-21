@@ -9,7 +9,7 @@ cache:
     - node_modules
 
 before_install:
-  - npm install -g grunt-cli
+  - npm install -g gulp-cli
 
 script:
-  - grunt test
+  - gulp test

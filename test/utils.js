@@ -1,6 +1,6 @@
 'use strict';
 
-var utils = require('../src/utils');
+var utils = require('../lib/src/_utils');
 
 exports['utils'] = {
     'Should return the string of the formatted date': function (test) {

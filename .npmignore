@@ -1,6 +1,7 @@
+lib/
 docs/
 node_modules/
-Gruntfile.js
+gulpfile.js
 .grenrc
 .grenrc.*
 .jsdoc.conf.json
