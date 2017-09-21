@@ -1,5 +1,6 @@
 lib/
 docs/
+test/
 node_modules/
 gulpfile.js
 .grenrc
