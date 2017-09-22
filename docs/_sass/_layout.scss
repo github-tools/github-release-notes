@@ -143,28 +143,16 @@
 
     .post-content {
         margin-bottom: $spacing-unit;
-        /*
-        h2 {
-            font-size: 32px;
+    }
 
-            @include media-query($on-laptop) {
-                font-size: 28px;
-            }
-        }
+/* gren
+ * ============================================== */
+    .full {
+        display: table;
+        table-layout: fixed;
+        width: 100%
+    }
 
-        h3 {
-            font-size: 26px;
-
-            @include media-query($on-laptop) {
-                font-size: 22px;
-            }
-        }
-
-        h4 {
-            font-size: 20px;
-
-            @include media-query($on-laptop) {
-                font-size: 18px;
-            }
-        } */
+    .full td:first-child {
+        width: 100px;
     }

@@ -1,5 +1,6 @@
 lib/
 docs/
+tasks/
 test/
 node_modules/
 gulpfile.js

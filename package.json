@@ -6,7 +6,10 @@
     "scripts": {
         "start": "node github-release-notes.js",
         "test": "gulp test",
-        "docs": "node_modules/.bin/jsdoc -c .jsdoc.conf.json --verbose"
+        "options": "node tasks/_generate-options.js",
+        "examples": "node tasks/_generate-examples.js",
+        "docs": "npm run options && npm run examples && node_modules/.bin/jsdoc -c .jsdoc.conf.json --verbose",
+        "prepublish": "npm run test && npm run docs"
     },
     "repository": {
         "type": "git",
@@ -76,6 +79,7 @@
         "gulp-watch": "^4.3.11",
         "gulp-zip": "^4.0.0",
         "jsdoc": "^3.4.3",
-        "minami": "^1.1.1"
+        "minami": "^1.2.3",
+        "yamljs": "^0.3.0"
     }
 }

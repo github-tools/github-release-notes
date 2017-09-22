@@ -1,0 +1,22 @@
+## {{ include.title }}
+
+{% for example in include.examples %}
+
+{% if example.name %}
+---
+
+#### `{{ example.name }}`
+{% endif %}
+
+{% if example.description %}
+{{ example.description }}
+{% endif %}
+
+{% if example.code %}
+```
+{{ example.code }}
+```
+{% endif %}
+
+{% endfor %}
+

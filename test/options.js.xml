@@ -4,10 +4,15 @@
   <testsuite name="options.js"
              errors="0"
              failures="0"
-             tests="1">
+             tests="2">
     
       
-      <testcase name="options - There should be no duplicates">
+      <testcase name="options - Should have unique shorts">
+        
+      </testcase>
+    
+      
+      <testcase name="options - Should have unique names">
         
       </testcase>
     
