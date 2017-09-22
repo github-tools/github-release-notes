@@ -1,7 +1,7 @@
 {
     "name": "github-release-notes",
     "version": "0.9.0",
-    "description": "Node module to publish release notes based on commits between the last two tags.",
+    "description": "Creates a release from a tag and uses issues or commits to creating the release notes. It also can generate a CHANGELOG.md file based on the release notes (or generate a brand new).",
     "main": "./github-release-notes.js",
     "scripts": {
         "start": "node github-release-notes.js",

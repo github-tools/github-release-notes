@@ -6,6 +6,7 @@ exports['options'] = {
 
         const duplicates = releaseOptions.concat(changelogOptions)
             .map(option => option.short)
+            .filter(Boolean)
             .filter((short, index, array) => array.indexOf(short) !== index)
             .length;
 
