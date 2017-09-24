@@ -143,6 +143,8 @@ If you don't want to save the token, you can specify one as an option:
 gren release --token=[your token]
 ```
 
+### [See all the options here](https://github-tools.github.io/github-release-notes/options.html)
+
 ### Commands
 
 There are two main commands that can be ran with 🤖:
@@ -176,6 +178,12 @@ To trigger the help of a command, run:
 gren --help
 # Command usage
 gren help release # or gren release --help
+```
+
+It's also possible to see all the examples [here](https://github-tools.github.io/github-release-notes/examples.html) or directly in the terminal:
+
+```shell
+gren examples release
 ```
 
 ## Configuration file
