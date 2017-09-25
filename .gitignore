@@ -1,8 +1,10 @@
 .DS_Store
+.nyc_output
 node_modules/
 npm-debug.log
 docs/_site
 docs/.sass-cache
+coverage
 dist
 bin
 test/**.js.xml
