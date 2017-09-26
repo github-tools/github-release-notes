@@ -14,7 +14,7 @@ before_install:
   - npm install -g mocha
 
 script:
-  - npm run test
+  - npm run coverage
 
 after_success:
   - codecov

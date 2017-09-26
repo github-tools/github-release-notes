@@ -53,4 +53,5 @@ rules:
             array: false
     prefer-spread: error
     prefer-rest-params: error
+    prefer-promise-reject-errors: 0
     valid-typeof: 0

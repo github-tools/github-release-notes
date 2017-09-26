@@ -4,8 +4,9 @@
     "description": "Creates a release from a tag and uses issues or commits to creating the release notes. It also can generate a CHANGELOG.md file based on the release notes (or generate a brand new).",
     "main": "./github-release-notes.js",
     "scripts": {
-        "test": "nyc --reporter=lcov --reporter=text mocha --compilers=js:babel-register",
         "start": "node github-release-notes.js",
+        "test": "nyc mocha --compilers=js:babel-register",
+        "coverage": "nyc --reporter=lcov --reporter=text mocha --compilers=js:babel-register",
         "options": "node tasks/_generate-options.js",
         "examples": "node tasks/_generate-examples.js",
         "docs": "npm run options && npm run examples && node_modules/.bin/jsdoc -c .jsdoc.conf.json --verbose"

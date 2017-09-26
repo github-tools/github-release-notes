@@ -4,7 +4,6 @@ const eslint = require('gulp-eslint');
 const ghPages = require('gulp-gh-pages');
 const gulp = require('gulp');
 const gulpIf = require('gulp-if');
-const mocha = require('gulp-mocha');
 const sass = require('gulp-sass');
 const watch = require('gulp-watch');
 

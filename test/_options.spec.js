@@ -21,4 +21,19 @@ describe('_options.js', () => {
 
         assert.isOk(duplicates === 0, 'There are no duplicates');
     });
+
+    it('Should work with tags', () => {
+        const { action } = globalOptions.filter(({ name }) => name === 'tags')[0];
+        assert.deepEqual(JSON.stringify(action('1..2')), JSON.stringify(['1', '2']));
+    });
+
+    it('Should work with ignore-labels', () => {
+        const { action } = globalOptions.filter(({ name }) => name === 'ignore-labels')[0];
+        assert.deepEqual(JSON.stringify(action('1,2')), JSON.stringify(['1', '2']), 'Testing the option ignore-labels');
+    });
+
+    it('Should work with ignore-issues-with', () => {
+        const { action } = globalOptions.filter(({ name }) => name === 'ignore-issues-with')[0];
+        assert.deepEqual(JSON.stringify(action('1,2')), JSON.stringify(['1', '2']), 'Testing the option ignore-issues-with');
+    });
 });
