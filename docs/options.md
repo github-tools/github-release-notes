@@ -8,7 +8,7 @@ title: Options
 
 See all the options for `gren`.
 
-The **global options** are shared between the `gren release` and `gren changelog` commands. As `gren changelog --generate` can create release notes and a `CHANGELOG.md` file, instead of getting all the releases from project release notes.
+The **global options** are shared between the `gren release` and `gren changelog` commands, as `gren changelog --generate` can create release notes and a `CHANGELOG.md` file, instead of getting all the releases from project release notes.
 
 To use an option in your terminal, prefix the name with `--` _(e.g. `gren release --data-source=commits`)_
 
