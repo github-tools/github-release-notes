@@ -2,7 +2,7 @@ language:
   - node_js
 
 node_js:
-  - "5.1"
+  - "7.9"
 
 cache:
   directories:
@@ -10,6 +10,11 @@ cache:
 
 before_install:
   - npm install -g gulp-cli
+  - npm install -g codecov
+  - npm install -g mocha
 
 script:
-  - gulp test
+  - npm run coverage
+
+after_success:
+  - codecov

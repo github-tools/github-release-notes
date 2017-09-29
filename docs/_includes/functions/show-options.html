@@ -1,0 +1,18 @@
+## {{ include.title }}
+
+{% for option in include.options %}
+
+#### {{ option.name }}
+
+{% if option.defaultValue == null %}
+    {{ option.description }}
+{% else %}
+    {% assign defaultValue = '[' | append: option.defaultValue | append: ']' %}
+
+    {{ option.description | replace_first:defaultValue, '' }}
+{% endif %}
+
+{:.full}
+| _short:_ `{{ option.short }}` {% if option.valueType != null %} | _value:_ `{{ option.valueType }}` {% endif %} {% if option.defaultValue != null %} | _default_: `{{ option.defaultValue }}` {% endif %} |
+
+{% endfor %}
