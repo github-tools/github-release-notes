@@ -1,5 +1,8 @@
 lib/
 docs/
+tasks/
+test/
+coverage/
 node_modules/
 gulpfile.js
 .grenrc

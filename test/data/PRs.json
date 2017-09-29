@@ -1,0 +1,51 @@
+[
+    {
+        "url": "https://api.github.com/repos/github-tools/github-release-notes/issues/66",
+        "repository_url": "https://api.github.com/repos/github-tools/github-release-notes",
+        "labels_url": "https://api.github.com/repos/github-tools/github-release-notes/issues/66/labels{/name}",
+        "comments_url": "https://api.github.com/repos/github-tools/github-release-notes/issues/66/comments",
+        "events_url": "https://api.github.com/repos/github-tools/github-release-notes/issues/66/events",
+        "html_url": "https://github.com/github-tools/github-release-notes/pull/66",
+        "id": 123456789,
+        "number": 2,
+        "title": "Pull Request Title",
+        "user": {
+            "login": "alexcanessa",
+            "id": 1176495,
+            "avatar_url": "https://avatars0.githubusercontent.com/u/1176495?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/alexcanessa",
+            "html_url": "https://github.com/alexcanessa",
+            "followers_url": "https://api.github.com/users/alexcanessa/followers",
+            "following_url": "https://api.github.com/users/alexcanessa/following{/other_user}",
+            "gists_url": "https://api.github.com/users/alexcanessa/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/alexcanessa/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/alexcanessa/subscriptions",
+            "organizations_url": "https://api.github.com/users/alexcanessa/orgs",
+            "repos_url": "https://api.github.com/users/alexcanessa/repos",
+            "events_url": "https://api.github.com/users/alexcanessa/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/alexcanessa/received_events",
+            "type": "User",
+            "site_admin": false
+        },
+        "labels": [],
+        "state": "open",
+        "locked": false,
+        "assignee": null,
+        "assignees": [],
+        "milestone": null,
+        "comments": 1,
+        "created_at": "2017-09-24T12:33:39Z",
+        "updated_at": "2017-09-28T13:45:35Z",
+        "closed_at": null,
+        "author_association": "OWNER",
+        "pull_request": {
+            "url": "https://api.github.com/repos/github-tools/github-release-notes/pulls/66",
+            "html_url": "https://github.com/github-tools/github-release-notes/pull/66",
+            "diff_url": "https://github.com/github-tools/github-release-notes/pull/66.diff",
+            "patch_url": "https://github.com/github-tools/github-release-notes/pull/66.patch"
+        },
+        "body": "## PR Body\r\n\r\nThis is the body of the pr",
+        "closed_by": null
+    }
+]

@@ -1,0 +1,10 @@
+-
+    short: '-G'
+    name: generate
+    description: 'Generate the changelog with gren rather then using the repo releases'
+-
+    short: '-f'
+    name: changelog-filename
+    valueType: '<filename.md>'
+    description: 'The name of the changelog file. [CHANGELOG.md]'
+    defaultValue: CHANGELOG.md

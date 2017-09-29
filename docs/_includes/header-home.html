@@ -1,5 +1,12 @@
-<div class="site-header">
-    <nav class="site-nav">
+<div class="site-header site-header--full">
+    <h1>
+        <span>
+            <div>🤖</div>
+            <a class="site-title" href="{{ site.baseurl }}/">{{ site.title }}</a>
+        </span>
+    </h1>
+    <p class="site-description">{{ site.description }}</p>
+    <nav class="site-nav site-nav--center">
         <a class="page-link" href="https://github.com/github-tools/github-release-notes">Github repo</a>
         {% for page in site.pages %}
             {% if page.title %}
@@ -7,10 +14,4 @@
             {% endif %}
         {% endfor %}
     </nav>
-    <h1>
-        <span>
-            <div>🤖</div>
-            <a class="site-title" href="{{ site.baseurl }}/">{{ site.title }}</a>
-        </span>
-    </h1>
 </div>

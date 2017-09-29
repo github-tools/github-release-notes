@@ -1,0 +1,4 @@
+-
+    name: 'Custom changelog'
+    description: 'Create a changelog with a custom filename'
+    code: 'gren changelog --generate --override --changelog-filename=RELEASE_NOTES.md'

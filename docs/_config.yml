@@ -1,6 +1,7 @@
 # Site settings
-title: Github Release Notes
-description: > # Node module to publish release notes based on commits between the last two tags.
+title: gren
+full_title: github release notes
+description: Node module to publish release notes based on commits between the last two tags.
 baseurl: "/github-release-notes"
 docsurl: "github-release-notes/"
 url: "http://github-tools.github.io/github-release-notes" # the base hostname & protocol for your site

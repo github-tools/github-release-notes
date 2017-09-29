@@ -1,0 +1,17 @@
+-
+    name: Help
+    description: 'Show the general help of the gren tool'
+    code: gren
+-
+    code: 'gren --help'
+-
+    code: 'gren -h'
+-
+    name: Version
+    description: 'Show the using version'
+    code: 'gren --version'
+-
+    code: 'gren -v'
+-
+    description: 'Get help for the release options'
+    code: 'gren help release'
