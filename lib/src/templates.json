@@ -1,5 +1,5 @@
 {
-    "commit": "- {{message}}",
+    "commit": "- [{{message}}]({{url}}) - @{{author}}",
     "issue": "- {{labels}} {{name}} [{{text}}]({{url}})",
     "label": "[**{{label}}**]",
     "noLabel": "closed",

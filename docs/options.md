@@ -52,16 +52,15 @@ You can configure the output of **gren** using templates. Set your own configura
 ```json
 {
     "template": {
-        "commit": "- {{message}}",
+        "commit": "- [{{message}}]({{url}}) - @{{author}}",
         "issue": "- {{labels}} {{name}} [{{text}}]({{url}})",
         "label": "[**{{label}}**]",
         "noLabel": "closed",
         "group": "\n#### {{heading}}\n",
         "changelogTitle": "# Changelog\n\n",
-        "release": "## {{release}} {{date}}\n{{body}}",
+        "release": "## {{release}} ({{date}})\n{{body}}",
         "releaseSeparator": "\n---\n\n"
     }
-
 }
 ```
 {% endraw %}
