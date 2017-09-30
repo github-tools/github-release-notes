@@ -271,31 +271,42 @@ describe('Gren', () => {
         let commitMessages;
 
         before(() => {
+            gren.options.template.commit = '{{message}} - {{author}}';
+
             commitMessages = [
                 {
                     commit: {
-                        message: "First commit"
+                        message: 'First commit',
+                        author: {
+                            name: 'alexcanessa'
+                        }
                     }
                 },
                 {
                     commit: {
-                        message: "This is another commit"
+                        message: 'This is another commit',
+                        author: {
+                            name: 'alexcanessa'
+                        }
                     }
                 },
                 {
                     commit: {
-                        message: "Merge branch into master: Something else here to be tested"
+                        message: 'Merge branch into master: Something else here to be tested',
+                        author: {
+                            name: 'alexcanessa'
+                        }
                     }
                 },
                 {
                     commit: {
-                        message: "This is the last one"
+                        message: 'This is the last one',
+                        author: {
+                            name: 'alexcanessa'
+                        }
                     }
                 }
             ];
-
-            // This makes the test easier
-            gren.options.template.commit = '{{message}}';
         });
 
         it('Should always return a string', () => {
@@ -307,21 +318,71 @@ describe('Gren', () => {
         });
 
         it('Should not return the last message', () => {
-            assert.notInclude(gren._generateCommitsBody(commitMessages), commitMessages.slice(-1)[0], 'Generate the messages');
-            assert.deepEqual(gren._generateCommitsBody([{ commit: { message: 'One message' }}]), 'One message', 'One message passed');
-            assert.deepEqual(gren._generateCommitsBody([{ commit: { message: 'One' }}, { commit: { message: 'Two' }}]), 'One', 'Two message passed');
-            assert.deepEqual(gren._generateCommitsBody([{ commit: { message: 'One' }}, { commit: { message: 'Two' }}, { commit: { message: 'Three' }}]), 'One\nTwo', 'Three message passed');
+            const lastMessage = commitMessages.slice(-1)[0];
+
+            assert.notInclude(gren._generateCommitsBody(commitMessages), `${lastMessage.commit.message} - ${lastMessage.commit.author.name}`, 'Generate the messages');
+            assert.deepEqual(gren._generateCommitsBody([{
+                commit: {
+                    message: 'One message',
+                    author: {
+                        name: 'alexcanessa'
+                    }
+                }
+            }]), 'One message - alexcanessa', 'One message passed');
+            assert.deepEqual(gren._generateCommitsBody([{
+                commit: {
+                    message: 'One',
+                    author: {
+                        name: 'alexcanessa'
+                    }
+                }
+            },
+            {
+                commit: {
+                    message: 'Two',
+                    author: {
+                        name: 'alexcanessa'
+                    }
+                }
+            }]), 'One - alexcanessa', 'Two message passed');
+            assert.deepEqual(gren._generateCommitsBody([{
+                commit: {
+                    message: 'One',
+                    author: {
+                        name: 'alexcanessa'
+                    }
+                }
+            },
+            {
+                commit: {
+                    message: 'Two',
+                    author: {
+                        name: 'alexcanessa'
+                    }
+                }
+            },
+            {
+                commit: {
+                    message: 'Three',
+                    author: {
+                        name: 'alexcanessa'
+                    }
+                }
+            }]), 'One - alexcanessa\nTwo - alexcanessa', 'Three message passed');
         });
 
         it('Should only return the messages defined in the options', () => {
             gren.options.includeMessages = 'commits';
-            assert.deepEqual(gren._generateCommitsBody(commitMessages), `${commitMessages[0].commit.message}\n${commitMessages[1].commit.message}`, 'Using commits as includeMessages');
+
+            const messages = msg => `${commitMessages[msg].commit.message} - ${commitMessages[msg].commit.author.name}`;
+
+            assert.deepEqual(gren._generateCommitsBody(commitMessages), `${messages(0)}\n${messages(1)}`, 'Using commits as includeMessages');
 
             gren.options.includeMessages = 'all';
-            assert.deepEqual(gren._generateCommitsBody(commitMessages), `${commitMessages[0].commit.message}\n${commitMessages[1].commit.message}\n${commitMessages[2].commit.message}`, 'Using commits as includeMessages');
+            assert.deepEqual(gren._generateCommitsBody(commitMessages), `${messages(0)}\n${messages(1)}\n${messages(2)}`, 'Using commits as includeMessages');
 
             gren.options.includeMessages = 'merges';
-            assert.deepEqual(gren._generateCommitsBody(commitMessages), commitMessages[2].commit.message, 'Using commits as includeMessages');
+            assert.deepEqual(gren._generateCommitsBody(commitMessages), messages(2), 'Using commits as includeMessages');
         });
     });
 
