@@ -115,10 +115,11 @@ describe('Gren', () => {
 
         describe('_groupBy, _groupByLabel', () => {
             it('Should return the just templated issues', () => {
-                const { normal } = issues;
+                const { normal, noLabel } = issues;
 
                 gren.options.groupBy = false;
                 assert.deepEqual(gren._groupBy(normal), [normal[0].title], 'The groupBy option is false');
+                assert.deepEqual(gren._groupBy(noLabel), [noLabel[0].title], 'The groupBy option is false');
             });
 
             it('Should return the group based on issue labels', () => {
@@ -129,8 +130,33 @@ describe('Gren', () => {
                 assert.deepEqual(gren._groupBy(noLabel), [`closed\n${noLabel[0].title}`], 'Group option is "label" with no labels');
             });
 
+            it('Should not return labels without labels', () => {
+                const { normal, noLabel } = issues;
+
+                gren.options.template.noLabel = false;
+                gren.options.groupBy = 'label';
+
+                assert.lengthOf(gren._groupBy(noLabel), 0, 'When the noLabel is false and only an issue with no labels has been passed');
+                assert.lengthOf(gren._groupBy(noLabel.concat(normal)), 1, 'When the noLabel is false and only one issue with labels has been passed');
+            });
+
+            it('Should throw an error', () => {
+                const error = chalk.red('The option for groupBy is invalid, please check the documentation');
+
+                gren.options.groupBy = 'an unrecognised string';
+                assert.throws(gren._groupBy.bind(gren, issues), error, 'Passing an unrecognised string');
+
+                gren.options.groupBy = [1, 2, 3];
+                assert.throws(gren._groupBy.bind(gren, issues), error, 'Passing an Array');
+
+                gren.options.groupBy = 123;
+                assert.throws(gren._groupBy.bind(gren, issues), error, 'Passing a number');
+            });
+
             it('Should group the issues based on the option', () => {
                 const { normal, noLabel } = issues;
+
+                gren.options.template.noLabel = 'closed';
 
                 gren.options.groupBy = {
                     'Test': ['enhancement'],
