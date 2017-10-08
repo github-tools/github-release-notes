@@ -16,9 +16,6 @@
 -
     name: 'Create release notes for all the tags'
     description: 'Get the commits or issues closed between the specified tag and the one before.'
-    code: 'gren release --tags=*'
--
-    description: '_`all` instead of `*` will be deprecated in 1.0.0_ '
     code: 'gren release --tags=all'
 -
     name: 'Work with milestones'
@@ -27,3 +24,7 @@
 -
     description: 'Otherwise, you can just filter the issues that belong to _a_ milestone'
     code: 'gren release --only-milestones'
+-
+    name: 'Use commit messages'
+    description: 'Generate release notes based on commit messages'
+    code: 'gren release --data-source=commits'
