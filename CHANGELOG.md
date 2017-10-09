@@ -1,5 +1,32 @@
 # Changelog
 
+## v0.10.0 (08/10/2017)
+
+#### Framework Enhancements:
+
+- [#81](https://github.com/github-tools/github-release-notes/issues/81) Swap Grunt with Gulp
+- [#80](https://github.com/github-tools/github-release-notes/issues/80) `gren --help` quietly does shit
+- [#78](https://github.com/github-tools/github-release-notes/issues/78) README doesn't explain what gren does
+- [#72](https://github.com/github-tools/github-release-notes/issues/72) Expanded options for commit template variables
+- [#68](https://github.com/github-tools/github-release-notes/issues/68) Migrate to ES2015
+- [#66](https://github.com/github-tools/github-release-notes/issues/66) Create a --help section
+- [#37](https://github.com/github-tools/github-release-notes/issues/37) Introduce unit test
+
+#### Bug Fixes:
+
+- [#77](https://github.com/github-tools/github-release-notes/issues/77) Check if there are no tags
+
+---
+
+## v0.9.0 (17/05/2017)
+
+#### Framework Enhancements:
+
+- [#74](https://github.com/github-tools/github-release-notes/issues/74) Support GitHub Enterprise
+- [#67](https://github.com/github-tools/github-release-notes/issues/67) Use milestones to create release notes
+
+---
+
 ## v0.8.1 (13/04/2017)
 
 #### Bug Fixes:
