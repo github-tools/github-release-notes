@@ -4,11 +4,25 @@ import fs from 'fs';
 import Gren from '../lib/src/Gren.js';
 import { requireConfig } from '../lib/src/_utils.js';
 
+const TOKEN = process.env.GREN_GITHUB_TOKEN;
+
+if (!TOKEN) {
+    console.log(chalk.blue('Token not present, skipping Gren tests.'))
+    describe = describe.skip
+}
+
 describe('Gren', () => {
     const gren = new Gren({
-        token: process.env.GREN_GITHUB_TOKEN,
+        token: TOKEN,
         username: 'github-tools',
         repo: 'github-release-notes'
+    });
+
+    it('Should throw an error', () => {
+        process.env.GREN_GITHUB_TOKEN = null;
+
+        const gren = () => new Gren();
+        assert.throws(gren, chalk.red('You must provide the TOKEN'), 'No token passed');
     });
 
     it('Should generate the options', () => {

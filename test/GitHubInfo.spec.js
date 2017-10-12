@@ -20,14 +20,19 @@ describe('GitHubInfo', () => {
             assert.deepEqual(repo, 'github-release-notes', 'Get the repository name from repo\'s folder');
         });
 
-        githubInfo.token.then(({ token }) => {
-            assert.isOk(token);
-        });
+        if (process.env.GREN_GITHUB_TOKEN) {
+            githubInfo.token.then(({ token }) => {
+                assert.isOk(token);
+            });
+        }
 
         githubInfo.options.then(options => {
             assert.isOk(options[0].repo);
             assert.isOk(options[0].username);
-            assert.isOk(options[1].token);
+
+            if (process.env.GREN_GITHUB_TOKEN) {
+                assert.isOk(options[1].token);
+            }
         });
 
     });
