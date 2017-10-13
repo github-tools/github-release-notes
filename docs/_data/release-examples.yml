@@ -16,7 +16,7 @@
 -
     name: 'Create release notes for all the tags'
     description: 'Get the commits or issues closed between the specified tag and the one before.'
-    code: 'gren release --tags=all'
+    code: 'gren release --tags=all --limit=200'
 -
     name: 'Work with milestones'
     description: 'Create release notes for a tag using the belonging to a milestone that matches the name of the tag. e.g. If the tag is 4.0.0, `gren` is going to match the milestone _"Release 4.0.0"_.'
