@@ -493,6 +493,28 @@ describe('Gren', () => {
                 .catch(err => done(err));
         });
 
+        it('_listReleases', done => {
+            gren._listReleases({
+                per_page: 10
+            })
+            .then(({ data: releases }) => {
+                assert.lengthOf(releases, 10, 'The list of releases is the set one.');
+                done();
+            })
+            .catch(err => done(err));
+        });
+
+        it('_listTags', done => {
+            gren._listTags({
+                per_page: 10
+            })
+            .then(({ data: tags }) => {
+                assert.lengthOf(tags, 10, 'The list of tags is the set one.');
+                done();
+            })
+            .catch(err => done(err));
+        });
+
         it('_getReleaseBlocks', done => {
             gren._getReleaseBlocks()
                 .then(releaseBlocks => {
