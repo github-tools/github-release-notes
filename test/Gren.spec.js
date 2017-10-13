@@ -7,8 +7,8 @@ import { requireConfig } from '../lib/src/_utils.js';
 const TOKEN = process.env.GREN_GITHUB_TOKEN;
 
 if (!TOKEN) {
-    console.log(chalk.blue('Token not present, skipping Gren tests.'))
-    describe = describe.skip
+    console.log(chalk.blue('Token not present, skipping Gren tests.'));
+    describe = describe.skip;
 }
 
 describe('Gren', () => {
@@ -96,10 +96,10 @@ describe('Gren', () => {
 
             assert.deepEqual(gren._createReleaseRanges(blocks), rangedBlocks, 'Given release blocks');
 
-            gren.options.tags = 'all'
+            gren.options.tags = 'all';
             assert.deepEqual(gren._createReleaseRanges(blocks), rangedBlocks.concat([[
                 {
-                    date: '2016-09-01T23:00:00.000Z',
+                    date: '2016-09-01T23:00:00.000Z'
                 },
                 {
                     id: 0,
@@ -125,6 +125,20 @@ describe('Gren', () => {
                 noMilestone: issueFile.filter(({ id }) => id === 234567891),
                 noLabel: issueFile.filter(({ id }) => id === 234567891)
             };
+        });
+
+        describe('_getLastPage', () => {
+            it('Should return the number of the last page', () => {
+                const link = '<https://api.github.com/search/code?q=addClass+user%3Amozilla&page=2>; rel="next", <https://api.github.com/search/code?q=addClass+user%3Amozilla&page=34>; rel="last"';
+
+                assert.deepEqual(gren._getLastPage(link), 34, 'String of pages');
+            });
+
+            it('Should return false', () => {
+                assert.isNotOk(gren._getLastPage(), 'Nothing has been passed');
+                assert.isNotOk(gren._getLastPage('Lorem ipsum'), 'The string does not contain the page information');
+                assert.isNotOk(gren._getLastPage(false), 'False has been passed');
+            });
         });
 
         describe('_groupBy, _groupByLabel', () => {
@@ -497,22 +511,22 @@ describe('Gren', () => {
             gren._listReleases({
                 per_page: 10
             })
-            .then(({ data: releases }) => {
-                assert.lengthOf(releases, 10, 'The list of releases is the set one.');
-                done();
-            })
-            .catch(err => done(err));
+                .then(({ data: releases }) => {
+                    assert.lengthOf(releases, 10, 'The list of releases is the set one.');
+                    done();
+                })
+                .catch(err => done(err));
         });
 
         it('_listTags', done => {
             gren._listTags({
                 per_page: 10
             })
-            .then(({ data: tags }) => {
-                assert.lengthOf(tags, 10, 'The list of tags is the set one.');
-                done();
-            })
-            .catch(err => done(err));
+                .then(({ data: tags }) => {
+                    assert.lengthOf(tags, 10, 'The list of tags is the set one.');
+                    done();
+                })
+                .catch(err => done(err));
         });
 
         it('_getReleaseBlocks', done => {
