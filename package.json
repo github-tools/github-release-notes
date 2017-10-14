@@ -1,6 +1,6 @@
 {
     "name": "github-release-notes",
-    "version": "0.12.0",
+    "version": "0.12.1",
     "description": "Create a release from a tag and uses issues or commits to creating the release notes. It also can generate a CHANGELOG.md file based on the release notes (or generate a brand new).",
     "main": "./github-release-notes.js",
     "scripts": {
