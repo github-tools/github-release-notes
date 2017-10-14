@@ -438,6 +438,14 @@ describe('Gren', () => {
             gren.options.includeMessages = 'merges';
             assert.deepEqual(gren._generateCommitsBody(commitMessages), messages(2), 'Using commits as includeMessages');
         });
+
+        it('Should not return commits with ignored words', () => {
+            gren.options.ignoreCommitsWith = ['another'];
+
+            const messages = msg => `${commitMessages[msg].commit.message} - ${commitMessages[msg].commit.author.name}`;
+
+            assert.notInclude(commitMessages.filter(message => gren._filterCommit(message)), messages(1), 'Ignore another');
+        });
     });
 
     describe('_checkChangelogFile', () => {
