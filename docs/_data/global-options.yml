@@ -26,13 +26,7 @@
     short: '-t'
     name: tags
     valueType: '<new-tag>..<old-tag>'
-    description: 'Write release notes for <new-tag> using data collected until <old-tag>. If only one tag is specified, will use data until the previous tag. To run gren for all the tags, use --tags=*'
--
-    short: '-l'
-    name: limit
-    valueType: '<number>'
-    description: 'The limit of tags/releases to get. [30]'
-    defaultValue: '30'
+    description: 'Write release notes for <new-tag> using data collected until <old-tag>. If only one tag is specified, will use data until the previous tag. To run gren for all the tags, use --tags=all'
 -
     short: '-D'
     name: data-source

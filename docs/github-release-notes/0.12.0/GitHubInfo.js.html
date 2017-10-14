@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>GitHubInfo.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Classes</li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="GitHubInfo.html">GitHubInfo</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="GitHubInfo.html#_executeCommand">_executeCommand</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="GitHubInfo.html#_repo">_repo</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="GitHubInfo.html#_token">_token</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Gren.html">Gren</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Gren.html#_checkChangelogFile">_checkChangelogFile</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Gren.html#_createChangelog">_createChangelog</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Gren.html#_createRelease">_createRelease</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Gren.html#_createReleaseRanges">_createReleaseRanges</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Gren.html#_editRelease">_editRelease</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Gren.html#_filterBlockIssue">_filterBlockIssue</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Gren.html#_filterCommit">_filterCommit</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Gren.html#_filterIssue">_filterIssue</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Gren.html#_generateCommitsBody">_generateCommitsBody</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Gren.html#_getClosedIssues">_getClosedIssues</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Gren.html#_getCommitBlocks">_getCommitBlocks</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Gren.html#_getCommitsBetweenTwo">_getCommitsBetweenTwo</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Gren.html#_getIssueBlocks">_getIssueBlocks</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Gren.html#_getLastPage">_getLastPage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Gren.html#_getLastTags">_getLastTags</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Gren.html#_getListReleases">_getListReleases</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Gren.html#_getReleaseBlocks">_getReleaseBlocks</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Gren.html#_getSelectedTags">_getSelectedTags</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Gren.html#_getTagDates">_getTagDates</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Gren.html#_groupBy">_groupBy</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Gren.html#_groupByLabel">_groupByLabel</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Gren.html#_hasNetwork">_hasNetwork</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Gren.html#_lablesAreIgnored">_lablesAreIgnored</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Gren.html#_listReleases">_listReleases</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Gren.html#_listTags">_listTags</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Gren.html#_prepareRelease">_prepareRelease</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Gren.html#_sortReleasesByDate">_sortReleasesByDate</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Gren.html#_templateCommits">_templateCommits</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Gren.html#_templateGroups">_templateGroups</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Gren.html#_templateIssue">_templateIssue</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Gren.html#_templateIssueBody">_templateIssueBody</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Gren.html#_templateLabels">_templateLabels</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Gren.html#changelog">changelog</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Gren.html#release">release</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Program.html">Program</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Program.html#_camelCaseObjectKeys">_camelCaseObjectKeys</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Program.html#_consumeOptions">_consumeOptions</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Program.html#_dashToCamelCase">_dashToCamelCase</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Program.html#_filterObject">_filterObject</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Program.html#_getEnvOptions">_getEnvOptions</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Program.html#_getOptionsFromObject">_getOptionsFromObject</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Program.html#_programWithEvents">_programWithEvents</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Program.html#_programWithOptions">_programWithOptions</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Program.html#init">init</a></span></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#clearTasks">clearTasks</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#convertStringToArray">convertStringToArray</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#dashToCamelCase">dashToCamelCase</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#formatDate">formatDate</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#generate">generate</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getConfigFromFile">getConfigFromFile</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getFileNameFromPath">getFileNameFromPath</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#isInRange">isInRange</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#printTask">printTask</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#requireConfig">requireConfig</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#sortObject">sortObject</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#task">task</a></span></li>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">GitHubInfo.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { exec } from 'child_process';
+import chalk from 'chalk';
+
+/** Class retrieving GitHub informations from the folder where .git is initialised. */
+class GitHubInfo {
+    /**
+     * Getter for the options
+     *
+     * @return {Promise.all}
+     */
+    get options() {
+        return Promise.all([
+            this._repo(),
+            this._token()
+        ]);
+    }
+
+    /**
+     * Getter for the token
+     *
+     * @return {Promise}
+     */
+    get token() {
+        return this._token();
+    }
+
+    /**
+     * Getter for the repo
+     *
+     * @return {Promise}
+     */
+    get repo() {
+        return this._repo();
+    }
+
+    /**
+    * Execute a command in the bash and run a callback
+    *
+    * @since 0.5.0
+    * @private
+    *
+    * @param  {string}   command The command to execute
+    * @param  {Function} callback The callback which returns the stdout
+    *
+    * @return {Promise}
+    */
+    _executeCommand(command, callback) {
+        return new Promise((resolve, reject) => {
+            exec(command, (err, stdout, stderr) => {
+                if (err || stderr) {
+                    reject(err || stderr);
+                } else {
+                    resolve(stdout.replace('\n', ''));
+                }
+            });
+        })
+            .then(callback)
+            .catch((error) => {
+                throw new Error(chalk.red(error) + chalk.yellow('Make sure you\'re running the command from the repo folder, or you using the --username and --repo flags.'));
+            });
+    }
+
+    /**
+    * Get repo informations
+    *
+    * @since 0.5.0
+    * @public
+    *
+    * @param  {Function} callback
+    *
+    * @return {Promise} The promise that resolves repo informations ({user: user, name: name})
+    */
+    _repo(callback) {
+        return this._executeCommand('git config remote.origin.url', repo => {
+            const repoPath = repo
+                .replace(/([^:]*:)|\.[^.]+$/g, '')
+                .split('/');
+            const user = repoPath[0];
+            const name = repoPath[1];
+
+            return {
+                username: user,
+                repo: name
+            };
+        }).then(callback);
+    }
+
+    /**
+    * Get token informations
+    *
+    * @since 0.5.0
+    * @public
+    *
+    * @param  {Function} callback
+    *
+    * @return {Promise} The promise that resolves token informations ({token: token})
+    */
+    _token() {
+        const token = process.env.GREN_GITHUB_TOKEN;
+
+        return token ? Promise.resolve({ token }) : Promise.resolve(null);
+    }
+}
+
+export default GitHubInfo;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sat Oct 14 2017 22:19:46 GMT+0100 (BST) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>
