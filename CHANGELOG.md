@@ -1,11 +1,45 @@
 # Changelog
 
+## v0.12.1 (14/10/2017)
+*No changelog for this release.*
+
+---
+
+## v0.12.0 (14/10/2017)
+
+#### Bug Fixes:
+
+- [#99](https://github.com/github-tools/github-release-notes/issues/99) Use Babel transform runtime
+- [#95](https://github.com/github-tools/github-release-notes/issues/95) Extend limit option to include pagination 
+
+---
+
+## v0.11.0 (13/10/2017)
+
+#### Framework Enhancements:
+
+- [#69](https://github.com/github-tools/github-release-notes/issues/69) Remove the releases limit
+
+#### Bug Fixes:
+
+- [#69](https://github.com/github-tools/github-release-notes/issues/69) Remove the releases limit
+
+---
+
+## v0.10.1 (12/10/2017)
+
+#### Bug Fixes:
+
+- [#90](https://github.com/github-tools/github-release-notes/issues/90) Fix the token option
+
+---
+
 ## v0.10.0 (08/10/2017)
 
 #### Framework Enhancements:
 
 - [#81](https://github.com/github-tools/github-release-notes/issues/81) Swap Grunt with Gulp
-- [#80](https://github.com/github-tools/github-release-notes/issues/80) `gren --help` quietly does shit
+- [#80](https://github.com/github-tools/github-release-notes/issues/80) `gren --help` quietly does stuff
 - [#78](https://github.com/github-tools/github-release-notes/issues/78) README doesn't explain what gren does
 - [#72](https://github.com/github-tools/github-release-notes/issues/72) Expanded options for commit template variables
 - [#68](https://github.com/github-tools/github-release-notes/issues/68) Migrate to ES2015
