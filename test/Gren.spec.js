@@ -284,7 +284,6 @@ describe('Gren', () => {
         });
 
         describe('_getSelectedTags', () => {
-            // gren.options.tags = [2, 1];
             it('Should return all the tags', () => {
                 gren.options.tags = 'all';
                 assert.deepEqual(gren._getSelectedTags(tags), tags, 'The tags option is all');
@@ -541,6 +540,18 @@ describe('Gren', () => {
             })
                 .then(({ data: tags }) => {
                     assert.lengthOf(tags, 10, 'The list of tags is the set one.');
+                    done();
+                })
+                .catch(err => done(err));
+        });
+
+        it('_getLastTags', done => {
+            gren.options.ignoreTagsWith = ['11'];
+            gren.options.tags = ['0.12.0', '0.11.0'];
+
+            gren._getLastTags()
+                .then(tags => {
+                    assert.notInclude(tags.map(({ name }) => name), '0.11.0', 'The ignored tag is not present');
                     done();
                 })
                 .catch(err => done(err));
