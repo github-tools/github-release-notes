@@ -129,5 +129,109 @@
         "author_association": "OWNER",
         "body": "Use `nyc` `babel` and `istanbul`",
         "closed_by": null
+    },
+    {
+        "url":"https://api.github.com/repos/github-tools/github-release-notes/issues/101",
+        "repository_url":"https://api.github.com/repos/github-tools/github-release-notes",
+        "labels_url":"https://api.github.com/repos/github-tools/github-release-notes/issues/101/labels{/name}",
+        "comments_url":"https://api.github.com/repos/github-tools/github-release-notes/issues/101/comments",
+        "events_url":"https://api.github.com/repos/github-tools/github-release-notes/issues/101/events",
+        "html_url":"https://github.com/github-tools/github-release-notes/pull/101",
+        "id":265524462,
+        "number":101,
+        "title":"Add babel-plugin-transform-runtime",
+        "user":{
+            "login":"alexcanessa",
+            "id":1176495,
+            "avatar_url":"https://avatars0.githubusercontent.com/u/1176495?v=4",
+            "gravatar_id":"",
+            "url":"https://api.github.com/users/alexcanessa",
+            "html_url":"https://github.com/alexcanessa",
+            "followers_url":"https://api.github.com/users/alexcanessa/followers",
+            "following_url":"https://api.github.com/users/alexcanessa/following{/other_user}",
+            "gists_url":"https://api.github.com/users/alexcanessa/gists{/gist_id}",
+            "starred_url":"https://api.github.com/users/alexcanessa/starred{/owner}{/repo}",
+            "subscriptions_url":"https://api.github.com/users/alexcanessa/subscriptions",
+            "organizations_url":"https://api.github.com/users/alexcanessa/orgs",
+            "repos_url":"https://api.github.com/users/alexcanessa/repos",
+            "events_url":"https://api.github.com/users/alexcanessa/events{/privacy}",
+            "received_events_url":"https://api.github.com/users/alexcanessa/received_events",
+            "type":"User",
+            "site_admin":false
+        },
+        "labels":[
+
+        ],
+        "state":"closed",
+        "locked":false,
+        "assignee":null,
+        "assignees":[
+
+        ],
+        "milestone":null,
+        "comments":1,
+        "created_at":"2017-10-14T21:16:13Z",
+        "updated_at":"2017-10-14T21:18:37Z",
+        "closed_at":"2017-10-14T21:18:27Z",
+        "author_association":"OWNER",
+        "pull_request":{
+            "url":"https://api.github.com/repos/github-tools/github-release-notes/pulls/101",
+            "html_url":"https://github.com/github-tools/github-release-notes/pull/101",
+            "diff_url":"https://github.com/github-tools/github-release-notes/pull/101.diff",
+            "patch_url":"https://github.com/github-tools/github-release-notes/pull/101.patch"
+        },
+        "body":"Fixes #99 "
+    },
+    {
+        "url":"https://api.github.com/repos/github-tools/github-release-notes/issues/100",
+        "repository_url":"https://api.github.com/repos/github-tools/github-release-notes",
+        "labels_url":"https://api.github.com/repos/github-tools/github-release-notes/issues/100/labels{/name}",
+        "comments_url":"https://api.github.com/repos/github-tools/github-release-notes/issues/100/comments",
+        "events_url":"https://api.github.com/repos/github-tools/github-release-notes/issues/100/events",
+        "html_url":"https://github.com/github-tools/github-release-notes/pull/100",
+        "id":265522515,
+        "number":100,
+        "title":"Remove the limit option and add the logic to tags all and pagination",
+        "user":{
+            "login":"alexcanessa",
+            "id":1176495,
+            "avatar_url":"https://avatars0.githubusercontent.com/u/1176495?v=4",
+            "gravatar_id":"",
+            "url":"https://api.github.com/users/alexcanessa",
+            "html_url":"https://github.com/alexcanessa",
+            "followers_url":"https://api.github.com/users/alexcanessa/followers",
+            "following_url":"https://api.github.com/users/alexcanessa/following{/other_user}",
+            "gists_url":"https://api.github.com/users/alexcanessa/gists{/gist_id}",
+            "starred_url":"https://api.github.com/users/alexcanessa/starred{/owner}{/repo}",
+            "subscriptions_url":"https://api.github.com/users/alexcanessa/subscriptions",
+            "organizations_url":"https://api.github.com/users/alexcanessa/orgs",
+            "repos_url":"https://api.github.com/users/alexcanessa/repos",
+            "events_url":"https://api.github.com/users/alexcanessa/events{/privacy}",
+            "received_events_url":"https://api.github.com/users/alexcanessa/received_events",
+            "type":"User",
+            "site_admin":false
+        },
+        "labels":[
+
+        ],
+        "state":"closed",
+        "locked":false,
+        "assignee":null,
+        "assignees":[
+
+        ],
+        "milestone":null,
+        "comments":1,
+        "created_at":"2017-10-14T20:47:40Z",
+        "updated_at":"2017-10-14T20:51:52Z",
+        "closed_at":"2017-10-14T20:51:31Z",
+        "author_association":"OWNER",
+        "pull_request":{
+            "url":"https://api.github.com/repos/github-tools/github-release-notes/pulls/100",
+            "html_url":"https://github.com/github-tools/github-release-notes/pull/100",
+            "diff_url":"https://github.com/github-tools/github-release-notes/pull/100.diff",
+            "patch_url":"https://github.com/github-tools/github-release-notes/pull/100.patch"
+        },
+        "body":"If the option `tags` is `all` the purpose is to get all the tags in the repo, therefore the option `limit` is not necessary.\r\n\r\nResolves #95"
     }
 ]

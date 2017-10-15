@@ -123,7 +123,8 @@ describe('Gren', () => {
             issues = {
                 normal: issueFile.filter(({ id }) => id === 234567890),
                 noMilestone: issueFile.filter(({ id }) => id === 234567891),
-                noLabel: issueFile.filter(({ id }) => id === 234567891)
+                noLabel: issueFile.filter(({ id }) => id === 234567891),
+                pullRequests: issueFile.filter(({ pull_request }) => pull_request)
             };
         });
 
@@ -222,6 +223,14 @@ describe('Gren', () => {
                 gren.options.onlyMilestones = false;
                 gren.options.dataSource = 'milestones';
                 assert.isNotOk(gren._filterIssue(noMilestone[0]), 'Issue without milestone, with dataSource as milestone');
+
+                gren.options.dataSource = 'prs';
+                assert.isNotOk(gren._filterIssue(normal[0]), 'Issue are not included, with dataSource as prs');
+            });
+
+            it('Should include pull requests', () => {
+                gren.options.dataSource = 'prs';
+                assert.isOk(gren._filterIssue(issues.pullRequests[0]), 'Pull Requests are included, with dataSource as prs');
             });
         });
 
