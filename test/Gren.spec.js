@@ -461,29 +461,22 @@ describe('Gren', () => {
             gren.options.changelogFilename = 'test/.temp/CHANGELOG.md';
         });
 
-        it('Should reject if the file does not exists ', done => {
-            gren._checkChangelogFile()
-                .then(done)
-                .catch(err => {
-                    assert.isOk(err);
-
-                    done();
-                });
-        });
-
-        it('Should reject if the file does not exists ', done => {
-            fs.writeFileSync(gren.options.changelogFilename, 'Test');
-
-            gren._checkChangelogFile()
-                .then(() => {
-                    done();
-                }).catch(() => done());
-        });
-
-        afterEach(() => {
+        beforeEach(() => {
             if (fs.existsSync(gren.options.changelogFilename)) {
                 fs.unlinkSync(gren.options.changelogFilename);
             }
+        });
+
+        it('Should reject if the file does not exists ', () => {
+            fs.writeFileSync(gren.options.changelogFilename, 'Test');
+
+            const err = chalk.black(chalk.bgYellow('Looks like there is already a changelog, to override it use --override'));
+
+            assert.throws(() => gren._checkChangelogFile(), err, 'The function throws the error');
+        });
+
+        it('Should return the filepath if the file exists ', () => {
+            assert.isOk(gren._checkChangelogFile(), 'The file exists');
         });
     });
 
@@ -567,6 +560,6 @@ describe('Gren', () => {
                     done();
                 })
                 .catch(err => done(err));
-        }).timeout(5000);
+        }).timeout(6000);
     });
 });
