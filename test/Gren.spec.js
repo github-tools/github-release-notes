@@ -15,14 +15,15 @@ describe('Gren', () => {
     const gren = new Gren({
         token: TOKEN,
         username: 'github-tools',
-        repo: 'github-release-notes'
+        repo: 'github-release-notes',
+        quiet: true
     });
 
     it('Should throw an error', () => {
         process.env.GREN_GITHUB_TOKEN = null;
 
-        const gren = () => new Gren();
-        assert.throws(gren, chalk.red('You must provide the TOKEN'), 'No token passed');
+        const grenWithoutToken = () => new Gren();
+        assert.throws(grenWithoutToken, chalk.red('You must provide the TOKEN'), 'No token passed');
     });
 
     it('Should generate the options', () => {
