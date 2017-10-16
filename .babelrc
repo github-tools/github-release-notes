@@ -1,6 +1,6 @@
 {
     "presets": ["es2015", "es2017"],
-    "plugins": ["transform-runtime"],
+    "plugins": ["transform-runtime", "transform-object-rest-spread"],
     "env": {
         "test": {
             "plugins": ["istanbul"]

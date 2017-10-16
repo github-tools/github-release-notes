@@ -87,13 +87,8 @@ describe('_utils.js', () => {
     });
 
     describe('requireConfig', () => {
-        const files = [
-            '.grenrc.yml',
-            '.grenrc.json',
-            '.grenrc.yaml',
-            '.grenrc.js',
-            '.grenrc'
-        ].map(file => `${process.cwd()}/test/.temp/${file}`);
+        const files = utils.getFileTypes()
+            .map(file => `${process.cwd()}/test/.temp/${file}`);
         const simpleObject = {
             a: 1,
             b: 2
@@ -159,6 +154,50 @@ describe('_utils.js', () => {
 
         afterEach(() => {
             fs.unlinkSync(filename);
+        });
+    });
+
+    describe('getFileExtension', () => {
+        it('Should return the extension of the file', () => {
+            assert.deepEqual(utils.getFileExtension('filename.txt'), 'txt', 'Just the filename');
+            assert.deepEqual(utils.getFileExtension('filename.something.txt'), 'txt', 'Filename with dots');
+            assert.deepEqual(utils.getFileExtension('.filename.txt'), 'txt', 'Filename that starts with dots');
+        });
+    });
+
+    describe('getFileNameFromPath', () => {
+        it('Should return the filename', () => {
+            assert.deepEqual(utils.getFileNameFromPath('path/to/filename.txt'), 'filename.txt', 'Simple path');
+            assert.deepEqual(utils.getFileNameFromPath('path/to/.filename.txt'), '.filename.txt', 'Simple path and filename with dot');
+            assert.deepEqual(utils.getFileNameFromPath('path/to\\ a \\(complex\\)/.filename.txt'), '.filename.txt', 'Complex path and filename with dot');
+        });
+    });
+
+    describe('getFileTypes', () => {
+        it('Should return an Array', () => {
+            assert.isArray(utils.getFileTypes(), 'Call the function');
+        });
+    });
+
+    describe('cleanConfig', () => {
+        const path = process.cwd() + '/test/.temp';
+        const fileContent = {
+            a: 1,
+            b: 2
+        };
+
+        beforeEach(() => {
+            fs.writeFileSync(`${path}/.grenrc`, JSON.stringify(fileContent));
+        });
+
+        it('Should not do anything', () => {
+            assert.isNotOk(utils.cleanConfig(), 'When no confirm has passed');
+            assert.isNotOk(utils.cleanConfig('hey'), 'When confirm has passed, but not true');
+        });
+
+        it('Should delete any config file present in path', () => {
+            utils.cleanConfig(true, path);
+            assert.isNotOk(fs.existsSync(`${path}/.grenrc`));
         });
     });
 
