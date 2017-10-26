@@ -30,7 +30,7 @@
 -
     short: '-D'
     name: data-source
-    valueType: '<issues|commits|milestones>'
+    valueType: '<issues|commits|milestones|prs>'
     description: 'The informations you want to use to build release notes. [issues]'
     defaultValue: issues
 -
@@ -39,6 +39,16 @@
     valueType: '<merge|commits|all>'
     description: 'Filter the messages added to the release notes. Only used when --data-source used is commits [commits]'
     defaultValue: commits
+-
+    short: '-i'
+    name: ignore-tags-with
+    valueType: '<string1>,<string2>'
+    description: 'Ignore tags that contain one of the specified strings.'
+-
+    short: '-C'
+    name: ignore-commits-with
+    valueType: '<string1>,<string2>'
+    description: 'Ignore commits that contain one of the specified strings.'
 -
     short: '-p'
     name: prefix

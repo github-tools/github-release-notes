@@ -18,6 +18,9 @@
     description: 'Create release notes for all the tags in the repository.'
     code: 'gren release --tags=all'
 -
+    description: 'Ignore the tags including an Array of strings'
+    code: 'gren release --tags=all --ignore-tags-with="-rc","-alpha","-beta"'
+-
     name: 'Work with milestones'
     description: 'Create release notes for a tag using the belonging to a milestone that matches the name of the tag. e.g. If the tag is 4.0.0, `gren` is going to match the milestone _"Release 4.0.0"_.'
     code: 'gren release --data-source=milestones --milestone-match="Release {{tag_name}}"'
