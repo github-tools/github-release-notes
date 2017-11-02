@@ -4,31 +4,28 @@
 [![npm version](https://badge.fury.io/js/github-release-notes.svg)](https://badge.fury.io/js/github-release-notes)
 [![Build Status](https://travis-ci.org/github-tools/github-release-notes.svg?branch=master)](https://travis-ci.org/github-tools/github-release-notes)
 [![Join the chat at https://gitter.im/github-release-notes/Lobby](https://badges.gitter.im/github-release-notes/Lobby.svg)](https://gitter.im/github-release-notes/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![Codecov](https://codecov.io/gh/github-tools/github-release-notes/branch/master/graph/badge.svg)](https://codecov.io/gh/github-tools/github-release-notes/)
+[![Codecov](https://codecov.io/gh/github-tools/github-release-notes/branch/master/graph/badge.svg)](https://codecov.io/gh/github-tools/github-release-notes/branch/master)
 [![npm downloads](https://img.shields.io/npm/dy/github-release-notes.svg)](https://www.npmjs.com/package/github-release-notes)
-
-## Motivation
-
-Everyone loves neat, transparent, informative release notes.
-
-Everyone would also rather avoid maintaining them. What a hassle to have to evaluate what issues have been solved between two points in project's timeline, what types of problems they were, are they important to inform the users about, what issues solved them etc.
-
-Wouldn't it be great to get fantastic release notes compiled for you automaticaly based on all the hard work you put into your GitHub issues and pull requests.
 
 ## OK, what can `gren` do for me?
 
-`gren` is a small helpful robot that will do for you just that! To put simply, it can create a release from a tag and compile the release notes using issues or commits.
+`gren` is a small helpful robot that will do for you just create a release from a tag and compile the release notes using issues or commits.
 
 It also can generate a `CHANGELOG.md` file based on the release notes (or generate a brand new).
 
-- [The Concept](#the-concept)
+- [The Motivation and Concept](#the-motiviation-and-concept)
 - [Feed 🤖](#feed-gren-)
 - [Installation](#installation)
 - [Basic Usage](#basic-usage)
 - [Configuration file](#configuration-file)
 - [Full Documentation](https://github-tools.github.io/github-release-notes)
 
-## The Concept
+## The Motivation and Concept
+
+Everyone loves neat, transparent, informative release notes.
+Everyone would also rather avoid maintaining them. What a hassle to have to evaluate what issues have been solved between two points in project's timeline, what types of problems they were, are they important to inform the users about, what issues solved them etc.
+
+Wouldn't it be great to get fantastic release notes compiled for you automaticaly based on all the hard work you put into your GitHub issues and pull requests.
 
 The main motivation for bringing `gren` to life was the need for auto generating release notes for every tag in a project.
 The process, [as explained here](https://help.github.com/articles/creating-releases/), requires to go to your project's releases page in GitHub, draft that tag as a new release and manually add what I remembered has changed.
