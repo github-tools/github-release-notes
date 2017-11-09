@@ -1,16 +1,8 @@
 const babel = require('gulp-babel');
 const chmod = require('gulp-chmod');
 const eslint = require('gulp-eslint');
-const ghPages = require('gulp-gh-pages');
 const gulp = require('gulp');
 const gulpIf = require('gulp-if');
-const sass = require('gulp-sass');
-const watch = require('gulp-watch');
-
-gulp.task('deploy', ['build'], function() {
-    return gulp.src('./docs/**/*')
-        .pipe(ghPages());
-});
 
 gulp.task('scripts', () => {
     gulp.src('./lib/src/**/*.js')
@@ -44,9 +36,7 @@ gulp.task('lint', () => {
         .pipe(gulpIf(isFixed, gulp.dest('./lib/')));
 });
 
-gulp.task('watch', () => {
-    return gulp.watch('./lib/**/*.js', ['lint', 'scripts']);
-});
+gulp.task('watch', () => gulp.watch('./lib/**/*.js', ['lint', 'scripts']));
 
 gulp.task('build', ['lint', 'scripts']);
 gulp.task('default', ['build', 'watch']);
