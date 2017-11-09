@@ -1,3 +1,1 @@
-'use strict';
-
-const gren = require('./bin/gren.js');
+require('./bin/gren.js');
