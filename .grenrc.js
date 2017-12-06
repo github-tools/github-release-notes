@@ -10,7 +10,7 @@ module.exports = {
         "issue": "- [{{text}}]({{url}}) {{name}}"
     },
     "groupBy": {
-        "Framework Enhancements:": ["enhancement"],
+        "Enhancements:": ["enhancement", "internal"],
         "Bug Fixes:": ["bug"]
     }
 };
