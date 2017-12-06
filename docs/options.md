@@ -36,6 +36,24 @@ The options are the same on specified above but in camelCase *e.g*:
 }
 ```
 
+### Group By
+
+Via the configuration file you can have more complex grouping, using labels in a more creative way.
+`gren` will use the keys of the given Object as titles and group all the issues that contain one or more of the labels in the value Array. A bit complex to understand? Just see the example:
+
+```json
+{
+    "groupBy": {
+        "Enhancements:": ["enhancement", "internal"],
+        "Bug Fixes:": ["bug"]
+    }
+}
+```
+
+In this case `gren` will group all the issues labeled with `enhancement` and `internal` under the title _"Enhancements: "_ and all the ones with `bug` under the title _"Bug Fixes: "_.
+
+### Extensions
+
 The accepted file extensions are the following:
 
 - `.grenrc`
