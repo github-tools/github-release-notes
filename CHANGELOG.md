@@ -1,5 +1,48 @@
 # Changelog
 
+## v0.14.1 (08/12/2017)
+*No changelog for this release.*
+
+---
+
+## v0.14.0 (08/12/2017)
+
+#### Enhancements:
+
+- [#108](https://github.com/github-tools/github-release-notes/issues/108) Create a silent mode
+- [#83](https://github.com/github-tools/github-release-notes/issues/83) Create module initialisation panel
+
+#### Bug Fixes:
+
+- [#122](https://github.com/github-tools/github-release-notes/issues/122) Fix git configuration from `https`
+- [#119](https://github.com/github-tools/github-release-notes/issues/119) Tags `all` takes a lot to exit the task
+
+---
+
+## v0.13.1 (06/12/2017)
+
+#### Bug Fixes:
+
+- [#110](https://github.com/github-tools/github-release-notes/issues/110) Configuration file not used with "gren release", but works with "gren changelog"
+
+---
+
+## v0.13.0 (26/10/2017)
+
+#### Enhancements:
+
+- [#102](https://github.com/github-tools/github-release-notes/issues/102) Create a better log
+- [#96](https://github.com/github-tools/github-release-notes/issues/96) Translate Promises to async, await
+- [#93](https://github.com/github-tools/github-release-notes/issues/93) Add Pull Requests as data-source option
+- [#92](https://github.com/github-tools/github-release-notes/issues/92) Ignore tags with a certain string
+- [#84](https://github.com/github-tools/github-release-notes/issues/84) Ignore commits with keywords
+
+#### Bug Fixes:
+
+- [#109](https://github.com/github-tools/github-release-notes/issues/109) Babel Runtime is missing
+
+---
+
 ## v0.12.1 (14/10/2017)
 *No changelog for this release.*
 
@@ -16,7 +59,7 @@
 
 ## v0.11.0 (13/10/2017)
 
-#### Framework Enhancements:
+#### Enhancements:
 
 - [#69](https://github.com/github-tools/github-release-notes/issues/69) Remove the releases limit
 
@@ -36,7 +79,7 @@
 
 ## v0.10.0 (08/10/2017)
 
-#### Framework Enhancements:
+#### Enhancements:
 
 - [#81](https://github.com/github-tools/github-release-notes/issues/81) Swap Grunt with Gulp
 - [#80](https://github.com/github-tools/github-release-notes/issues/80) `gren --help` quietly does stuff
@@ -54,7 +97,7 @@
 
 ## v0.9.0 (17/05/2017)
 
-#### Framework Enhancements:
+#### Enhancements:
 
 - [#74](https://github.com/github-tools/github-release-notes/issues/74) Support GitHub Enterprise
 - [#67](https://github.com/github-tools/github-release-notes/issues/67) Use milestones to create release notes
@@ -71,7 +114,7 @@
 
 ## v0.8.0 (11/04/2017)
 
-#### Framework Enhancements:
+#### Enhancements:
 
 - [#64](https://github.com/github-tools/github-release-notes/issues/64) Get the options with an external npm tool
 - [#61](https://github.com/github-tools/github-release-notes/issues/61) Rework the Changelog generator function
@@ -97,7 +140,7 @@
 
 ## v0.7.0 (16/03/2017)
 
-#### Framework Enhancements:
+#### Enhancements:
 
 - [#53](https://github.com/github-tools/github-release-notes/issues/53) Allow functions as template values
 - [#50](https://github.com/github-tools/github-release-notes/issues/50) Add GIF in readme.md file
@@ -112,7 +155,7 @@
 
 ## v0.5.0 (14/03/2017)
 
-#### Framework Enhancements:
+#### Enhancements:
 
 - [#20](https://github.com/github-tools/github-release-notes/issues/20) Specify which tag to build
 - [#18](https://github.com/github-tools/github-release-notes/issues/18) Create global version of the module
@@ -132,7 +175,7 @@
 
 ## v0.6.1 (14/03/2017)
 
-#### Framework Enhancements:
+#### Enhancements:
 
 - [#39](https://github.com/github-tools/github-release-notes/issues/39) Use different files type for configuration
 
@@ -160,7 +203,7 @@
 
 ## v0.4.0 (14/03/2017)
 
-#### Framework Enhancements:
+#### Enhancements:
 
 - [#5](https://github.com/github-tools/github-release-notes/issues/5) Include various types of commit messages
 
@@ -168,7 +211,7 @@
 
 ## v0.6.0 (14/03/2017)
 
-#### Framework Enhancements:
+#### Enhancements:
 
 - [#32](https://github.com/github-tools/github-release-notes/issues/32) Unwrap github-api promises
 - [#26](https://github.com/github-tools/github-release-notes/issues/26) Use external config file
@@ -210,11 +253,11 @@
 
 ## v0.2.0 (26/09/2016)
 
-#### Framework Enhancements:
+#### Enhancements:
 
 - [#3](https://github.com/github-tools/github-release-notes/issues/3) Cleanse option
 
 ---
 
 ## v0.1.0 (12/11/2015)
-_No changelog for this release._
+*No changelog for this release.*
