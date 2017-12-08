@@ -119,14 +119,6 @@ Then add this line to  `~/.bash_profile` (or `~/.zshrc`):
 export GREN_GITHUB_TOKEN=your_token_here
 ```
 
-#### Init
-
-If you need help to create the configuration file, you can run the following command and follow the instructions
-
-```
-gren init
-```
-
 ## Basic Usage
 
 `gren` gets the repo information directly from the folder where `git` is initialised.
@@ -203,5 +195,13 @@ The accepted file extensions are the following:
 - `.grenrc.yml`
 - `.grenrc.yaml`
 - `.grenrc.js`
+
+### Init
+
+If you need help to create the configuration file, you can run the following command and follow the instructions
+
+```
+gren init
+```
 
 ### [See full documentation here](https://github-tools.github.io/github-release-notes)
