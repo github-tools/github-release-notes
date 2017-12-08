@@ -8,7 +8,7 @@ process.stdout.write(chalk.white(`
 Before you start:
 
     1. Generate a token with ${chalk.yellow('repo scope')} at this link: ${chalk.blue('https://github.com/settings/tokens/new')}
-    2. Run ${chalk.green('gren init')} to create a config file
+    2. For every project, run ${chalk.green('gren init')} to create a config file (optional)
     3. Run ${chalk.green('gren help')} for more help or see ${chalk.blue('https://github-tools.github.io/github-release-notes/')}
 
 For any questions/issues, go here: ${chalk.blue('https://github.com/github-tools/github-release-notes/issues')}
