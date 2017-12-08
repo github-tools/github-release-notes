@@ -252,10 +252,7 @@
 ---
 
 ## v0.2.0 (26/09/2016)
-
-#### Enhancements:
-
-- [#3](https://github.com/github-tools/github-release-notes/issues/3) Cleanse option
+*No changelog for this release.*
 
 ---
 
