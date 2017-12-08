@@ -12,3 +12,4 @@ test/
 .grenrc.*
 .jsdoc.conf.json
 .travis.yml
+.nyc_output
