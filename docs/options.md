@@ -36,6 +36,12 @@ The options are the same on specified above but in camelCase *e.g*:
 }
 ```
 
+If you need help to create the configuration file, you can run the following command and follow the instructions
+
+```
+gren init
+```
+
 ### Group By
 
 Via the configuration file you can have more complex grouping, using labels in a more creative way.
