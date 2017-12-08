@@ -3,6 +3,6 @@
     name: draft
     description: 'Set the release notes as a draft.'
 -
-    short: '-pr'
+    short: '-P'
     name: prerelease
     description: 'Set the release as a prerelease.'

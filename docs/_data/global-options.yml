@@ -14,14 +14,18 @@
     valueType: '<github token>'
     description: 'The token generated with repo access'
 -
-    short: '-au'
+    short: '-a'
     name: api-url
     valueType: '<url>'
     description: 'Override the GitHub API URL, allows gren to connect to a private GHE installation'
 -
     short: '-o'
     name: override
-    description: 'Override the release notes if exist.'
+    description: 'Override the release notes if exist'
+-
+    short: '-B'
+    name: debug
+    description: 'Run the command in debugging mode'
 -
     short: '-t'
     name: tags
@@ -34,7 +38,7 @@
     description: 'The informations you want to use to build release notes. [issues]'
     defaultValue: issues
 -
-    short: '-im'
+    short: '-N'
     name: include-messages
     valueType: '<merge|commits|all>'
     description: 'Filter the messages added to the release notes. Only used when --data-source used is commits [commits]'
@@ -70,7 +74,7 @@
     valueType: '<label1>,<label2>'
     description: 'Ignore issues that contains one of the specified labels.'
 -
-    short: '-mm'
+    short: '-M'
     name: milestone-match
     valueType: '<prefix>'
     description: 'The title that the script needs to match to link the release to the milestone. e.g. v will match v0.1.0 [Release {{tag_name}}]'
@@ -79,3 +83,7 @@
     short: '-m'
     name: only-milestones
     description: 'Add to the release bodies only the issues that have a milestone'
+-
+    short: '-q'
+    name: quiet
+    description: 'Run command without console logs.'
