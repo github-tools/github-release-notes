@@ -71,7 +71,7 @@ In order to have spliendid generated release notes, we reccomend to follow these
 
 1. Start the title with a verb (e.g. Change header styles)
 2. Use the imperative mood in the title (e.g. Fix, not Fixed or Fixes header styles)
-3. Use labels wisely and assign one label per issue. `gren` has the [option to ignore issues](#) _(alex: put link to options)_ that have a specified issues.
+3. Use labels wisely and assign one label per issue. `gren` has the [option to ignore issues](https://github-tools.github.io/github-release-notes/options.html#ignore-issues-with) that have a specified issues.
 
 ### `commits`
 
