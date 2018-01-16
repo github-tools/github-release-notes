@@ -561,6 +561,6 @@ describe('Gren', () => {
                     done();
                 })
                 .catch(err => done(err));
-        }).timeout(6000);
+        }).timeout(10000);
     });
 });
