@@ -12,11 +12,15 @@ if (!TOKEN) {
 }
 
 describe('Gren', () => {
-    const gren = new Gren({
-        token: TOKEN,
-        username: 'github-tools',
-        repo: 'github-release-notes',
-        quiet: true
+    let gren;
+
+    before(() => {
+        gren = new Gren({
+            token: TOKEN,
+            username: 'github-tools',
+            repo: 'github-release-notes',
+            quiet: true
+        });
     });
 
     it('Should throw an error', () => {
