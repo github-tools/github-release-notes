@@ -1,6 +1,13 @@
 import { assert } from 'chai';
 import GitHubInfo from '../lib/src/GitHubInfo';
 
+const TOKEN = process.env.GREN_GITHUB_TOKEN;
+
+if (!TOKEN) {
+    console.log(chalk.blue('Token not present, skipping Gren tests.'));
+    describe = describe.skip;
+}
+
 describe('GitHubInfo', () => {
     let githubInfo;
 
@@ -20,7 +27,7 @@ describe('GitHubInfo', () => {
             assert.deepEqual(repo, 'github-release-notes', 'Get the repository name from repo\'s folder');
         });
 
-        if (process.env.GREN_GITHUB_TOKEN) {
+        if (TOKEN) {
             githubInfo.token.then(({ token }) => {
                 assert.isOk(token);
             });
@@ -30,10 +37,9 @@ describe('GitHubInfo', () => {
             assert.isOk(options[0].repo);
             assert.isOk(options[0].username);
 
-            if (process.env.GREN_GITHUB_TOKEN) {
+            if (TOKEN) {
                 assert.isOk(options[1].token);
             }
         });
-
     });
-})
+});
