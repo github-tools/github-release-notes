@@ -5,7 +5,7 @@
     "main": "./github-release-notes.js",
     "scripts": {
         "start": "node github-release-notes.js",
-        "test": "nyc mocha --reporter=nyan --compilers=js:babel-register",
+        "test": "./node_modules/.bin/nyc mocha --reporter=nyan --compilers=js:babel-register",
         "coverage": "nyc --reporter=lcov --reporter=text mocha --compilers=js:babel-register",
         "options": "node tasks/_generate-options.js",
         "examples": "node tasks/_generate-examples.js",
@@ -92,6 +92,7 @@
         "gulp-watch": "^4.3.11",
         "jsdoc": "^3.4.3",
         "minami": "^1.2.3",
+        "mocha": "^4.1.0",
         "nyc": "^11.2.1",
         "tap-nyan": "^1.1.0",
         "yamljs": "^0.3.0"
