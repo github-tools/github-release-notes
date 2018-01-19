@@ -58,6 +58,10 @@ Via the configuration file you can have more complex grouping, using labels in a
 
 In this case `gren` will group all the issues labeled with `enhancement` and `internal` under the title _"Enhancements: "_ and all the ones with `bug` under the title _"Bug Fixes: "_.
 
+#### Issues with multiple labels
+
+In case an issue has more than a specified label (e.g. both "enhancement" and "bug"), `gren` will prioritise based on the order (i.e. the issue will only appear in the "Enhancements" group).
+
 ### Extensions
 
 The accepted file extensions are the following:
