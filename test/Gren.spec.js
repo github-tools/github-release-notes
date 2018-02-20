@@ -543,19 +543,25 @@ describe('Gren', () => {
                 .catch(err => done(err));
         });
 
-        it('_getLastTags', done => {
-            gren.options.ignoreTagsWith = ['11'];
-            gren.options.tags = ['0.12.0', '0.11.0'];
-
-            gren._getLastTags()
-                .then(tags => {
-                    assert.notInclude(tags.map(({ name }) => name), '0.11.0', 'The ignored tag is not present');
-                    done();
-                })
-                .catch(err => done(err));
+        describe('_getLastTags', () => {
+            describe('with tags=all', () => {
+                describe('with ignoreTagsWith', () => {
+                    it('should ignore the specific tag', done => {
+                        gren.options.ignoreTagsWith = ['11'];
+                        gren.options.tags = ['all'];
+                        gren._getLastTags()
+                            .then(tags => {
+                                assert.notInclude(tags.map(({ name }) => name), '0.11.0', 'The ignored tag is not present');
+                                done();
+                            })
+                            .catch(err => done(err));
+                    });
+                });
+            });
         });
 
         it('_getReleaseBlocks', done => {
+            gren.options.tags = ['0.12.0', '0.11.0'];
             gren._getReleaseBlocks()
                 .then(releaseBlocks => {
                     assert.isArray(releaseBlocks, 'The releaseBlocks is an Array');
