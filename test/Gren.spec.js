@@ -504,6 +504,24 @@ describe('Gren', () => {
                 fs.unlinkSync(gren.options.changelogFilename);
             }
         });
+    })
+
+    describe('_validateRequiredTagsExists', () => {
+        it('should failed if one tag is missing', () => {
+            const existingTagName = 'existing_tag';
+            const existingTag = { tag: { name: existingTagName } };
+            const expectedException = chalk.red('\nThe following tag is not found in the repository: some_tag. please provide existing tags.');
+            assert.throw(() => gren._validateRequiredTagsExists([existingTag], ['some_tag', 'existing_tag']), expectedException);
+        });
+
+        it('should failed if the two input tags are missing', () => {
+            const expectedException = chalk.red('\nThe following tags are not found in the repository: some_tag,some_other_tag. please provide existing tags.');
+            assert.throw(() => gren._validateRequiredTagsExists([], ['some_tag', 'some_other_tag']), expectedException);
+        });
+
+        it('Should do nothing if requireTags=all', () => {
+            assert.doesNotThrow(() => gren._validateRequiredTagsExists([], 'all'));
+        });
     });
 
     describe('Tests that require network', () => {
@@ -543,19 +561,25 @@ describe('Gren', () => {
                 .catch(err => done(err));
         });
 
-        it('_getLastTags', done => {
-            gren.options.ignoreTagsWith = ['11'];
-            gren.options.tags = ['0.12.0', '0.11.0'];
-
-            gren._getLastTags()
-                .then(tags => {
-                    assert.notInclude(tags.map(({ name }) => name), '0.11.0', 'The ignored tag is not present');
-                    done();
-                })
-                .catch(err => done(err));
+        describe('_getLastTags', () => {
+            describe('with tags=all', () => {
+                describe('with ignoreTagsWith', () => {
+                    it('should ignore the specific tag', done => {
+                        gren.options.ignoreTagsWith = ['11'];
+                        gren.options.tags = ['all'];
+                        gren._getLastTags()
+                            .then(tags => {
+                                assert.notInclude(tags.map(({ name }) => name), '0.11.0', 'The ignored tag is not present');
+                                done();
+                            })
+                            .catch(err => done(err));
+                    });
+                });
+            });
         });
 
         it('_getReleaseBlocks', done => {
+            gren.options.tags = ['0.12.0', '0.11.0'];
             gren._getReleaseBlocks()
                 .then(releaseBlocks => {
                     assert.isArray(releaseBlocks, 'The releaseBlocks is an Array');
