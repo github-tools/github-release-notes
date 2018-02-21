@@ -510,12 +510,12 @@ describe('Gren', () => {
         it('should failed if one tag is missing', () => {
             const existingTagName = 'existing_tag';
             const existingTag = { tag: { name: existingTagName } };
-            const expectedException = chalk.red('\nThe following tag is not found in the repository: some_tag. please provider tags that are exists in the repository');
+            const expectedException = chalk.red('\nThe following tag is not found in the repository: some_tag. please provide existing tags.');
             assert.throw(() => gren._validateRequiredTagsExists([existingTag], ['some_tag', 'existing_tag']), expectedException);
         });
 
         it('should failed if the two input tags are missing', () => {
-            const expectedException = chalk.red('\nThe following tags are not found in the repository: some_tag,some_other_tag. please provider tags that are exists in the repository');
+            const expectedException = chalk.red('\nThe following tags are not found in the repository: some_tag,some_other_tag. please provide existing tags.');
             assert.throw(() => gren._validateRequiredTagsExists([], ['some_tag', 'some_other_tag']), expectedException);
         });
 
