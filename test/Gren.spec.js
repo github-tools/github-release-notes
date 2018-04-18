@@ -239,7 +239,7 @@ describe('Gren', () => {
             });
         });
 
-        describe('_templateIssueBody', () => {
+        describe('_templateBody', () => {
             it('Should always return a string', () => {
                 const body = [
                     'First',
@@ -248,10 +248,10 @@ describe('Gren', () => {
                 ];
                 const rangeBody = 'This is one body';
 
-                assert.isString(gren._templateIssueBody(body), 'Passing only the body');
-                assert.isString(gren._templateIssueBody(false, rangeBody), 'Passing only the rangeBody');
-                assert.isString(gren._templateIssueBody(), 'No parameters');
-                assert.isString(gren._templateIssueBody('This is not an Array!'), 'No parameters');
+                assert.isString(gren._templateBody(body), 'Passing only the body');
+                assert.isString(gren._templateBody(false, rangeBody), 'Passing only the rangeBody');
+                assert.isString(gren._templateBody(), 'No parameters');
+                assert.isString(gren._templateBody('This is not an Array!'), 'No parameters');
             });
         });
 

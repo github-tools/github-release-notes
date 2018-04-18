@@ -13,7 +13,7 @@
 
 It also can generate a `CHANGELOG.md` file based on the release notes (or generate a brand new).
 
-- [The Motivation and Concept](#the-motiviation-and-concept)
+- [The Motivation and Concept](#the-motivation-and-concept)
 - [Feed 🤖](#feed-gren-)
 - [Installation](#installation)
 - [Basic Usage](#basic-usage)
