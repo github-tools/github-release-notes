@@ -1,4 +1,5 @@
 import { assert } from 'chai';
+import chalk from 'chalk';
 import fs from 'fs';
 import YAML from 'yamljs';
 import * as utils from '../lib/src/_utils';
@@ -158,6 +159,13 @@ describe('_utils.js', () => {
             assert.deepEqual(utils.getConfigFromFile(process.cwd() + '/test/.temp'), fileContent, 'Given the right path');
             assert.deepEqual(utils.getConfigFromFile(process.cwd() + '/test/.temp', '.custom-grenrc'), customFileContent, 'Given a custom path');
             assert.deepEqual(utils.getConfigFromFile(process.cwd() + '/test'), {}, 'Given a path with no config file');
+        });
+
+        it('Should throw on non-existent custom config file', () => {
+            assert.throws(
+                () => utils.getConfigFromFile(process.cwd() + '/test/.temp', '.non-existing-grenrc'),
+                chalk.red('Could not find custom config file: .non-existing-grenrc')
+            );
         });
 
         afterEach(() => {
