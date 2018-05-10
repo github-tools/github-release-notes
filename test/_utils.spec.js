@@ -1,4 +1,5 @@
 import { assert } from 'chai';
+import chalk from 'chalk';
 import fs from 'fs';
 import YAML from 'yamljs';
 import * as utils from '../lib/src/_utils';
@@ -142,18 +143,34 @@ describe('_utils.js', () => {
             b: 2
         };
 
+        const customFilename = process.cwd() + '/test/.temp/.custom-grenrc';
+        const customFileContent = {
+            c: 3,
+            d: 4
+        };
+
         beforeEach(() => {
             fs.writeFileSync(filename, JSON.stringify(fileContent));
+            fs.writeFileSync(customFilename, JSON.stringify(customFileContent));
         });
 
         it('Should always return an Object', () => {
             assert.isOk(typeof utils.getConfigFromFile(process.cwd() + '/test/.temp') === 'object', 'The type is an object');
             assert.deepEqual(utils.getConfigFromFile(process.cwd() + '/test/.temp'), fileContent, 'Given the right path');
+            assert.deepEqual(utils.getConfigFromFile(process.cwd() + '/test/.temp', '.custom-grenrc'), customFileContent, 'Given a custom path');
             assert.deepEqual(utils.getConfigFromFile(process.cwd() + '/test'), {}, 'Given a path with no config file');
+        });
+
+        it('Should throw on non-existent custom config file', () => {
+            assert.throws(
+                () => utils.getConfigFromFile(process.cwd() + '/test/.temp', '.non-existing-grenrc'),
+                chalk.red('Could not find custom config file: .non-existing-grenrc')
+            );
         });
 
         afterEach(() => {
             fs.unlinkSync(filename);
+            fs.unlinkSync(customFilename);
         });
     });
 
