@@ -345,7 +345,7 @@ describe('Gren', () => {
                     commit: {
                         message: 'First commit',
                         author: {
-                            name: 'alexcanessa'
+                            login: 'alexcanessa'
                         }
                     }
                 },
@@ -353,7 +353,7 @@ describe('Gren', () => {
                     commit: {
                         message: 'This is another commit',
                         author: {
-                            name: 'alexcanessa'
+                            login: 'alexcanessa'
                         }
                     }
                 },
@@ -361,7 +361,7 @@ describe('Gren', () => {
                     commit: {
                         message: 'Merge branch into master: Something else here to be tested',
                         author: {
-                            name: 'alexcanessa'
+                            login: 'alexcanessa'
                         }
                     }
                 },
@@ -369,7 +369,7 @@ describe('Gren', () => {
                     commit: {
                         message: 'This is the last one',
                         author: {
-                            name: 'alexcanessa'
+                            login: 'alexcanessa'
                         }
                     }
                 }
@@ -387,12 +387,12 @@ describe('Gren', () => {
         it('Should not return the last message', () => {
             const lastMessage = commitMessages.slice(-1)[0];
 
-            assert.notInclude(gren._generateCommitsBody(commitMessages), `${lastMessage.commit.message} - ${lastMessage.commit.author.name}`, 'Generate the messages');
+            assert.notInclude(gren._generateCommitsBody(commitMessages), `${lastMessage.commit.message} - ${lastMessage.commit.author.login}`, 'Generate the messages');
             assert.deepEqual(gren._generateCommitsBody([{
                 commit: {
                     message: 'One message',
                     author: {
-                        name: 'alexcanessa'
+                        login: 'alexcanessa'
                     }
                 }
             }]), 'One message - alexcanessa', 'One message passed');
@@ -400,7 +400,7 @@ describe('Gren', () => {
                 commit: {
                     message: 'One',
                     author: {
-                        name: 'alexcanessa'
+                        login: 'alexcanessa'
                     }
                 }
             },
@@ -408,7 +408,7 @@ describe('Gren', () => {
                 commit: {
                     message: 'Two',
                     author: {
-                        name: 'alexcanessa'
+                        login: 'alexcanessa'
                     }
                 }
             }]), 'One - alexcanessa', 'Two message passed');
@@ -416,7 +416,7 @@ describe('Gren', () => {
                 commit: {
                     message: 'One',
                     author: {
-                        name: 'alexcanessa'
+                        login: 'alexcanessa'
                     }
                 }
             },
@@ -424,7 +424,7 @@ describe('Gren', () => {
                 commit: {
                     message: 'Two',
                     author: {
-                        name: 'alexcanessa'
+                        login: 'alexcanessa'
                     }
                 }
             },
@@ -432,7 +432,7 @@ describe('Gren', () => {
                 commit: {
                     message: 'Three',
                     author: {
-                        name: 'alexcanessa'
+                        login: 'alexcanessa'
                     }
                 }
             }]), 'One - alexcanessa\nTwo - alexcanessa', 'Three message passed');
@@ -441,7 +441,7 @@ describe('Gren', () => {
         it('Should only return the messages defined in the options', () => {
             gren.options.includeMessages = 'commits';
 
-            const messages = msg => `${commitMessages[msg].commit.message} - ${commitMessages[msg].commit.author.name}`;
+            const messages = msg => `${commitMessages[msg].commit.message} - ${commitMessages[msg].commit.author.login}`;
 
             assert.deepEqual(gren._generateCommitsBody(commitMessages), `${messages(0)}\n${messages(1)}`, 'Using commits as includeMessages');
 
@@ -455,7 +455,7 @@ describe('Gren', () => {
         it('Should not return commits with ignored words', () => {
             gren.options.ignoreCommitsWith = ['another'];
 
-            const messages = msg => `${commitMessages[msg].commit.message} - ${commitMessages[msg].commit.author.name}`;
+            const messages = msg => `${commitMessages[msg].commit.message} - ${commitMessages[msg].commit.author.login}`;
 
             assert.notInclude(commitMessages.filter(message => gren._filterCommit(message)), messages(1), 'Ignore another');
         });
