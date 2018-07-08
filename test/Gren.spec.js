@@ -260,7 +260,7 @@ describe('Gren', () => {
                 assert.isNotOk(gren._lablesAreIgnored([]), 'The variable is empty');
                 assert.isNotOk(gren._lablesAreIgnored(false), 'The variable is false');
                 assert.isNotOk(gren._lablesAreIgnored(true), 'The variable is true');
-                assert.isNotOk(gren._lablesAreIgnored({a: 1, b: 2}), 'The variable is an Object');
+                assert.isNotOk(gren._lablesAreIgnored({ a: 1, b: 2 }), 'The variable is an Object');
                 assert.isNotOk(gren._lablesAreIgnored({}), 'The variable is an empty Object');
                 assert.isNotOk(gren._lablesAreIgnored('string'), 'The variable is a string');
                 assert.isNotOk(gren._lablesAreIgnored([1, 2, 3]), 'The variable is a Array of invalid data');
@@ -268,15 +268,15 @@ describe('Gren', () => {
 
             it('Should return false if none of the label names are included', () => {
                 gren.options.ignoreIssuesWith = ['c'];
-                assert.isNotOk(gren._lablesAreIgnored([{name: 'a'}, {name: 'b'}]), 'None of the names match');
-                assert.isNotOk(gren._lablesAreIgnored([{name: 'ac'}, {name: 'b'}]), 'Part of the name is in a label name');
+                assert.isNotOk(gren._lablesAreIgnored([{ name: 'a' }, { name: 'b' }]), 'None of the names match');
+                assert.isNotOk(gren._lablesAreIgnored([{ name: 'ac' }, { name: 'b' }]), 'Part of the name is in a label name');
             });
 
             it('Should return true if it finds any label name', () => {
                 gren.options.ignoreIssuesWith = ['c', 'd'];
-                assert.isOk(gren._lablesAreIgnored([{name: 'c'}, { name: 'd'}]), 'All the labels match');
-                assert.isOk(gren._lablesAreIgnored([{name: 'c'}, { name: 'e'}]), 'Only one of the labels match');
-                assert.isOk(gren._lablesAreIgnored([{name: 'c'}, 1]), 'Only one of the labels match and is valid data');
+                assert.isOk(gren._lablesAreIgnored([{ name: 'c' }, { name: 'd' }]), 'All the labels match');
+                assert.isOk(gren._lablesAreIgnored([{ name: 'c' }, { name: 'e' }]), 'Only one of the labels match');
+                assert.isOk(gren._lablesAreIgnored([{ name: 'c' }, 1]), 'Only one of the labels match and is valid data');
             });
         });
     });
@@ -344,33 +344,33 @@ describe('Gren', () => {
                 {
                     commit: {
                         message: 'First commit',
-                        author: {
-                            login: 'alexcanessa'
-                        }
+                    },
+                    author: {
+                        login: 'alexcanessa'
                     }
                 },
                 {
                     commit: {
                         message: 'This is another commit',
-                        author: {
-                            login: 'alexcanessa'
-                        }
+                    },
+                    author: {
+                        login: 'alexcanessa'
                     }
                 },
                 {
                     commit: {
                         message: 'Merge branch into master: Something else here to be tested',
-                        author: {
-                            login: 'alexcanessa'
-                        }
+                    },
+                    author: {
+                        login: 'alexcanessa'
                     }
                 },
                 {
                     commit: {
                         message: 'This is the last one',
-                        author: {
-                            login: 'alexcanessa'
-                        }
+                    },
+                    author: {
+                        login: 'alexcanessa'
                     }
                 }
             ];
@@ -525,7 +525,7 @@ describe('Gren', () => {
     });
 
     describe('Tests that require network', () => {
-        before(function(done) {
+        before(function (done) {
             gren._hasNetwork()
                 .then(isOnline => {
                     if (!isOnline) {
