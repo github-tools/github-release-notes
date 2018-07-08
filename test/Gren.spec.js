@@ -260,7 +260,7 @@ describe('Gren', () => {
                 assert.isNotOk(gren._lablesAreIgnored([]), 'The variable is empty');
                 assert.isNotOk(gren._lablesAreIgnored(false), 'The variable is false');
                 assert.isNotOk(gren._lablesAreIgnored(true), 'The variable is true');
-                assert.isNotOk(gren._lablesAreIgnored({a: 1, b: 2}), 'The variable is an Object');
+                assert.isNotOk(gren._lablesAreIgnored({ a: 1, b: 2 }), 'The variable is an Object');
                 assert.isNotOk(gren._lablesAreIgnored({}), 'The variable is an empty Object');
                 assert.isNotOk(gren._lablesAreIgnored('string'), 'The variable is a string');
                 assert.isNotOk(gren._lablesAreIgnored([1, 2, 3]), 'The variable is a Array of invalid data');
@@ -268,15 +268,15 @@ describe('Gren', () => {
 
             it('Should return false if none of the label names are included', () => {
                 gren.options.ignoreIssuesWith = ['c'];
-                assert.isNotOk(gren._lablesAreIgnored([{name: 'a'}, {name: 'b'}]), 'None of the names match');
-                assert.isNotOk(gren._lablesAreIgnored([{name: 'ac'}, {name: 'b'}]), 'Part of the name is in a label name');
+                assert.isNotOk(gren._lablesAreIgnored([{ name: 'a' }, { name: 'b' }]), 'None of the names match');
+                assert.isNotOk(gren._lablesAreIgnored([{ name: 'ac' }, { name: 'b' }]), 'Part of the name is in a label name');
             });
 
             it('Should return true if it finds any label name', () => {
                 gren.options.ignoreIssuesWith = ['c', 'd'];
-                assert.isOk(gren._lablesAreIgnored([{name: 'c'}, { name: 'd'}]), 'All the labels match');
-                assert.isOk(gren._lablesAreIgnored([{name: 'c'}, { name: 'e'}]), 'Only one of the labels match');
-                assert.isOk(gren._lablesAreIgnored([{name: 'c'}, 1]), 'Only one of the labels match and is valid data');
+                assert.isOk(gren._lablesAreIgnored([{ name: 'c' }, { name: 'd' }]), 'All the labels match');
+                assert.isOk(gren._lablesAreIgnored([{ name: 'c' }, { name: 'e' }]), 'Only one of the labels match');
+                assert.isOk(gren._lablesAreIgnored([{ name: 'c' }, 1]), 'Only one of the labels match and is valid data');
             });
         });
     });
@@ -344,33 +344,33 @@ describe('Gren', () => {
                 {
                     commit: {
                         message: 'First commit',
-                        author: {
-                            login: 'alexcanessa'
-                        }
+                    },
+                    author: {
+                        login: 'alexcanessa'
                     }
                 },
                 {
                     commit: {
                         message: 'This is another commit',
-                        author: {
-                            login: 'alexcanessa'
-                        }
+                    },
+                    author: {
+                        login: 'alexcanessa'
                     }
                 },
                 {
                     commit: {
                         message: 'Merge branch into master: Something else here to be tested',
-                        author: {
-                            login: 'alexcanessa'
-                        }
+                    },
+                    author: {
+                        login: 'alexcanessa'
                     }
                 },
                 {
                     commit: {
                         message: 'This is the last one',
-                        author: {
-                            login: 'alexcanessa'
-                        }
+                    },
+                    author: {
+                        login: 'alexcanessa'
                     }
                 }
             ];
@@ -387,53 +387,53 @@ describe('Gren', () => {
         it('Should not return the last message', () => {
             const lastMessage = commitMessages.slice(-1)[0];
 
-            assert.notInclude(gren._generateCommitsBody(commitMessages), `${lastMessage.commit.message} - ${lastMessage.commit.author.login}`, 'Generate the messages');
+            assert.notInclude(gren._generateCommitsBody(commitMessages), `${lastMessage.commit.message} - ${lastMessage.author.login}`, 'Generate the messages');
             assert.deepEqual(gren._generateCommitsBody([{
                 commit: {
-                    message: 'One message',
-                    author: {
-                        login: 'alexcanessa'
-                    }
+                    message: 'One message'
+                },
+                author: {
+                    login: 'alexcanessa'
                 }
             }]), 'One message - alexcanessa', 'One message passed');
             assert.deepEqual(gren._generateCommitsBody([{
                 commit: {
-                    message: 'One',
-                    author: {
-                        login: 'alexcanessa'
-                    }
+                    message: 'One'
+                },
+                author: {
+                    login: 'alexcanessa'
                 }
             },
             {
                 commit: {
-                    message: 'Two',
-                    author: {
-                        login: 'alexcanessa'
-                    }
+                    message: 'Two'
+                },
+                author: {
+                    login: 'alexcanessa'
                 }
             }]), 'One - alexcanessa', 'Two message passed');
             assert.deepEqual(gren._generateCommitsBody([{
                 commit: {
-                    message: 'One',
-                    author: {
-                        login: 'alexcanessa'
-                    }
+                    message: 'One'
+                },
+                author: {
+                    login: 'alexcanessa'
                 }
             },
             {
                 commit: {
-                    message: 'Two',
-                    author: {
-                        login: 'alexcanessa'
-                    }
+                    message: 'Two'
+                },
+                author: {
+                    login: 'alexcanessa'
                 }
             },
             {
                 commit: {
-                    message: 'Three',
-                    author: {
-                        login: 'alexcanessa'
-                    }
+                    message: 'Three'
+                },
+                author: {
+                    login: 'alexcanessa'
                 }
             }]), 'One - alexcanessa\nTwo - alexcanessa', 'Three message passed');
         });
@@ -441,7 +441,7 @@ describe('Gren', () => {
         it('Should only return the messages defined in the options', () => {
             gren.options.includeMessages = 'commits';
 
-            const messages = msg => `${commitMessages[msg].commit.message} - ${commitMessages[msg].commit.author.login}`;
+            const messages = msg => `${commitMessages[msg].commit.message} - ${commitMessages[msg].author.login}`;
 
             assert.deepEqual(gren._generateCommitsBody(commitMessages), `${messages(0)}\n${messages(1)}`, 'Using commits as includeMessages');
 
@@ -455,7 +455,7 @@ describe('Gren', () => {
         it('Should not return commits with ignored words', () => {
             gren.options.ignoreCommitsWith = ['another'];
 
-            const messages = msg => `${commitMessages[msg].commit.message} - ${commitMessages[msg].commit.author.login}`;
+            const messages = msg => `${commitMessages[msg].commit.message} - ${commitMessages[msg].author.login}`;
 
             assert.notInclude(commitMessages.filter(message => gren._filterCommit(message)), messages(1), 'Ignore another');
         });
@@ -525,7 +525,7 @@ describe('Gren', () => {
     });
 
     describe('Tests that require network', () => {
-        before(function(done) {
+        before(function (done) {
             gren._hasNetwork()
                 .then(isOnline => {
                     if (!isOnline) {
