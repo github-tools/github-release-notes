@@ -32,6 +32,11 @@
     valueType: '<new-tag>..<old-tag>'
     description: 'Write release notes for <new-tag> using data collected until <old-tag>. If only one tag is specified, will use data until the previous tag. To run gren for all the tags, use --tags=all'
 -
+    short: '-l'
+    name: limit
+    valueType: '<number>'
+    description: 'Just produce release notes for the <number> last releases.'
+-
     short: '-D'
     name: data-source
     valueType: '<issues|commits|milestones|prs>'
@@ -87,3 +92,8 @@
     short: '-q'
     name: quiet
     description: 'Run command without console logs.'
+-
+    short: '-c'
+    name: config
+    valueType: '<string>'
+    description: 'Specify a custom config filename'
