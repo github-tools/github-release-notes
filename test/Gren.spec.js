@@ -129,6 +129,7 @@ describe('Gren', () => {
                 normal: issueFile.filter(({ id }) => id === 234567890),
                 noMilestone: issueFile.filter(({ id }) => id === 234567891),
                 noLabel: issueFile.filter(({ id }) => id === 234567891),
+                // eslint-disable-next-line camelcase
                 pullRequests: issueFile.filter(({ pull_request }) => pull_request)
             };
         });
@@ -343,7 +344,10 @@ describe('Gren', () => {
             commitMessages = [
                 {
                     commit: {
-                        message: 'First commit',
+                        author: {
+                            name: 'Alex Canessa'
+                        },
+                        message: 'First commit'
                     },
                     author: {
                         login: 'alexcanessa'
@@ -351,7 +355,10 @@ describe('Gren', () => {
                 },
                 {
                     commit: {
-                        message: 'This is another commit',
+                        author: {
+                            name: 'Alex Canessa'
+                        },
+                        message: 'This is another commit'
                     },
                     author: {
                         login: 'alexcanessa'
@@ -359,7 +366,10 @@ describe('Gren', () => {
                 },
                 {
                     commit: {
-                        message: 'Merge branch into master: Something else here to be tested',
+                        author: {
+                            name: 'Alex Canessa'
+                        },
+                        message: 'Merge branch into master: Something else here to be tested'
                     },
                     author: {
                         login: 'alexcanessa'
@@ -367,7 +377,10 @@ describe('Gren', () => {
                 },
                 {
                     commit: {
-                        message: 'This is the last one',
+                        author: {
+                            name: 'Alex Canessa'
+                        },
+                        message: 'This is the last one'
                     },
                     author: {
                         login: 'alexcanessa'
@@ -390,6 +403,9 @@ describe('Gren', () => {
             assert.notInclude(gren._generateCommitsBody(commitMessages), `${lastMessage.commit.message} - ${lastMessage.author.login}`, 'Generate the messages');
             assert.deepEqual(gren._generateCommitsBody([{
                 commit: {
+                    author: {
+                        name: 'Alex Canessa'
+                    },
                     message: 'One message'
                 },
                 author: {
@@ -398,6 +414,9 @@ describe('Gren', () => {
             }]), 'One message - alexcanessa', 'One message passed');
             assert.deepEqual(gren._generateCommitsBody([{
                 commit: {
+                    author: {
+                        name: 'Alex Canessa'
+                    },
                     message: 'One'
                 },
                 author: {
@@ -405,6 +424,9 @@ describe('Gren', () => {
                 }
             },
             {
+                author: {
+                    name: 'Alex Canessa'
+                },
                 commit: {
                     message: 'Two'
                 },
@@ -414,6 +436,9 @@ describe('Gren', () => {
             }]), 'One - alexcanessa', 'Two message passed');
             assert.deepEqual(gren._generateCommitsBody([{
                 commit: {
+                    author: {
+                        name: 'Alex Canessa'
+                    },
                     message: 'One'
                 },
                 author: {
@@ -422,6 +447,9 @@ describe('Gren', () => {
             },
             {
                 commit: {
+                    author: {
+                        name: 'Alex Canessa'
+                    },
                     message: 'Two'
                 },
                 author: {
@@ -430,6 +458,9 @@ describe('Gren', () => {
             },
             {
                 commit: {
+                    author: {
+                        name: 'Alex Canessa'
+                    },
                     message: 'Three'
                 },
                 author: {
