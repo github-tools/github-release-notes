@@ -4,7 +4,7 @@ const eslint = require('gulp-eslint');
 const gulp = require('gulp');
 const gulpIf = require('gulp-if');
 
-gulp.task('scripts', () => {
+gulp.task('scripts', done => {
     gulp.src('./lib/src/**/*.js')
         .pipe(babel({
             presets: ['es2015']
@@ -18,6 +18,8 @@ gulp.task('scripts', () => {
         .pipe(babel())
         .pipe(chmod(0o755))
         .pipe(gulp.dest('bin'));
+
+    done();
 });
 
 gulp.task('lint', () => {
@@ -36,7 +38,7 @@ gulp.task('lint', () => {
         .pipe(gulpIf(isFixed, gulp.dest('./lib/')));
 });
 
-gulp.task('watch', () => gulp.watch('./lib/**/*.js', ['lint', 'scripts']));
+gulp.task('watch', () => gulp.watch('./lib/**/*.js', gulp.series(['lint', 'scripts'])));
 
-gulp.task('build', ['lint', 'scripts']);
-gulp.task('default', ['build', 'watch']);
+gulp.task('build', gulp.series(['lint', 'scripts']));
+gulp.task('default', gulp.series(['build', 'watch']));

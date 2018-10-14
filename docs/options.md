@@ -77,17 +77,17 @@ The accepted file extensions are the following:
 You can configure the output of **gren** using templates. Set your own configuration inside the config file, which will be merged with the defaults, shown below:
 
 {% raw %}
-```json
-{
+```js
+module.exports = {
     "template": {
-        "commit": "- [{{message}}]({{url}}) - @{{author}}",
-        "issue": "- {{labels}} {{name}} [{{text}}]({{url}})",
-        "label": "[**{{label}}**]",
-        "noLabel": "closed",
-        "group": "\n#### {{heading}}\n",
-        "changelogTitle": "# Changelog\n\n",
-        "release": "## {{release}} ({{date}})\n{{body}}",
-        "releaseSeparator": "\n---\n\n"
+        commit: ({ message, url, author, name }) => `- [${message}](${url}) - ${author ? `@${author}` : name}`,
+        issue: "- {{labels}} {{name}} [{{text}}]({{url}})",
+        label: "[**{{label}}**]",
+        noLabel: "closed",
+        group: "\n#### {{heading}}\n",
+        changelogTitle: "# Changelog\n\n",
+        release: "## {{release}} ({{date}})\n{{body}}",
+        releaseSeparator: "\n---\n\n"
     }
 }
 ```
