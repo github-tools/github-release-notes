@@ -424,10 +424,10 @@ describe('Gren', () => {
                 }
             },
             {
-                author: {
-                    name: 'Alex Canessa'
-                },
                 commit: {
+                    author: {
+                        name: 'Alex Canessa'
+                    },
                     message: 'Two'
                 },
                 author: {
@@ -535,7 +535,7 @@ describe('Gren', () => {
                 fs.unlinkSync(gren.options.changelogFilename);
             }
         });
-    })
+    });
 
     describe('_validateRequiredTagsExists', () => {
         it('should failed if one tag is missing', () => {
@@ -556,7 +556,7 @@ describe('Gren', () => {
     });
 
     describe('Tests that require network', () => {
-        before(function (done) {
+        before(function(done) {
             gren._hasNetwork()
                 .then(isOnline => {
                     if (!isOnline) {
