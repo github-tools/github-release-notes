@@ -8,6 +8,7 @@ parserOptions:
         impliedStrict: true
     allowImportExportEverywhere: false
 plugins:
+    - mocha
     - babel
 extends:
     - semistandard
