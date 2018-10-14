@@ -1,5 +1,39 @@
 # Changelog
 
+## v0.17.0 (14/10/2018)
+
+#### Bug Fixes:
+
+- [#186](https://github.com/github-tools/github-release-notes/issues/186) Missing version numbers in generated changelog
+- [#158](https://github.com/github-tools/github-release-notes/issues/158) Commit author's name link is incorrect
+
+---
+
+## v0.16.0 (28/05/2018)
+
+#### Enhancements:
+
+- [#165](https://github.com/github-tools/github-release-notes/issues/165) Avoid paginating over all pull requests
+- [#161](https://github.com/github-tools/github-release-notes/issues/161) Pass issue descriptions into templates
+- [#152](https://github.com/github-tools/github-release-notes/issues/152) Add configuration-file option
+- [#144](https://github.com/github-tools/github-release-notes/issues/144) Feature to be able to specify limit on tags for the changelog
+- [#131](https://github.com/github-tools/github-release-notes/issues/131) Template: PR branch name?
+
+#### Bug Fixes:
+
+- [#140](https://github.com/github-tools/github-release-notes/issues/140) html_url and url are both pointing to 'https://api.github.com..'
+- [#133](https://github.com/github-tools/github-release-notes/issues/133) PRs that didn't merge to the master are shown in 
+- [#132](https://github.com/github-tools/github-release-notes/issues/132) Tags not found
+
+---
+
+## v0.15.0 (19/01/2018)
+#### Enhancements:
+
+- [#98](https://github.com/github-tools/github-release-notes/issues/98) Manage issues with multiple labels
+
+---
+
 ## v0.14.1 (08/12/2017)
 *No changelog for this release.*
 
@@ -247,14 +281,4 @@
 ---
 
 ## v0.2.1 (26/09/2016)
-*No changelog for this release.*
-
----
-
-## v0.2.0 (26/09/2016)
-*No changelog for this release.*
-
----
-
-## v0.1.0 (12/11/2015)
 *No changelog for this release.*
