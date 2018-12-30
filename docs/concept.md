@@ -60,13 +60,13 @@ If you want to be more accurate on the issues that belong to a release, you can 
 
 > The output above is a result of release notes built from issues.
 
-#### Help 🤖 to write wondeful stuff (issues)
+#### Help 🤖 to write wonderful stuff (issues)
 
-In order to have spliendid generated release notes, we reccomend to follow these convensions:
+In order to have splendidly generated release notes, we reccomend to follow these convensions:
 
-1. Start the title with a verb (e.g. Change header styles)
+1. Start the title with a verb (e.g. **Change** header styles)
 2. Use the imperative mood in the title (e.g. Fix, not Fixed or Fixes header styles)
-3. Use labels wisely and assign one label per issue. `gren` has the [option to ignore issues](https://github-tools.github.io/github-release-notes/options.html#ignore-issues-with) that have a one of the specified labels.
+3. Use labels wisely and assign one label per issue. `gren` has the [option to ignore issues](https://github-tools.github.io/github-release-notes/options.html#ignore-issues-with) that have more than one of the specified labels.
 
 ### `commits`
 
@@ -87,9 +87,9 @@ The output would then use commit messages (title + description) to look somethin
 
 #### Help 🤖 to write wondeful stuff (commits)
 
-In order to have spliendid generated release notes, we reccomend to follow these convensions:
+In order to have splendidly generated release notes, we reccomend to follow these convensions:
 
-1. Start the subject line with a verb (e.g. Change header styles)
+1. Start the subject line with a verb (e.g. **Change** header styles)
 2. Use the imperative mood in the subject line (e.g. Fix, not Fixed or Fixes header styles)
 3. Limit the subject line to about 50 characters
 4. Do not end the subject line with a period
