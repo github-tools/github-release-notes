@@ -1,7 +1,7 @@
 {
     "name": "github-release-notes",
     "version": "0.17.0",
-    "description": "Create a release from a tag and uses issues or commits to creating the release notes. It also can generate a CHANGELOG.md file based on the release notes (or generate a brand new).",
+    "description": "A fork of git+https://github.com/github-tools/github-release-notes.git.",
     "main": "./github-release-notes.js",
     "scripts": {
         "start": "node github-release-notes.js",
@@ -14,7 +14,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/github-tools/github-release-notes.git"
+        "url": "git+https://github.com/masim05/github-release-notes.git"
     },
     "directories": {
         "bin": "./bin",
