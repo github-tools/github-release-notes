@@ -1,9 +1,21 @@
 {
-    "presets": ["es2015", "es2017"],
-    "plugins": ["transform-runtime", "transform-object-rest-spread"],
+    "presets": [
+        "@babel/preset-env"
+    ],
+    "plugins": [
+        [
+            "@babel/plugin-transform-runtime",
+            {
+                "corejs": 2
+            }
+        ],
+        "@babel/plugin-proposal-object-rest-spread"
+    ],
     "env": {
         "test": {
-            "plugins": ["istanbul"]
+            "plugins": [
+                "istanbul"
+            ]
         }
     }
 }
