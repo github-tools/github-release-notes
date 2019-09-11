@@ -1,7 +1,7 @@
 -
     short: '-G'
     name: generate
-    description: 'Generate the changelog with gren rather then using the repo releases'
+    description: 'Generate the changelog with gren rather than using the repo releases'
 -
     short: '-f'
     name: changelog-filename
