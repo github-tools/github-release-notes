@@ -1,6 +1,6 @@
 {
-    "name": "github-release-notes",
-    "version": "0.17.0",
+    "name": "@femessage/github-release-notes",
+    "version": "0.1.0",
     "description": "Create a release from a tag and uses issues or commits to creating the release notes. It also can generate a CHANGELOG.md file based on the release notes (or generate a brand new).",
     "main": "./github-release-notes.js",
     "scripts": {
@@ -14,7 +14,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/github-tools/github-release-notes.git"
+        "url": "git+https://github.com/femessage/github-release-notes.git"
     },
     "directories": {
         "bin": "./bin",
@@ -37,13 +37,14 @@
     ],
     "author": "alexcanessa",
     "contributors": [
-        "Alex Canessa <canessa.alex@gmail.com>"
+        "Alex Canessa <canessa.alex@gmail.com>",
+        "Han <xsytby1112@gmail.com>"
     ],
     "license": "ISC",
     "bugs": {
-        "url": "https://github.com/alexcanessa/github-release-notes/issues"
+        "url": "https://github.com/femessage/github-release-notes/issues"
     },
-    "homepage": "https://github.com/alexcanessa/github-release-notes#readme",
+    "homepage": "https://github.com/femessage/github-release-notes#readme",
     "dependencies": {
         "babel-runtime": "^6.26.0",
         "base-64": "^0.1.0",
