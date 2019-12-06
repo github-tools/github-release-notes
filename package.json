@@ -61,6 +61,7 @@
         "object-assign-deep": "^0.3.1",
         "ora": "^1.3.0",
         "regex-match-all": "^1.0.2",
+        "require-from-url": "^3.1.3",
         "require-yaml": "0.0.1",
         "valid-url": "^1.0.9"
     },
@@ -96,5 +97,6 @@
         "nyc": "^13.1.0",
         "tap-nyan": "^1.1.0",
         "yamljs": "^0.3.0"
-    }
+    },
+    "gren": "https://raw.githubusercontent.com/FEMessage/.github/master/.grenrc.js"
 }
