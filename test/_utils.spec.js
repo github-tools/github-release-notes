@@ -174,6 +174,27 @@ describe('_utils.js', () => {
         });
     });
 
+    describe('getRemoteUrl', () => {
+        const filename = process.cwd() + '/test/.temp/package.json';
+        const fileContent = {
+            gren: 'testUri'
+        };
+
+        beforeEach(() => {
+            fs.writeFileSync(filename, JSON.stringify(fileContent));
+        });
+
+        it('Should always return a String', () => {
+            assert.isOk(typeof utils.getRemoteUrl(process.cwd() + '/test/.temp') === 'string', 'The type is a string');
+            assert.deepEqual(utils.getRemoteUrl(process.cwd() + '/test/.temp'), fileContent.gren, 'Given the right package path');
+            assert.deepEqual(utils.getRemoteUrl(process.cwd() + '/test'), '', 'Given a path with no package.json');
+        });
+
+        afterEach(() => {
+            fs.unlinkSync(filename);
+        });
+    });
+
     describe('getConfigFromRemote', () => {
         const grenRemote = 'https://raw.githubusercontent.com/FEMessage/github-release-notes/master/.grenrc.js';
         const grenrc = require(process.cwd() + '/.grenrc.js');
