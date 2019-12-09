@@ -174,6 +174,15 @@ describe('_utils.js', () => {
         });
     });
 
+    describe('getConfigFromRemote', () => {
+        const grenRemote = 'https://raw.githubusercontent.com/FEMessage/github-release-notes/master/.grenrc.js';
+        const grenrc = require(process.cwd() + '/.grenrc.js');
+
+        it('Should fetch config from remote url', () => {
+            assert.deepEqual(utils.getConfigFromRemote(grenRemote), grenrc, 'Given a remote gren config');
+        });
+    });
+
     describe('getFileExtension', () => {
         it('Should return the extension of the file', () => {
             assert.deepEqual(utils.getFileExtension('filename.txt'), 'txt', 'Just the filename');
