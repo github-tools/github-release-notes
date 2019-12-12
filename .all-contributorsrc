@@ -51,6 +51,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "mariotacke",
+      "name": "Mario Tacke",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/4942019?v=4",
+      "profile": "https://www.mariotacke.io",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
