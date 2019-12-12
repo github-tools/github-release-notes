@@ -1,5 +1,19 @@
 # Changelog
 
+## v0.17.1 (12/12/2019)
+
+#### Enhancements:
+
+- [#217](https://github.com/github-tools/github-release-notes/issues/217) [feature request] sharing config or online config
+
+#### Bug Fixes:
+
+- [#229](https://github.com/github-tools/github-release-notes/issues/229) The number of  commits will be reduced by one when "--data-source=commits"
+- [#162](https://github.com/github-tools/github-release-notes/issues/162) Change in artifact name - Gren no longer creates release notes!
+- [#134](https://github.com/github-tools/github-release-notes/issues/134) Sort tags by date before fetching release notes
+
+---
+
 ## v0.17.0 (14/10/2018)
 
 #### Bug Fixes:
@@ -276,9 +290,4 @@
 ---
 
 ## v0.3.2 (10/03/2017)
-*No changelog for this release.*
-
----
-
-## v0.2.1 (26/09/2016)
 *No changelog for this release.*
