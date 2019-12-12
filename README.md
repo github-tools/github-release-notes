@@ -1,6 +1,6 @@
 # `gren` 🤖
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-7-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-8-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 > Github release notes and changelog generator
 
@@ -232,6 +232,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/durera"><img src="https://avatars1.githubusercontent.com/u/4400618?v=4" width="100px;" alt=""/><br /><sub><b>David Parker</b></sub></a><br /><a href="https://github.com/github-tools/github-release-notes/commits?author=durera" title="Code">💻</a></td>
     <td align="center"><a href="https://www.mariotacke.io"><img src="https://avatars2.githubusercontent.com/u/4942019?v=4" width="100px;" alt=""/><br /><sub><b>Mario Tacke</b></sub></a><br /><a href="https://github.com/github-tools/github-release-notes/commits?author=mariotacke" title="Code">💻</a></td>
     <td align="center"><a href="http://kyeh.me"><img src="https://avatars1.githubusercontent.com/u/2308368?v=4" width="100px;" alt=""/><br /><sub><b>Kevin Yeh</b></sub></a><br /><a href="https://github.com/github-tools/github-release-notes/commits?author=kyeah" title="Code">💻</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://keithstolte.io"><img src="https://avatars0.githubusercontent.com/u/20091146?v=4" width="100px;" alt=""/><br /><sub><b>Keith Stolte</b></sub></a><br /><a href="https://github.com/github-tools/github-release-notes/commits?author=kstolte" title="Documentation">📖</a> <a href="#design-kstolte" title="Design">🎨</a></td>
   </tr>
 </table>
 
