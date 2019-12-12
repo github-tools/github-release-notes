@@ -6,6 +6,15 @@
   "commit": false,
   "contributors": [
     {
+      "login": "wellDan28",
+      "name": "Dan Klausner",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/2083539?v=4",
+      "profile": "https://github.com/wellDan28",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
       "login": "datitisev",
       "name": "David Sevilla Martín",
       "avatar_url": "https://avatars2.githubusercontent.com/u/6401250?v=4",
