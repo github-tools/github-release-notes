@@ -60,6 +60,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "kyeah",
+      "name": "Kevin Yeh",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/2308368?v=4",
+      "profile": "http://kyeh.me",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
