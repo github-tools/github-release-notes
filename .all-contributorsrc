@@ -1,0 +1,24 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "datitisev",
+      "name": "David Sevilla Martín",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/6401250?v=4",
+      "profile": "https://datitisev.me",
+      "contributions": [
+        "doc"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "github-release-notes",
+  "projectOwner": "github-tools",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
