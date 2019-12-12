@@ -8,6 +8,7 @@ const TOKEN = process.env.GREN_GITHUB_TOKEN;
 
 if (!TOKEN) {
     console.log(chalk.blue('Token not present, skipping Gren tests.'));
+    // eslint-disable-next-line no-global-assign
     describe = describe.skip;
 }
 
@@ -78,7 +79,7 @@ describe('Gren', () => {
                         date: '2017-10-01T23:00:00.000Z'
                     },
                     {
-                        date: '2017-09-01T23:00:01Z'
+                        date: '2017-09-01T23:00:00.000Z'
                     }
                 ],
                 [
@@ -86,7 +87,7 @@ describe('Gren', () => {
                         date: '2017-09-01T23:00:00.000Z'
                     },
                     {
-                        date: '2017-05-01T23:00:01Z'
+                        date: '2017-05-01T23:00:00.000Z'
                     }
                 ],
                 [
@@ -94,7 +95,7 @@ describe('Gren', () => {
                         date: '2017-05-01T23:00:00.000Z'
                     },
                     {
-                        date: '2016-09-01T23:00:01Z'
+                        date: '2016-09-01T23:00:00.000Z'
                     }
                 ]
             ];
@@ -108,7 +109,7 @@ describe('Gren', () => {
                 },
                 {
                     id: 0,
-                    date: '1970-01-01T00:00:01Z'
+                    date: new Date('1970-01-01T00:00:00.000Z')
                 }
             ]]), 'Given release blocks with all tags option in');
         });
