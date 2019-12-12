@@ -31,6 +31,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "code",
+      "name": "codegent",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/7318?v=4",
+      "profile": "http://www.codegent.com",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
