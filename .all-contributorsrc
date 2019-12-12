@@ -124,6 +124,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "v1v",
+      "name": "Victor Martinez",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/2871786?v=4",
+      "profile": "https://github.com/v1v",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
