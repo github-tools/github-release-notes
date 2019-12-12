@@ -1,6 +1,6 @@
 # `gren` 🤖
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-14-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-15-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 > Github release notes and changelog generator
 
@@ -241,6 +241,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/pawk"><img src="https://avatars1.githubusercontent.com/u/27773225?v=4" width="100px;" alt=""/><br /><sub><b>pawk</b></sub></a><br /><a href="https://github.com/github-tools/github-release-notes/commits?author=pawk" title="Code">💻</a></td>
     <td align="center"><a href="https://www.yang-bo.com/"><img src="https://avatars3.githubusercontent.com/u/601530?v=4" width="100px;" alt=""/><br /><sub><b>Yang, Bo</b></sub></a><br /><a href="https://github.com/github-tools/github-release-notes/commits?author=Atry" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/v1v"><img src="https://avatars2.githubusercontent.com/u/2871786?v=4" width="100px;" alt=""/><br /><sub><b>Victor Martinez</b></sub></a><br /><a href="https://github.com/github-tools/github-release-notes/commits?author=v1v" title="Documentation">📖</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/Tybot204"><img src="https://avatars3.githubusercontent.com/u/7002601?v=4" width="100px;" alt=""/><br /><sub><b>Tyler Hogan</b></sub></a><br /><a href="https://github.com/github-tools/github-release-notes/commits?author=Tybot204" title="Code">💻</a></td>
   </tr>
 </table>
 
