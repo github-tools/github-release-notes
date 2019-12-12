@@ -226,6 +226,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <table>
   <tr>
     <td align="center"><a href="https://github.com/wellDan28"><img src="https://avatars1.githubusercontent.com/u/2083539?v=4" width="100px;" alt=""/><br /><sub><b>Dan Klausner</b></sub></a><br /><a href="https://github.com/github-tools/github-release-notes/issues?q=author%3AwellDan28" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://datitisev.me"><img src="https://avatars2.githubusercontent.com/u/6401250?v=4" width="100px;" alt=""/><br /><sub><b>David Sevilla Martín</b></sub></a><br /><a href="https://github.com/github-tools/github-release-notes/commits?author=datitisev" title="Documentation">📖</a></td>
   </tr>
 </table>
 
