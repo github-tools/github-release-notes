@@ -1,6 +1,6 @@
 # `gren` 🤖
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-11-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-12-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 > Github release notes and changelog generator
 
@@ -237,6 +237,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://jackocnr.com"><img src="https://avatars0.githubusercontent.com/u/1186883?v=4" width="100px;" alt=""/><br /><sub><b>Jack O'Connor</b></sub></a><br /><a href="https://github.com/github-tools/github-release-notes/commits?author=jackocnr" title="Code">💻</a></td>
     <td align="center"><a href="https://keithstolte.io"><img src="https://avatars0.githubusercontent.com/u/20091146?v=4" width="100px;" alt=""/><br /><sub><b>Keith Stolte</b></sub></a><br /><a href="https://github.com/github-tools/github-release-notes/commits?author=kstolte" title="Documentation">📖</a> <a href="#design-kstolte" title="Design">🎨</a></td>
     <td align="center"><a href="http://www.nvisionative.com"><img src="https://avatars2.githubusercontent.com/u/4568451?v=4" width="100px;" alt=""/><br /><sub><b>David Poindexter</b></sub></a><br /><a href="https://github.com/github-tools/github-release-notes/commits?author=david-poindexter" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/fthomas"><img src="https://avatars1.githubusercontent.com/u/141252?v=4" width="100px;" alt=""/><br /><sub><b>Frank S. Thomas</b></sub></a><br /><a href="https://github.com/github-tools/github-release-notes/commits?author=fthomas" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/pawk"><img src="https://avatars1.githubusercontent.com/u/27773225?v=4" width="100px;" alt=""/><br /><sub><b>pawk</b></sub></a><br /><a href="https://github.com/github-tools/github-release-notes/commits?author=pawk" title="Code">💻</a></td>
   </tr>
 </table>
