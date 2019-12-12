@@ -69,6 +69,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "kstolte",
+      "name": "Keith Stolte",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/20091146?v=4",
+      "profile": "https://keithstolte.io",
+      "contributions": [
+        "doc",
+        "design"
+      ]
     }
   ],
   "contributorsPerLine": 7,
