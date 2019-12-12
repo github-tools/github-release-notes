@@ -88,6 +88,15 @@
         "doc",
         "design"
       ]
+    },
+    {
+      "login": "david-poindexter",
+      "name": "David Poindexter",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/4568451?v=4",
+      "profile": "http://www.nvisionative.com",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
