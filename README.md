@@ -1,6 +1,6 @@
 # `gren` 🤖
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 > Github release notes and changelog generator
 
@@ -228,6 +228,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/wellDan28"><img src="https://avatars1.githubusercontent.com/u/2083539?v=4" width="100px;" alt=""/><br /><sub><b>Dan Klausner</b></sub></a><br /><a href="https://github.com/github-tools/github-release-notes/issues?q=author%3AwellDan28" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://datitisev.me"><img src="https://avatars2.githubusercontent.com/u/6401250?v=4" width="100px;" alt=""/><br /><sub><b>David Sevilla Martín</b></sub></a><br /><a href="https://github.com/github-tools/github-release-notes/commits?author=datitisev" title="Documentation">📖</a></td>
     <td align="center"><a href="http://phun-ky.net"><img src="https://avatars1.githubusercontent.com/u/1714029?v=4" width="100px;" alt=""/><br /><sub><b>Alexander Vassbotn Røyne-Helgesen</b></sub></a><br /><a href="https://github.com/github-tools/github-release-notes/issues?q=author%3Aphun-ky" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="http://www.codegent.com"><img src="https://avatars1.githubusercontent.com/u/7318?v=4" width="100px;" alt=""/><br /><sub><b>codegent</b></sub></a><br /><a href="https://github.com/github-tools/github-release-notes/commits?author=code" title="Code">💻</a></td>
   </tr>
 </table>
 
