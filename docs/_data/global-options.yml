@@ -39,7 +39,7 @@
 -
     short: '-D'
     name: data-source
-    valueType: '<issues|commits|milestones|prs>'
+    valueType: '<issues|commits|milestones|prs|prs-with-issues>'
     description: 'The informations you want to use to build release notes. [issues]'
     defaultValue: issues
 -
