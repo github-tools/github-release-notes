@@ -24,12 +24,12 @@ It also can generate a `CHANGELOG.md` file based on the release notes (or genera
 ## The Motivation and Concept
 
 Everyone loves neat, transparent, informative release notes.
-Everyone would also rather avoid maintaining them. What a hassle to have to evaluate what issues have been solved between two points in project's timeline, what types of problems they were, are they important to inform the users about, what issues solved them etc.
+Everyone would also rather avoid maintaining them. What a hassle to have to evaluate what issues have been solved between two points in project's timeline, what types of problems they were, are they important to inform the users about, what issues solved them, etc.
 
-Wouldn't it be great to get fantastic release notes compiled for you automaticaly based on all the hard work you put into your GitHub issues and pull requests.
+Wouldn't it be great to get fantastic release notes compiled for you automatically based on all the hard work you put into your GitHub issues and pull requests?
 
-The main motivation for bringing `gren` to life was the need for auto generating release notes for every tag in a project.
-The process, [as explained here](https://help.github.com/articles/creating-releases/), requires to go to your project's releases page in GitHub, draft that tag as a new release and manually add what I remembered has changed.
+The main motivation for bringing `gren` to life was the need for auto-generating release notes for every tag in a project.
+The process, [as explained here](https://help.github.com/articles/creating-releases/), requires the tagger to go to your project's releases page in GitHub, draft that tag as a new release and manually add what has changed.
 
 Let `gren` take care of that for you. It automates this process and also writes release notes for you, creating something like this:
 
@@ -68,7 +68,7 @@ If you want to be more accurate on the issues that belong to a release, you can 
 
 #### Help 🤖 to write wondeful stuff (issues)
 
-In order to have spliendid generated release notes, we reccomend to follow these convensions:
+In order to have splendidly generated release notes, we recommend to follow these conventions:
 
 1. Start the title with a verb (e.g. Change header styles)
 2. Use the imperative mood in the title (e.g. Fix, not Fixed or Fixes header styles)
@@ -77,9 +77,9 @@ In order to have spliendid generated release notes, we reccomend to follow these
 ### `commits`
 
 The simplest way of getting data is from the commits you write.
-Even though it doesn't require a machine-readable commit, still would be better to have them in a nice format.
+Even though it doesn't require a machine-readable commit, it is still better to have them in a nice format.
 
-The output would then use commit messages (title + description) to look something like:
+The output then uses commit messages (title + description) to look something like:
 
 > ## v0.9.0 (17/05/2017)
 > 
@@ -93,7 +93,7 @@ The output would then use commit messages (title + description) to look somethin
 
 #### Help 🤖 to write wondeful stuff (commits)
 
-In order to have spliendid generated release notes, we reccomend to follow these convensions:
+In order to have splendidly generated release notes, we recommend to follow these conventions:
 
 1. Start the subject line with a verb (e.g. Change header styles)
 2. Use the imperative mood in the subject line (e.g. Fix, not Fixed or Fixes header styles)
@@ -194,7 +194,7 @@ gren examples release
 
 ## Configuration file
 
-You can create a configuration file where the task will be ran, where to specify your options. [See how to set up the config file](https://github-tools.github.io/github-release-notes/options.html#configuration-file)
+You can create a configuration file where the task will be run to specify your options. [See how to set up the config file](https://github-tools.github.io/github-release-notes/options.html#configuration-file)
 The accepted file extensions are the following:
 
 - `.grenrc`
