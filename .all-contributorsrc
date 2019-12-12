@@ -142,6 +142,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "blairg23",
+      "name": "Blair Gemmer",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/6225764?v=4",
+      "profile": "http://blairgemmer.com",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,

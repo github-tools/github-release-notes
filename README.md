@@ -1,6 +1,6 @@
 # `gren` 🤖
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-15-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-16-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 > Github release notes and changelog generator
 
@@ -244,6 +244,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   </tr>
   <tr>
     <td align="center"><a href="https://github.com/Tybot204"><img src="https://avatars3.githubusercontent.com/u/7002601?v=4" width="100px;" alt=""/><br /><sub><b>Tyler Hogan</b></sub></a><br /><a href="https://github.com/github-tools/github-release-notes/commits?author=Tybot204" title="Code">💻</a></td>
+    <td align="center"><a href="http://blairgemmer.com"><img src="https://avatars0.githubusercontent.com/u/6225764?v=4" width="100px;" alt=""/><br /><sub><b>Blair Gemmer</b></sub></a><br /><a href="https://github.com/github-tools/github-release-notes/commits?author=blairg23" title="Code">💻</a></td>
   </tr>
 </table>
 
