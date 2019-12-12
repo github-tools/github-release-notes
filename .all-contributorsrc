@@ -32,6 +32,15 @@
         "bug",
         "code"
       ]
+    },
+    {
+      "login": "joaquin-corchero",
+      "name": "Joaquin Corchero",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/6892214?v=4",
+      "profile": "https://github.com/joaquin-corchero",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
