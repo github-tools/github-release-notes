@@ -1,6 +1,6 @@
 # `gren` 🤖
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 > Github release notes and changelog generator
 
@@ -229,6 +229,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://datitisev.me"><img src="https://avatars2.githubusercontent.com/u/6401250?v=4" width="100px;" alt=""/><br /><sub><b>David Sevilla Martín</b></sub></a><br /><a href="https://github.com/github-tools/github-release-notes/commits?author=datitisev" title="Documentation">📖</a></td>
     <td align="center"><a href="http://phun-ky.net"><img src="https://avatars1.githubusercontent.com/u/1714029?v=4" width="100px;" alt=""/><br /><sub><b>Alexander Vassbotn Røyne-Helgesen</b></sub></a><br /><a href="https://github.com/github-tools/github-release-notes/issues?q=author%3Aphun-ky" title="Bug reports">🐛</a> <a href="https://github.com/github-tools/github-release-notes/commits?author=phun-ky" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/joaquin-corchero"><img src="https://avatars2.githubusercontent.com/u/6892214?v=4" width="100px;" alt=""/><br /><sub><b>Joaquin Corchero</b></sub></a><br /><a href="https://github.com/github-tools/github-release-notes/commits?author=joaquin-corchero" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/durera"><img src="https://avatars1.githubusercontent.com/u/4400618?v=4" width="100px;" alt=""/><br /><sub><b>David Parker</b></sub></a><br /><a href="https://github.com/github-tools/github-release-notes/commits?author=durera" title="Code">💻</a></td>
   </tr>
 </table>
 
