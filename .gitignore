@@ -8,3 +8,4 @@ coverage
 dist
 bin
 test/**.js.xml
+.vscode
