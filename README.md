@@ -1,7 +1,5 @@
 # `gren` 🤖
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-17-orange.svg?style=flat-square)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
+
 > Github release notes and changelog generator
 
 [![npm version](https://badge.fury.io/js/github-release-notes.svg)](https://badge.fury.io/js/github-release-notes)
@@ -10,6 +8,9 @@
 [![Codecov](https://codecov.io/gh/github-tools/github-release-notes/branch/master/graph/badge.svg)](https://codecov.io/gh/github-tools/github-release-notes/branch/master)
 [![npm downloads](https://img.shields.io/npm/dm/github-release-notes.svg)](https://www.npmjs.com/package/github-release-notes)
 [![Automated Release Notes by gren](https://img.shields.io/badge/%F0%9F%A4%96-release%20notes-00B2EE.svg)](https://github-tools.github.io/github-release-notes/)
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-17-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 ## OK, what can `gren` do for me?
 
