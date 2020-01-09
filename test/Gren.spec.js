@@ -610,17 +610,32 @@ describe('Gren', () => {
             });
         });
 
-        it('_getReleaseBlocks', done => {
-            gren.options.tags = ['0.12.0', '0.11.0'];
-            gren._getReleaseBlocks()
-                .then(releaseBlocks => {
-                    assert.isArray(releaseBlocks, 'The releaseBlocks is an Array');
-                    releaseBlocks.forEach(block => {
-                        assert.hasAllKeys(block, ['id', 'release', 'name', 'published_at', 'body']);
-                    });
-                    done();
-                })
-                .catch(err => done(err));
-        }).timeout(10000);
+        describe('_getReleaseBlocks', () => {
+            it('more than one tag', done => {
+                gren.options.tags = ['0.12.0', '0.11.0'];
+                gren._getReleaseBlocks()
+                    .then(releaseBlocks => {
+                        assert.isArray(releaseBlocks, 'The releaseBlocks is an Array');
+                        releaseBlocks.forEach(block => {
+                            assert.hasAllKeys(block, ['id', 'release', 'name', 'published_at', 'body']);
+                        });
+                        done();
+                    })
+                    .catch(err => done(err));
+            }).timeout(10000);
+
+            it('just one tag', done => {
+                gren.options.tags = ['0.11.0'];
+                gren._getReleaseBlocks()
+                    .then(releaseBlocks => {
+                        assert.isArray(releaseBlocks, 'The releaseBlocks is an Array');
+                        releaseBlocks.forEach(block => {
+                            assert.hasAllKeys(block, ['id', 'release', 'name', 'published_at', 'body']);
+                        });
+                        done();
+                    })
+                    .catch(err => done(err));
+            }).timeout(10000);
+        });
     });
 });
