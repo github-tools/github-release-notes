@@ -70,7 +70,7 @@ If you want to be more accurate on the issues that belong to a release, you can 
 
 > The output above is a result of release notes built from issues.
 
-#### Help 🤖 to write wondeful stuff (issues)
+#### Help 🤖 to write wonderful stuff (issues)
 
 In order to have splendidly generated release notes, we recommend to follow these conventions:
 
@@ -95,7 +95,7 @@ The output then uses commit messages (title + description) to look something lik
 >     * Add api-url to options documentation
 > - Update CHANGELOG.md
 
-#### Help 🤖 to write wondeful stuff (commits)
+#### Help 🤖 to write wonderful stuff (commits)
 
 In order to have splendidly generated release notes, we recommend to follow these conventions:
 
