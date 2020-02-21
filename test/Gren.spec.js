@@ -538,6 +538,18 @@ describe('Gren', () => {
         });
     });
 
+    describe('_transformTagsIntoReleaseObjects', () => {
+        it('Should transform tags into release objects', () => {
+            const tag = { 'tag': { 'name': 'tagName', 'number': 3 }, 'releaseId': '12315', 'date': '2020-02-20T13:40:16Z' };
+
+            const receivedObject = gren._transformTagsIntoReleaseObjects([tag]);
+
+            assert.equals(tag.date, receivedObject.date);
+            assert.equals(tag.releaseId, receivedObject.id);
+            assert.equals(tag.name, receivedObject.name);
+        });
+    });
+
     describe('_validateRequiredTagsExists', () => {
         it('should failed if one tag is missing', () => {
             const existingTagName = 'existing_tag';
