@@ -9,7 +9,7 @@
 [![npm downloads](https://img.shields.io/npm/dm/github-release-notes.svg)](https://www.npmjs.com/package/github-release-notes)
 [![Automated Release Notes by gren](https://img.shields.io/badge/%F0%9F%A4%96-release%20notes-00B2EE.svg)](https://github-tools.github.io/github-release-notes/)
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-19-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-20-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 ## OK, what can `gren` do for me?
@@ -249,6 +249,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/lianghx-319"><img src="https://avatars2.githubusercontent.com/u/27187946?v=4" width="100px;" alt=""/><br /><sub><b>Han</b></sub></a><br /><a href="https://github.com/github-tools/github-release-notes/commits?author=lianghx-319" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/donmahallem"><img src="https://avatars2.githubusercontent.com/u/4698322?v=4" width="100px;" alt=""/><br /><sub><b>donmahallem</b></sub></a><br /><a href="https://github.com/github-tools/github-release-notes/commits?author=donmahallem" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/aelbozie"><img src="https://avatars3.githubusercontent.com/u/36151122?v=4" width="100px;" alt=""/><br /><sub><b>Ahmed</b></sub></a><br /><a href="https://github.com/github-tools/github-release-notes/commits?author=aelbozie" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/monicarib"><img src="https://avatars0.githubusercontent.com/u/7025960?v=4" width="100px;" alt=""/><br /><sub><b>Mônica Ribeiro</b></sub></a><br /><a href="https://github.com/github-tools/github-release-notes/commits?author=monicarib" title="Code">💻</a></td>
   </tr>
 </table>
 
