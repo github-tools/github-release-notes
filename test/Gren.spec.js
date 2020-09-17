@@ -544,9 +544,10 @@ describe('Gren', () => {
 
             const receivedObject = gren._transformTagsIntoReleaseObjects([tag]);
 
-            assert.equals(tag.date, receivedObject.date);
-            assert.equals(tag.releaseId, receivedObject.id);
-            assert.equals(tag.name, receivedObject.name);
+            assert.equal(1, receivedObject.length)
+            assert.equal(tag.date, receivedObject[0].date);
+            assert.equal(tag.releaseId, receivedObject[0].id);
+            assert.equal(tag.tag.name, receivedObject[0].name);
         });
     });
 
