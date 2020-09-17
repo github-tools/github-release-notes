@@ -610,11 +610,11 @@ describe('Gren', () => {
             describe('with tags=all', () => {
                 describe('with ignoreTagsWith', () => {
                     it('should ignore the specific tag', done => {
-                        gren.options.ignoreTagsWith = ['11'];
+                        gren.options.ignoreTagsWith = ['16'];
                         gren.options.tags = ['all'];
                         gren._getLastTags()
                             .then(tags => {
-                                assert.notInclude(tags.map(({ name }) => name), '0.11.0', 'The ignored tag is not present');
+                                assert.notInclude(tags.map(({ name }) => name), '0.16.0', 'The ignored tag is not present');
                                 done();
                             })
                             .catch(err => done(err));
@@ -625,7 +625,8 @@ describe('Gren', () => {
 
         describe('_getReleaseBlocks', () => {
             it('more than one tag', done => {
-                gren.options.tags = ['0.12.0', '0.11.0'];
+                gren.options.tags = ['0.17.2', '0.17.1'];
+                gren.options.dataSource = "commits";
                 gren._getReleaseBlocks()
                     .then(releaseBlocks => {
                         assert.isArray(releaseBlocks, 'The releaseBlocks is an Array');
@@ -638,7 +639,8 @@ describe('Gren', () => {
             }).timeout(10000);
 
             it('just one tag', done => {
-                gren.options.tags = ['0.11.0'];
+                gren.options.tags = ['0.17.2'];
+                gren.options.dataSource = "commits";
                 gren._getReleaseBlocks()
                     .then(releaseBlocks => {
                         assert.isArray(releaseBlocks, 'The releaseBlocks is an Array');
