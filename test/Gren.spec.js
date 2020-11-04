@@ -220,13 +220,30 @@ describe('Gren', () => {
                     'Others': ['closed']
                 };
 
-                gren.options.postGroupFormatter = (groupContent) => {
+                gren.options.groupPostProcessor = (groupContent) => {
                     console.log(groupContent)
                     return groupContent.replace('Test', '### Test');
                 }
 
                 assert.deepEqual(gren._groupBy(normal), [`### Test\n${normal[0].title}`], 'Passing one heading for one issue');
                 assert.deepEqual(gren._groupBy(noLabel), [`Others\n${noLabel[0].title}`], 'Group option is "label" with no labels');
+            });
+
+            it.only('Should format group using post formatter', () => {
+                const { normal, noLabel } = issues;
+
+                gren.options.groupBy = {
+                    'Test:': ['enhancement'],
+                    'Others:': ['closed']
+                };
+
+                gren.options.groupPostProcessor = (groupContent) => {
+                    console.log(groupContent)
+                    return groupContent.replace(0, groupContent.indexOf(':\n') + 3);
+                }
+
+                assert.deepEqual(gren._groupBy(normal), [`Test:`], 'Passing one heading for one issue');
+                assert.deepEqual(gren._groupBy(noLabel), [`Others:`], 'Group option is "label" with no labels');
             });
         });
 

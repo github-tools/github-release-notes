@@ -1098,7 +1098,7 @@ var Gren = function () {
         value: function _templateGroups(groups) {
             var _this6 = this;
 
-            var postGroupFormatter = this.options.postGroupFormatter;
+            var groupPostProcessor = this.options.groupPostProcessor;
 
 
             return (0, _entries2.default)(groups).map(function (_ref19) {
@@ -1112,7 +1112,7 @@ var Gren = function () {
                 var body = value.join('\n');
                 var content = heading + '\n' + body;
 
-                return postGroupFormatter ? postGroupFormatter(content) : content;
+                return groupPostProcessor ? groupPostProcessor(content) : content;
             });
         }
 
