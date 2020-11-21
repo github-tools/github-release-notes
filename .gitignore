@@ -5,7 +5,7 @@ npm-debug.log
 docs/_site
 docs/.sass-cache
 coverage
-# dist
-# bin
+dist
+bin
 test/**.js.xml
 .vscode
