@@ -221,7 +221,6 @@ describe('Gren', () => {
                 };
 
                 gren.options.groupPostProcessor = (groupContent) => {
-                    console.log(groupContent)
                     return groupContent.replace(0, groupContent.indexOf(':\n') + 3);
                 }
 
