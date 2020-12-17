@@ -211,6 +211,22 @@ describe('Gren', () => {
                 };
                 assert.deepEqual(gren._groupBy(normal), [`All\n${normal[0].title}`], 'The issue does not match any labels, and goes in the ... group');
             });
+
+            it('Should format group using post formatter', () => {
+                const { normal, noLabel } = issues;
+
+                gren.options.groupBy = {
+                    'Test:': ['enhancement'],
+                    'Others:': ['closed']
+                };
+
+                gren.options.groupPostProcessor = (groupContent) => {
+                    return groupContent.replace(0, groupContent.indexOf(':\n') + 3);
+                }
+
+                assert.deepEqual(gren._groupBy(normal), [`Test:`], 'Passing one heading for one issue');
+                assert.deepEqual(gren._groupBy(noLabel), [`Others:`], 'Group option is "label" with no labels');
+            });
         });
 
         describe('_filterIssue', () => {
