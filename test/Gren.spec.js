@@ -585,6 +585,12 @@ describe('Gren', () => {
         });
     });
 
+    describe("_formatDate", () => {
+        it('Should return the string of the formatted date', () => {
+            assert.deepEqual(gren._formatDate(new Date('1970-01-01T00:00:00Z')), '01/01/1970', 'Given a date object.');
+        });
+    });
+
     describe('Tests that require network', () => {
         before(function(done) {
             gren._hasNetwork()
