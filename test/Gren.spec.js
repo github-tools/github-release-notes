@@ -220,12 +220,10 @@ describe('Gren', () => {
                     'Others:': ['closed']
                 };
 
-                gren.options.groupPostProcessor = (groupContent) => {
-                    return groupContent.replace(0, groupContent.indexOf(':\n') + 3);
-                }
+                gren.options.groupPostProcessor = (groupContent) => groupContent.replace(0, groupContent.indexOf(':\n') + 3);
 
-                assert.deepEqual(gren._groupBy(normal), [`Test:`], 'Passing one heading for one issue');
-                assert.deepEqual(gren._groupBy(noLabel), [`Others:`], 'Group option is "label" with no labels');
+                assert.deepEqual(gren._groupBy(normal), [`Test:\nIssue with one label and milestone`], 'Passing one heading for one issue');
+                assert.deepEqual(gren._groupBy(noLabel), [`Others:\nIssue with no milestone and no labels`], 'Group option is "label" with no labels');
             });
         });
 
