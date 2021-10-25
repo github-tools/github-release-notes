@@ -12,11 +12,11 @@
 [![All Contributors](https://img.shields.io/badge/all_contributors-21-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-## OK, what can `gren` do for me?
+## What can `gren` do for me?
 
-`gren` is a small helpful robot that will do for you just create a release from a tag and compile the release notes using issues or commits.
+`gren` is a small helpful robot that can create a release from a tag and compile its release notes from issues or commits.
 
-It also can generate a `CHANGELOG.md` file based on the release notes (or generate a brand new).
+It also can generate a `CHANGELOG.md` file using those release notes or from scratch.
 
 - [The Motivation and Concept](#the-motivation-and-concept)
 - [Feed 🤖](#feed-gren-)
