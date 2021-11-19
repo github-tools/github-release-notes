@@ -1,6 +1,6 @@
 # `gren` 🤖
 
-> Github release notes and changelog generator
+> GitHub release notes and changelog generator
 
 [![npm version](https://badge.fury.io/js/github-release-notes.svg)](https://badge.fury.io/js/github-release-notes)
 [![Build Status](https://travis-ci.org/github-tools/github-release-notes.svg?branch=master)](https://travis-ci.org/github-tools/github-release-notes)
